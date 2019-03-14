@@ -1,0 +1,39 @@
+D:\David\CMS-Web\CMS-DTO\bin\Debug\CMS-DTO.dll
+D:\David\CMS-Web\CMS-DTO\bin\Debug\CMS-DTO.pdb
+D:\David\CMS-Web\CMS-DTO\obj\Debug\CMS-DTO.csprojResolveAssemblyReference.cache
+D:\David\CMS-Web\CMS-DTO\obj\Debug\CMS-DTO.csproj.CoreCompileInputs.cache
+D:\David\CMS-Web\CMS-DTO\obj\Debug\CMS-DTO.dll
+D:\David\CMS-Web\CMS-DTO\obj\Debug\CMS-DTO.pdb
+D:\David\CMS-Web\CMS-DTO\bin\Debug\System.Web.Mvc.dll
+D:\My Outsource\WebCafegaredalat\CMS-DTO\bin\Debug\CMS-DTO.dll.config
+D:\My Outsource\WebCafegaredalat\CMS-DTO\bin\Debug\CMS-DTO.dll
+D:\My Outsource\WebCafegaredalat\CMS-DTO\bin\Debug\CMS-DTO.pdb
+D:\My Outsource\WebCafegaredalat\CMS-DTO\bin\Debug\EntityFramework.dll
+D:\My Outsource\WebCafegaredalat\CMS-DTO\bin\Debug\EntityFramework.SqlServer.dll
+D:\My Outsource\WebCafegaredalat\CMS-DTO\bin\Debug\log4net.dll
+D:\My Outsource\WebCafegaredalat\CMS-DTO\bin\Debug\Newtonsoft.Json.dll
+D:\My Outsource\WebCafegaredalat\CMS-DTO\bin\Debug\EntityFramework.xml
+D:\My Outsource\WebCafegaredalat\CMS-DTO\bin\Debug\EntityFramework.SqlServer.xml
+D:\My Outsource\WebCafegaredalat\CMS-DTO\bin\Debug\log4net.xml
+D:\My Outsource\WebCafegaredalat\CMS-DTO\bin\Debug\Newtonsoft.Json.xml
+D:\My Outsource\WebCafegaredalat\CMS-DTO\obj\Debug\CMS-DTO.csprojAssemblyReference.cache
+D:\My Outsource\WebCafegaredalat\CMS-DTO\obj\Debug\CMS-DTO.csproj.CoreCompileInputs.cache
+D:\My Outsource\WebCafegaredalat\CMS-DTO\obj\Debug\CMS-DTO.csproj.CopyComplete
+D:\My Outsource\WebCafegaredalat\CMS-DTO\obj\Debug\CMS-DTO.dll
+D:\My Outsource\WebCafegaredalat\CMS-DTO\obj\Debug\CMS-DTO.pdb
+D:\My Outsource\Admin\CMS-DTO\bin\Debug\CMS-DTO.dll.config
+D:\My Outsource\Admin\CMS-DTO\bin\Debug\CMS-DTO.dll
+D:\My Outsource\Admin\CMS-DTO\bin\Debug\CMS-DTO.pdb
+D:\My Outsource\Admin\CMS-DTO\bin\Debug\EntityFramework.dll
+D:\My Outsource\Admin\CMS-DTO\bin\Debug\EntityFramework.SqlServer.dll
+D:\My Outsource\Admin\CMS-DTO\bin\Debug\log4net.dll
+D:\My Outsource\Admin\CMS-DTO\bin\Debug\Newtonsoft.Json.dll
+D:\My Outsource\Admin\CMS-DTO\bin\Debug\EntityFramework.xml
+D:\My Outsource\Admin\CMS-DTO\bin\Debug\EntityFramework.SqlServer.xml
+D:\My Outsource\Admin\CMS-DTO\bin\Debug\log4net.xml
+D:\My Outsource\Admin\CMS-DTO\bin\Debug\Newtonsoft.Json.xml
+D:\My Outsource\Admin\CMS-DTO\obj\Debug\CMS-DTO.csprojAssemblyReference.cache
+D:\My Outsource\Admin\CMS-DTO\obj\Debug\CMS-DTO.csproj.CoreCompileInputs.cache
+D:\My Outsource\Admin\CMS-DTO\obj\Debug\CMS-DTO.csproj.CopyComplete
+D:\My Outsource\Admin\CMS-DTO\obj\Debug\CMS-DTO.dll
+D:\My Outsource\Admin\CMS-DTO\obj\Debug\CMS-DTO.pdb

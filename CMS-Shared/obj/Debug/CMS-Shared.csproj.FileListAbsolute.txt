@@ -1,0 +1,65 @@
+D:\David\CMS-Web\CMS-Shared\bin\Debug\CMS-Shared.dll
+D:\David\CMS-Web\CMS-Shared\bin\Debug\CMS-Shared.pdb
+D:\David\CMS-Web\CMS-Shared\obj\Debug\CMS-Shared.csproj.CoreCompileInputs.cache
+D:\David\CMS-Web\CMS-Shared\obj\Debug\CMS-Shared.dll
+D:\David\CMS-Web\CMS-Shared\obj\Debug\CMS-Shared.pdb
+D:\David\CMS-Web\CMS-Shared\obj\Debug\CMS-Shared.csprojResolveAssemblyReference.cache
+D:\David\CMS-Web\CMS-Shared\bin\Debug\CMS-Shared.dll.config
+D:\David\CMS-Web\CMS-Shared\bin\Debug\CMS-DTO.dll
+D:\David\CMS-Web\CMS-Shared\bin\Debug\CMS-Entity.dll
+D:\David\CMS-Web\CMS-Shared\bin\Debug\EntityFramework.dll
+D:\David\CMS-Web\CMS-Shared\bin\Debug\EntityFramework.SqlServer.dll
+D:\David\CMS-Web\CMS-Shared\bin\Debug\CMS-DTO.pdb
+D:\David\CMS-Web\CMS-Shared\bin\Debug\CMS-Entity.pdb
+D:\David\CMS-Web\CMS-Shared\bin\Debug\CMS-Entity.dll.config
+D:\David\CMS-Web\CMS-Shared\bin\Debug\EntityFramework.xml
+D:\David\CMS-Web\CMS-Shared\bin\Debug\EntityFramework.SqlServer.xml
+D:\David\CMS-Web\CMS-Shared\bin\Debug\System.Web.Mvc.dll
+D:\My Outsource\WebCafegaredalat\CMS-Shared\bin\Debug\CMS-Shared.dll.config
+D:\My Outsource\WebCafegaredalat\CMS-Shared\bin\Debug\CMS-Shared.dll
+D:\My Outsource\WebCafegaredalat\CMS-Shared\bin\Debug\CMS-Shared.pdb
+D:\My Outsource\WebCafegaredalat\CMS-Shared\bin\Debug\CMS-DTO.dll
+D:\My Outsource\WebCafegaredalat\CMS-Shared\bin\Debug\CMS-Entity.dll
+D:\My Outsource\WebCafegaredalat\CMS-Shared\bin\Debug\EntityFramework.dll
+D:\My Outsource\WebCafegaredalat\CMS-Shared\bin\Debug\EntityFramework.SqlServer.dll
+D:\My Outsource\WebCafegaredalat\CMS-Shared\bin\Debug\log4net.dll
+D:\My Outsource\WebCafegaredalat\CMS-Shared\bin\Debug\Newtonsoft.Json.dll
+D:\My Outsource\WebCafegaredalat\CMS-Shared\bin\Debug\NSLog.dll
+D:\My Outsource\WebCafegaredalat\CMS-Shared\bin\Debug\System.Web.Mvc.dll
+D:\My Outsource\WebCafegaredalat\CMS-Shared\bin\Debug\CMS-DTO.pdb
+D:\My Outsource\WebCafegaredalat\CMS-Shared\bin\Debug\CMS-DTO.dll.config
+D:\My Outsource\WebCafegaredalat\CMS-Shared\bin\Debug\CMS-Entity.pdb
+D:\My Outsource\WebCafegaredalat\CMS-Shared\bin\Debug\CMS-Entity.dll.config
+D:\My Outsource\WebCafegaredalat\CMS-Shared\bin\Debug\EntityFramework.xml
+D:\My Outsource\WebCafegaredalat\CMS-Shared\bin\Debug\EntityFramework.SqlServer.xml
+D:\My Outsource\WebCafegaredalat\CMS-Shared\bin\Debug\log4net.xml
+D:\My Outsource\WebCafegaredalat\CMS-Shared\bin\Debug\Newtonsoft.Json.xml
+D:\My Outsource\WebCafegaredalat\CMS-Shared\obj\Debug\CMS-Shared.csprojAssemblyReference.cache
+D:\My Outsource\WebCafegaredalat\CMS-Shared\obj\Debug\CMS-Shared.csproj.CoreCompileInputs.cache
+D:\My Outsource\WebCafegaredalat\CMS-Shared\obj\Debug\CMS-Shared.csproj.CopyComplete
+D:\My Outsource\WebCafegaredalat\CMS-Shared\obj\Debug\CMS-Shared.dll
+D:\My Outsource\WebCafegaredalat\CMS-Shared\obj\Debug\CMS-Shared.pdb
+D:\My Outsource\Admin\CMS-Shared\bin\Debug\CMS-Shared.dll.config
+D:\My Outsource\Admin\CMS-Shared\bin\Debug\CMS-Shared.dll
+D:\My Outsource\Admin\CMS-Shared\bin\Debug\CMS-Shared.pdb
+D:\My Outsource\Admin\CMS-Shared\bin\Debug\CMS-DTO.dll
+D:\My Outsource\Admin\CMS-Shared\bin\Debug\CMS-Entity.dll
+D:\My Outsource\Admin\CMS-Shared\bin\Debug\EntityFramework.dll
+D:\My Outsource\Admin\CMS-Shared\bin\Debug\EntityFramework.SqlServer.dll
+D:\My Outsource\Admin\CMS-Shared\bin\Debug\log4net.dll
+D:\My Outsource\Admin\CMS-Shared\bin\Debug\Newtonsoft.Json.dll
+D:\My Outsource\Admin\CMS-Shared\bin\Debug\NSLog.dll
+D:\My Outsource\Admin\CMS-Shared\bin\Debug\System.Web.Mvc.dll
+D:\My Outsource\Admin\CMS-Shared\bin\Debug\CMS-DTO.pdb
+D:\My Outsource\Admin\CMS-Shared\bin\Debug\CMS-DTO.dll.config
+D:\My Outsource\Admin\CMS-Shared\bin\Debug\CMS-Entity.pdb
+D:\My Outsource\Admin\CMS-Shared\bin\Debug\CMS-Entity.dll.config
+D:\My Outsource\Admin\CMS-Shared\bin\Debug\EntityFramework.xml
+D:\My Outsource\Admin\CMS-Shared\bin\Debug\EntityFramework.SqlServer.xml
+D:\My Outsource\Admin\CMS-Shared\bin\Debug\log4net.xml
+D:\My Outsource\Admin\CMS-Shared\bin\Debug\Newtonsoft.Json.xml
+D:\My Outsource\Admin\CMS-Shared\obj\Debug\CMS-Shared.csprojAssemblyReference.cache
+D:\My Outsource\Admin\CMS-Shared\obj\Debug\CMS-Shared.csproj.CoreCompileInputs.cache
+D:\My Outsource\Admin\CMS-Shared\obj\Debug\CMS-Shared.csproj.CopyComplete
+D:\My Outsource\Admin\CMS-Shared\obj\Debug\CMS-Shared.dll
+D:\My Outsource\Admin\CMS-Shared\obj\Debug\CMS-Shared.pdb

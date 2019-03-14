@@ -1,0 +1,125 @@
+﻿
+@model CMS_DTO.CMSHome.CMSHomeModels
+@using CMS_Shared
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewBag.Title = "Trang chủ";
+}
+
+<div role="main">
+    <div class="se-pre-con" style="display: none;"></div>
+    <div class="_gridview">
+        <div class="page-main">
+            <div id="div-silder">
+                <fieldset>
+                    <legend>SILDER (900 X 450)</legend>
+                    <div class="row text-right" style="margin-right:0px !important">
+                        <ul class="header-buttons pull-right list-inline">
+                            <li>
+                                <a href="javascript:void(0);" class="btn btn-success" id="btn-edit-save" onclick="SubmitForm('.form-edit-silder')">
+                                    <i class="fa fa-save"></i>
+                                    &nbsp;Lưu
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    @using (@Html.BeginForm("UploadSilder", "Home", FormMethod.Post, new { @class = "form-horizontal form-edit-silder", @enctype = "multipart/form-data" }))
+                    {
+                        <div class="div-partial-silder">
+                            @Html.Partial("_Slider", Model)
+                        </div>
+                    }
+                </fieldset>
+            </div>
+
+            <div class="div-info-company">
+                <fieldset>
+                    <legend>THÔNG TIN CÔNG TY</legend>
+
+                    <div class="row text-right" style="margin-right:0px !important">
+                        <ul class="header-buttons pull-right list-inline">
+                            <li>
+                                <a href="javascript:void(0);" class="btn btn-success" id="btn-edit-save" onclick="SubmitForm('.form-edit-com')">
+                                    <i class="fa fa-save"></i>
+                                    &nbsp;Lưu
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    @using (@Html.BeginForm("UpdateCompanyInfo", "Home", FormMethod.Post, new { @class = "form-horizontal form-edit-com", @enctype = "multipart/form-data" }))
+                    {
+                       <div class="div-partial-company">
+                           @Html.Partial("_CompanyInfo", Model)
+                       </div>
+                    }
+                </fieldset>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function preview_image(that, _attr) {
+        var _Files = document.getElementById(_attr).files[0];
+        var _FileName = _Files.name;
+        $("." + _attr + "").val(_FileName);
+    }
+
+    $(".form-edit-silder").submit(function (e) {
+        
+        $.ajax({
+            url: $(this).attr('action'),
+            type: "POST",
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $('.se-pre-con').show();
+            },
+            success: function (content) {
+                $(".div-partial-silder").html(content);
+                
+            },
+            complete: function () {
+                $('.se-pre-con').hide();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+        e.preventDefault();
+    });
+
+    $(".form-edit-com").submit(function (e) {
+        
+        $.ajax({
+            url: $(this).attr('action'),
+            type: "POST",
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $('.se-pre-con').show();
+            },
+            success: function (content) {
+                
+                $('.div-partial-company').html(content);
+            },
+            complete: function () {
+                $('.se-pre-con').hide();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              
+            }
+        });
+        e.preventDefault();
+    });
+
+    function showPictureUpload(that) {
+        $(that).click();
+    }
+
+</script>

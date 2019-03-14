@@ -1,0 +1,459 @@
+﻿@{
+    Layout = "~/Areas/Clients/Views/Shared/_Layout.cshtml";
+}
+@model CMS_DTO.CMSProduct.ProductViewModels
+@{ 
+    var _ListSlider = Session["SliderSession"] as List<CMS_DTO.CMSSession.SliderSession>;
+}
+<!-- Background Area Start -->
+<section class="slider-area">
+    <div class="slider-wrapper">
+        @if (_ListSlider != null && _ListSlider.Any())
+        {
+            foreach (var item in _ListSlider)
+            {
+                <div class="single-slide" style="background-image: url('@Url.Content(item.ImageUrl)');">
+                    <div class="banner-content">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                                    <div class="text-content-wrapper">
+                                        <div class="text-content text-center">
+                                            <h3 class="pt-70">welcome our Koffee</h3>
+                                            <h1>Live Your Life With Energy</h1>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras suscipit, est non tincidunt auctor, lacus lorem tincidunt est, sed ornare nisi est vel ligula.</p>
+                                            <div class="banner-btn">
+                                                <a class="default-btn" href="javascript:void(0)">
+                                                    <span>Reservation</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</section>
+<!-- Background Area End -->
+
+<!-- Contact Info Start -->
+@if (Model.Company != null)
+{
+    <section class="contact-area fix pb-30">
+        <div class="single-contact">
+            <div class="information text-center">
+                <h4><span>Điện thoại : </span>@Model.Company.Phone</h4>
+            </div>
+        </div>
+        <div class="single-contact">
+            <div class="information text-center">
+                <h4><span>Email :</span>@Model.Company.Email</h4>
+            </div>
+        </div>
+        <div class="single-contact">
+            <div class="information text-center">
+                <h4 title="@Model.Company.Address"><span>Địa chỉ :</span>@string.Format("{0}",!string.IsNullOrEmpty(Model.Company.Address) && Model.Company.Address.Length > 26 ? Model.Company.Address.Substring(0,25) + "..." : Model.Company.Address)</h4>
+            </div>
+        </div>
+        <div class="single-contact">
+            <div class="information text-center">
+                <h4><span>Open Hour :</span>8.Am-6.Pm</h4>
+            </div>
+        </div>
+    </section>
+}
+
+<!-- Contact Info End -->
+
+<!-- About Area Start -->
+<section class="about-area pt-70 pb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="about-container">
+                    <div class="about-text">
+                        <h3>About Koffee Shop</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown thing took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, this is remaining essential.</p>
+                        <p>Type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, this is remaining essential.</p>
+                        <a href="about.html" class="default-btn"><span>Read more</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 hidden-xs">
+                <div class="about-image">
+                    <img src="@Url.Content("~/Images/banner/z1029925499025_787a87bae513ecdbbbc1e0abe096d346.jpg")" style="width:80% !important" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- About Area End -->
+
+<!-- Special Area Strat -->
+<section class="special-area bg-light ptb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="section-title text-center">
+                    <h1>Special koffee</h1>
+                    <span><img src="@Url.Content("~/Images/banner/koffee.png")" alt=""></span>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since. </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        @if (Model != null && Model.ListCate != null && Model.ListCate.Any())
+        {
+            foreach (var item in Model.ListCate)
+            {
+                <div class="special-item">
+                    <div class="item-content">
+                        @if (string.IsNullOrEmpty(item.ImageURL))
+                        {
+                            <img src="@Url.Content("~/Images/banner/1.jpg")" alt="">
+                        }
+                        else
+                        {
+                            <img src="@Url.Content(item.ImageURL)" alt="">
+                            @*<img src="@Url.Content("~/Uploads/Products/1.jpg")" alt="">*@
+                        }
+                        
+                        <div class="item-hover text-center">
+                            <div class="hover-text">
+                                <h1><a href="javascript:void(0)">@item.CategoryName</a></h1>
+                                <p>@Html.Raw(item.Description)</p>
+                               @* <span class="price">$20.00</span>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</section>
+<!-- Special Area End -->
+
+<!-- Advertise Area Start -->
+<section class="advertise-area bg-1 ptb-100 overlay-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="advertise-text text-center">
+                    <h1>Start Your Day With koffee</h1>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Advertise Area End -->
+
+<!-- Menu Area Start -->
+<section class="menu-area ptb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="section-title text-center">
+                    <h1>Our Menu</h1>
+                    <span><img src="@Url.Content("~/Images/banner/koffee.png")" alt=""></span>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since. </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @if (Model.ListProduct != null && Model.ListProduct.Any())
+            {
+                foreach (var item in Model.ListProduct)
+                {
+                    <div class="col-md-3 col-sm-4">
+                        <div class="single-menu text-center">
+                            <div class="menu-image">
+                                <span>@item.ProductPrice</span>
+                                <a href="javascript:void(0)">
+                                    @if (string.IsNullOrEmpty(item.ImageURL))
+                                    {
+                                        <img src="@Url.Content("~/Images/banner/s-1.jpg")" />
+                                    }
+                                    else
+                                    {
+                                        <img src="@Url.Content(item.ImageURL)" alt="">
+                                    }
+                                </a>
+                            </div>
+                            <h4><a href="javascript:void(0)">@item.ProductName</a></h4>
+                            <span>@Html.Raw(item.Description) </span>
+                        </div>
+                    </div>
+                }
+            }
+            <div class="col-md-12 text-center menu-btn col-sm-12 col-xs-12">
+                <a href="javascript:void(0)" class="default-btn"><span>View full menu</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Menu Area End -->
+
+ <!-- Event Area Start -->
+<section class="event-area ptb-100 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="event-text text-center">
+                    <h1>UpComing Event</h1>
+                    <h1 class="event-title">30% Off <span>For First 3  Menu</span></h1>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived </p>
+                    <div class="event-btn">
+                        <a href="javascript:void(0)" class="default-btn"><span>Reservation Now</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Event Area End -->
+
+<!-- Team Area Start -->
+<section class="team-area ptb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="section-title text-center">
+                    <h1>Our Team Member</h1>
+                    <span><img src="@Url.Content("~/Images/banner/koffee.png")" alt=""></span>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since. </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-sm-4">
+                <div class="single-team">
+                    <a href="#"><img src="@Url.Content("~/Images/team/1.jpg")" alt=""></a>
+                    <div class="team-text text-center">
+                        <h4><a href="#">Jesse E. Marshall</a></h4>
+                        <h5>Senior Accountants</h5>
+                        <div class="team-links">
+                            <a href="#"><i class="zmdi zmdi-facebook"></i></a>
+                            <a href="#"><i class="zmdi zmdi-twitter"></i></a>
+                            <a href="#"><i class="zmdi zmdi-dribbble"></i></a>
+                            <a href="#"><i class="zmdi zmdi-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <div class="single-team">
+                    <a href="#"><img src="@Url.Content("~/Images/team/2.jpg")" alt=""></a>
+                    <div class="team-text text-center">
+                        <h4><a href="#">John Been Robi</a></h4>
+                        <h5>Catering Assistant</h5>
+                        <div class="team-links">
+                            <a href="#"><i class="zmdi zmdi-facebook"></i></a>
+                            <a href="#"><i class="zmdi zmdi-twitter"></i></a>
+                            <a href="#"><i class="zmdi zmdi-dribbble"></i></a>
+                            <a href="#"><i class="zmdi zmdi-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <div class="single-team">
+                    <a href="#"><img src="@Url.Content("~/Images/team/3.jpg")" alt=""></a>
+                    <div class="team-text text-center">
+                        <h4><a href="#">Rosalyn Golay</a></h4>
+                        <h5>Sales Assistant</h5>
+                        <div class="team-links">
+                            <a href="#"><i class="zmdi zmdi-facebook"></i></a>
+                            <a href="#"><i class="zmdi zmdi-twitter"></i></a>
+                            <a href="#"><i class="zmdi zmdi-dribbble"></i></a>
+                            <a href="#"><i class="zmdi zmdi-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 hidden-sm">
+                <div class="single-team">
+                    <a href="#"><img src="@Url.Content("~/Images/team/4.jpg")" alt=""></a>
+                    <div class="team-text text-center">
+                        <h4><a href="#"> France Denison </a></h4>
+                        <h5>General Manager</h5>
+                        <div class="team-links">
+                            <a href="#"><i class="zmdi zmdi-facebook"></i></a>
+                            <a href="#"><i class="zmdi zmdi-twitter"></i></a>
+                            <a href="#"><i class="zmdi zmdi-dribbble"></i></a>
+                            <a href="#"><i class="zmdi zmdi-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Team Area End -->
+
+<!-- Client Area Start -->
+<section class="client-area bg-2 overlay-1 ptb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="testimonial-carousel">
+                    <div class="single-tesimonial text-center">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley</p>
+                        <div class="client-rating">
+                            <i class="zmdi zmdi-star"></i>
+                            <i class="zmdi zmdi-star"></i>
+                            <i class="zmdi zmdi-star"></i>
+                            <i class="zmdi zmdi-star"></i>
+                            <i class="zmdi zmdi-star-half"></i>
+                        </div>
+                        <h4><a href="#">Wiliam Harry</a></h4>
+                    </div>
+                    <div class="single-tesimonial text-center">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley</p>
+                        <div class="client-rating">
+                            <i class="zmdi zmdi-star"></i>
+                            <i class="zmdi zmdi-star"></i>
+                            <i class="zmdi zmdi-star"></i>
+                            <i class="zmdi zmdi-star"></i>
+                            <i class="zmdi zmdi-star-half"></i>
+                        </div>
+                        <h4><a href="#">John Been Robi</a></h4>
+                    </div>
+                    <div class="single-tesimonial text-center">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley</p>
+                        <div class="client-rating">
+                            <i class="zmdi zmdi-star"></i>
+                            <i class="zmdi zmdi-star"></i>
+                            <i class="zmdi zmdi-star"></i>
+                            <i class="zmdi zmdi-star"></i>
+                            <i class="zmdi zmdi-star-half"></i>
+                        </div>
+                        <h4><a href="#">Rosalyn Golay</a></h4>
+                    </div>
+                    <div class="single-tesimonial text-center">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley</p>
+                        <div class="client-rating">
+                            <i class="zmdi zmdi-star"></i>
+                            <i class="zmdi zmdi-star"></i>
+                            <i class="zmdi zmdi-star"></i>
+                            <i class="zmdi zmdi-star"></i>
+                            <i class="zmdi zmdi-star-half"></i>
+                        </div>
+                        <h4><a href="#">Wiliam Harry</a></h4>
+                    </div>
+                    <div class="single-tesimonial text-center">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley</p>
+                        <div class="client-rating">
+                            <i class="zmdi zmdi-star"></i>
+                            <i class="zmdi zmdi-star"></i>
+                            <i class="zmdi zmdi-star"></i>
+                            <i class="zmdi zmdi-star"></i>
+                            <i class="zmdi zmdi-star-half"></i>
+                        </div>
+                        <h4><a href="#">Jesse E. Marshall</a></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="single-client-container">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            <a class="single-client" href="#">
+                                <span class="client-table-cell">
+                                    <img src="@Url.Content("~/Images/client/1.png")" alt="">
+                                </span>
+                            </a>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <a class="single-client" href="#">
+                                <span class="client-table-cell">
+                                    <img src="@Url.Content("~/Images/client/2.png")" alt="">
+                                </span>
+                            </a>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <a class="single-client" href="#">
+                                <span class="client-table-cell">
+                                    <img src="@Url.Content("~/Images/client/3.png")" alt="">
+                                </span>
+                            </a>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <a class="single-client" href="#">
+                                <span class="client-table-cell">
+                                    <img src="@Url.Content("~/Images/client/4.png")" alt="">
+                                </span>
+                            </a>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <a class="single-client" href="#">
+                                <span class="client-table-cell">
+                                    <img src="@Url.Content("~/Images/client/5.png")" alt="">
+                                </span>
+                            </a>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <a class="single-client" href="#">
+                                <span class="client-table-cell">
+                                    <img src="@Url.Content("~/Images/client/6.png")" alt="">
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Client Area End -->
+
+<!-- Blog Area Start -->
+<section class="blog-area ptb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="section-title text-center">
+                    <h1>Our Blog</h1>
+                    <span><img src="@Url.Content("~/Images/banner/koffee.png")" alt=""></span>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since. </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="blog-carousel">
+                @if (Model.ListNews != null && Model.ListNews.Any())
+                {
+                    foreach (var item in Model.ListNews)
+                    {
+                        <div class="col-xs-12">
+                            <div class="single-blog">
+                                <a href="@Url.Action("NewsDetail", "News", new {id=item.Id })" class="blog-image">
+                                    @if (string.IsNullOrEmpty(item.ImageURL))
+                                    {
+                                        <img src="@Url.Content("~/Images/banner/1.jpg")" alt="">
+                                    }
+                                    else
+                                    {
+                                        <img src="@Url.Content(item.ImageURL)" alt="">
+                                    }
+                                </a>
+                                <div class="blog-text text-center">
+                                    <span>@item.CreatedDate.ToString("dd/MM/yyyy")</span>
+                                    <h4><a href="@Url.Action("NewsDetail", "News", new {id=item.Id })">@item.Title</a></h4>
+                                    <p>@item.Short_Description</p>
+                                    <a href="@Url.Action("NewsDetail", "News", new {id=item.Id })">Xem Thêm</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Blog Area End -->

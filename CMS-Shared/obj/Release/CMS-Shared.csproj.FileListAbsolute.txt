@@ -1,0 +1,39 @@
+D:\David\CMS-Web\CMS-Shared\bin\Release\CMS-Shared.dll
+D:\David\CMS-Web\CMS-Shared\bin\Release\CMS-Shared.pdb
+D:\David\CMS-Web\CMS-Shared\obj\Release\CMS-Shared.csproj.CoreCompileInputs.cache
+D:\David\CMS-Web\CMS-Shared\obj\Release\CMS-Shared.dll
+D:\David\CMS-Web\CMS-Shared\obj\Release\CMS-Shared.pdb
+D:\David\CMS-Web\CMS-Shared\bin\Release\CMS-Shared.dll.config
+D:\David\CMS-Web\CMS-Shared\bin\Release\CMS-DTO.dll
+D:\David\CMS-Web\CMS-Shared\bin\Release\CMS-Entity.dll
+D:\David\CMS-Web\CMS-Shared\bin\Release\EntityFramework.dll
+D:\David\CMS-Web\CMS-Shared\bin\Release\EntityFramework.SqlServer.dll
+D:\David\CMS-Web\CMS-Shared\bin\Release\System.Web.Mvc.dll
+D:\David\CMS-Web\CMS-Shared\bin\Release\CMS-DTO.pdb
+D:\David\CMS-Web\CMS-Shared\bin\Release\CMS-Entity.pdb
+D:\David\CMS-Web\CMS-Shared\bin\Release\CMS-Entity.dll.config
+D:\David\CMS-Web\CMS-Shared\bin\Release\EntityFramework.xml
+D:\David\CMS-Web\CMS-Shared\bin\Release\EntityFramework.SqlServer.xml
+D:\David\CMS-Web\CMS-Shared\obj\Release\CMS-Shared.csprojResolveAssemblyReference.cache
+D:\My Outsource\Admin\CMS-Shared\bin\Release\CMS-Shared.dll.config
+D:\My Outsource\Admin\CMS-Shared\bin\Release\CMS-Shared.dll
+D:\My Outsource\Admin\CMS-Shared\bin\Release\CMS-Shared.pdb
+D:\My Outsource\Admin\CMS-Shared\bin\Release\CMS-DTO.dll
+D:\My Outsource\Admin\CMS-Shared\bin\Release\CMS-Entity.dll
+D:\My Outsource\Admin\CMS-Shared\bin\Release\log4net.dll
+D:\My Outsource\Admin\CMS-Shared\bin\Release\Newtonsoft.Json.dll
+D:\My Outsource\Admin\CMS-Shared\bin\Release\NSLog.dll
+D:\My Outsource\Admin\CMS-Shared\bin\Release\System.Web.Mvc.dll
+D:\My Outsource\Admin\CMS-Shared\bin\Release\CMS-DTO.pdb
+D:\My Outsource\Admin\CMS-Shared\bin\Release\CMS-DTO.dll.config
+D:\My Outsource\Admin\CMS-Shared\bin\Release\CMS-Entity.pdb
+D:\My Outsource\Admin\CMS-Shared\bin\Release\CMS-Entity.dll.config
+D:\My Outsource\Admin\CMS-Shared\bin\Release\EntityFramework.xml
+D:\My Outsource\Admin\CMS-Shared\bin\Release\EntityFramework.SqlServer.xml
+D:\My Outsource\Admin\CMS-Shared\bin\Release\log4net.xml
+D:\My Outsource\Admin\CMS-Shared\bin\Release\Newtonsoft.Json.xml
+D:\My Outsource\Admin\CMS-Shared\obj\Release\CMS-Shared.csprojAssemblyReference.cache
+D:\My Outsource\Admin\CMS-Shared\obj\Release\CMS-Shared.csproj.CoreCompileInputs.cache
+D:\My Outsource\Admin\CMS-Shared\obj\Release\CMS-Shared.csproj.CopyComplete
+D:\My Outsource\Admin\CMS-Shared\obj\Release\CMS-Shared.dll
+D:\My Outsource\Admin\CMS-Shared\obj\Release\CMS-Shared.pdb

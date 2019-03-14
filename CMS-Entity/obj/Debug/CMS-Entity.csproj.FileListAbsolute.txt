@@ -1,0 +1,74 @@
+D:\David\CMS-Web\CMS-Entity\bin\Debug\CMS-Entity.dll.config
+D:\David\CMS-Web\CMS-Entity\bin\Debug\CMS-Entity.dll
+D:\David\CMS-Web\CMS-Entity\bin\Debug\CMS-Entity.pdb
+D:\David\CMS-Web\CMS-Entity\bin\Debug\AutoMapper.dll
+D:\David\CMS-Web\CMS-Entity\bin\Debug\EntityFramework.dll
+D:\David\CMS-Web\CMS-Entity\bin\Debug\EntityFramework.SqlServer.dll
+D:\David\CMS-Web\CMS-Entity\bin\Debug\AutoMapper.xml
+D:\David\CMS-Web\CMS-Entity\bin\Debug\EntityFramework.xml
+D:\David\CMS-Web\CMS-Entity\bin\Debug\EntityFramework.SqlServer.xml
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS-Entity.csprojResolveAssemblyReference.cache
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS-Entity.csproj.CoreCompileInputs.cache
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS-Entity.dll
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS-Entity.pdb
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.createdatabase.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS-Entity.csproj.GenerateResource.Cache
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.updateTableCategories.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.updateDataType.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.updatedatatype1815.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.updatedatatype1815_v2.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.updatetableCategory_type.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.updatetablecategoryfieldCreateByUpdateBy.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.updatecolumnIdInCategory.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.createtableProduct.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.updatedatabase0305.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.updatetableemployee.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.addfieldPasswordInTableEmployee.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.updatecolumnIDCard.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.addColumnImageURLInTableEmployee.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.createTablePolicy.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.createTableNews.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.createTableImages.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.updatetableProductFieldProductName.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.updateMaxLenghtShortDescription.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.addTableCustomer.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.updateDatabase_0604.resources
+D:\David\CMS-Web\CMS-Entity\obj\Debug\CMS_Entity.Migrations.addFieldParentIdOnTableCategory.resources
+D:\My Outsource\WebCafegaredalat\CMS-Entity\bin\Debug\CMS-Entity.dll.config
+D:\My Outsource\WebCafegaredalat\CMS-Entity\bin\Debug\CMS-Entity.dll
+D:\My Outsource\WebCafegaredalat\CMS-Entity\bin\Debug\CMS-Entity.pdb
+D:\My Outsource\WebCafegaredalat\CMS-Entity\bin\Debug\AutoMapper.dll
+D:\My Outsource\WebCafegaredalat\CMS-Entity\bin\Debug\EntityFramework.dll
+D:\My Outsource\WebCafegaredalat\CMS-Entity\bin\Debug\EntityFramework.SqlServer.dll
+D:\My Outsource\WebCafegaredalat\CMS-Entity\bin\Debug\log4net.dll
+D:\My Outsource\WebCafegaredalat\CMS-Entity\bin\Debug\Newtonsoft.Json.dll
+D:\My Outsource\WebCafegaredalat\CMS-Entity\bin\Debug\AutoMapper.xml
+D:\My Outsource\WebCafegaredalat\CMS-Entity\bin\Debug\EntityFramework.xml
+D:\My Outsource\WebCafegaredalat\CMS-Entity\bin\Debug\EntityFramework.SqlServer.xml
+D:\My Outsource\WebCafegaredalat\CMS-Entity\bin\Debug\log4net.xml
+D:\My Outsource\WebCafegaredalat\CMS-Entity\bin\Debug\Newtonsoft.Json.xml
+D:\My Outsource\WebCafegaredalat\CMS-Entity\obj\Debug\CMS-Entity.csprojAssemblyReference.cache
+D:\My Outsource\WebCafegaredalat\CMS-Entity\obj\Debug\CMS_Entity.Migrations.updatedb2206.resources
+D:\My Outsource\WebCafegaredalat\CMS-Entity\obj\Debug\CMS-Entity.csproj.GenerateResource.cache
+D:\My Outsource\WebCafegaredalat\CMS-Entity\obj\Debug\CMS-Entity.csproj.CoreCompileInputs.cache
+D:\My Outsource\WebCafegaredalat\CMS-Entity\obj\Debug\CMS-Entity.csproj.CopyComplete
+D:\My Outsource\WebCafegaredalat\CMS-Entity\obj\Debug\CMS-Entity.dll
+D:\My Outsource\WebCafegaredalat\CMS-Entity\obj\Debug\CMS-Entity.pdb
+D:\My Outsource\Admin\CMS-Entity\bin\Debug\CMS-Entity.dll.config
+D:\My Outsource\Admin\CMS-Entity\bin\Debug\CMS-Entity.dll
+D:\My Outsource\Admin\CMS-Entity\bin\Debug\CMS-Entity.pdb
+D:\My Outsource\Admin\CMS-Entity\bin\Debug\AutoMapper.dll
+D:\My Outsource\Admin\CMS-Entity\bin\Debug\EntityFramework.dll
+D:\My Outsource\Admin\CMS-Entity\bin\Debug\EntityFramework.SqlServer.dll
+D:\My Outsource\Admin\CMS-Entity\bin\Debug\log4net.dll
+D:\My Outsource\Admin\CMS-Entity\bin\Debug\Newtonsoft.Json.dll
+D:\My Outsource\Admin\CMS-Entity\bin\Debug\AutoMapper.xml
+D:\My Outsource\Admin\CMS-Entity\bin\Debug\EntityFramework.xml
+D:\My Outsource\Admin\CMS-Entity\bin\Debug\EntityFramework.SqlServer.xml
+D:\My Outsource\Admin\CMS-Entity\bin\Debug\log4net.xml
+D:\My Outsource\Admin\CMS-Entity\bin\Debug\Newtonsoft.Json.xml
+D:\My Outsource\Admin\CMS-Entity\obj\Debug\CMS-Entity.csprojAssemblyReference.cache
+D:\My Outsource\Admin\CMS-Entity\obj\Debug\CMS-Entity.csproj.CoreCompileInputs.cache
+D:\My Outsource\Admin\CMS-Entity\obj\Debug\CMS-Entity.csproj.CopyComplete
+D:\My Outsource\Admin\CMS-Entity\obj\Debug\CMS-Entity.dll
+D:\My Outsource\Admin\CMS-Entity\obj\Debug\CMS-Entity.pdb

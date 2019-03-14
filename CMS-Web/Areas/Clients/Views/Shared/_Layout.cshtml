@@ -1,0 +1,98 @@
+﻿@{
+    string controller = (string)ViewContext.RouteData.Values["controller"];
+    string action = (string)ViewContext.RouteData.Values["action"];
+}
+@using CMS_Shared;
+<!DOCTYPE html>
+
+<html class="no-js">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="@Url.Content("~/logo.ico")" type="image/x-icon">
+    <title>@Commons.CompanyTitle</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <script src="@Url.Content("~/Libraries/plugins/jquery.min.js")"></script>
+    <script src="@Url.Content("~/Libraries/plugins/bootstrap/js/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Libraries/plugins/select2/dist/js/select2.min.js")"></script>
+    <script src="@Url.Content("~/Libraries/plugins/jquery-ui/jquery-ui.min.js")"></script>
+
+    <!--------------CSS----------->
+    <link href="@Url.Content("~/Libraries/plugins/bootstrap/css/bootstrap.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Libraries/plugins/font-awesome/css/font-awesome.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Libraries/plugins/select2/dist/css/select2.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/shortcodes.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/style.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/responsive.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/modernizr-2.8.3.min.js")"></script>
+</head>
+<body>
+    <!-- Header Area Start -->
+    <div id="" class="fixed">
+        @Html.Partial("_header")
+    </div>
+    <!-- Header Area End -->
+    <!--Content Area Start-->
+    @RenderBody()
+    <!--Content Area End-->
+    <!--Footer-->
+    <div class="footer-area">
+        @Html.Partial("_footer")
+    </div>
+    <a href="#" class="scroll_top" title="Scroll to Top" style="display: none;">Scroll</a>
+</body>
+</html>
+<script src="@Url.Content("~/Libraries/plugins/moment/moment.min.js")"></script>
+<script src="@Url.Content("~/Libraries/plugins/bootstrap-daterangepicker/daterangepicker.js")"></script>
+<!-- timepicker -->
+<script src="@Url.Content("~/Libraries/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js")"></script>
+<script src="@Url.Content("~/Libraries/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js")"></script>
+<script src="@Url.Content("~/Scripts/owl.carousel.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery.meanmenu.js")"></script>
+<script src="@Url.Content("~/Scripts/ajax-mail.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery.ajaxchimp.min.js")"></script>
+<script src="@Url.Content("~/Scripts/plugins.js")"></script>
+<script src="@Url.Content("~/Scripts/main.js")"></script>
+<script type="text/javascript">
+    function SearchKeyWord() {
+        var _key = $("#txtsearch").val();
+        if (_key.length > 0)
+        {
+            $.ajax({
+                url: "/Clients/Home/SearchKey",
+                type: "post",
+                data: { Key: _key },
+                beforeSend: function () {
+                    $("#loading-mask").show();
+                },
+                success: function (content) {
+                    $(".list-group").html(content);
+                },
+                complete: function () {
+                    $("#loading-mask").hide();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+            });
+        }
+    }
+
+    function LoadPagging(index,id,_key) {
+        $.ajax({
+            url: "/Clients/Home/LoadPagging",
+            type: "post",
+            beforeSend: function () {
+                $("#loading-mask").show();
+            },
+            data: { pageIndex: index, Key: _key, Id: id },
+            success: function (content) {
+                $(".list-group").html(content);
+            },
+            complete: function () {
+                $("#loading-mask").hide();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+    }
+</script>

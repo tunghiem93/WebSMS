@@ -1,0 +1,116 @@
+﻿@model CMS_DTO.CMSHome.CMSHomeModels
+@using CMS_Shared
+
+@Html.HiddenFor(model => model.ComInfo.ID)
+@*@Html.HiddenFor(model => model.ComInfo.ImageURL)*@
+
+<div class="box-body" style="display: block;">
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Avartar</label>
+        <div class="col-md-2 col-sm-2 col-xs-12">
+            @if (!string.IsNullOrEmpty(Model.ComInfo.ImageURL))
+            {
+                <img id="upload-preview" src="@Model.ComInfo.ImageURL" height="100" width="100" class="" style="border-radius:100% !important" />
+            }
+            else
+            {
+                <img id="upload-preview" class="" src="@Commons.Image200_100" height="100" width="100" style="border-radius:100% !important" />
+            }
+        </div>
+        <div class="col-md-1 col-sm-3 col-xs-12" style="line-height:55px;">
+            <div class="upload-btn-wrapper" style="cursor:pointer;">
+                <button class="btn btn-default" type="button" onclick="showPictureUpload('#upload-preview-com');" style="margin-top:-6%;margin-left:50px">Chọn hình</button>
+                @Html.TextBoxFor(model => model.ComInfo.PictureUpload, new { @type = "file", @onchange = "PreviewImage(this,\"upload-preview\")", @accept = "*.jpg", @class = "hidden", @id = "upload-preview-com" })
+            </div>
+            @Html.ValidationMessageFor(model => model.ComInfo.PictureUpload, null, new { @class = "label label-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">Tên công ty:</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.ComInfo.Name, new { @class = "form-control", @placeholder = "tên công ty", @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.ComInfo.Name, null, new { @class = "label label-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">Mô tả:</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.ComInfo.Description, new { @class = "form-control", @placeholder = "Description", @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.ComInfo.Description, null, new { @class = "label label-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">Email:</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.ComInfo.Email, new { @class = "form-control", @placeholder = "Email", @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.ComInfo.Email, null, new { @class = "label label-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">Phone:</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.ComInfo.Phone, new { @class = "form-control", @placeholder = "Phone", @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.ComInfo.Phone, null, new { @class = "label label-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">Địa chỉ:</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.ComInfo.Address, new { @class = "form-control", @placeholder = "địa chỉ", @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.ComInfo.Address, null, new { @class = "label label-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">Giờ mở cửa:</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.ComInfo.Businesshour, new { @class = "form-control", @placeholder = "8:00 sáng - 22:00 tối hàng ngày", @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.ComInfo.Businesshour, null, new { @class = "label label-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">FaceBook :</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.ComInfo.LinkFB, new { @class = "form-control", @placeholder = "facebook", @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.ComInfo.LinkFB, null, new { @class = "label label-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">Twitter :</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.ComInfo.LinkTwiter, new { @class = "form-control", @placeholder = "Twitter", @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.ComInfo.LinkTwiter, null, new { @class = "label label-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">Instagram :</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.ComInfo.LinkInstagram, new { @class = "form-control", @placeholder = "Instagram", @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.ComInfo.LinkInstagram, null, new { @class = "label label-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">Blog :</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.ComInfo.LinkBlog, new { @class = "form-control", @placeholder = "Blog", @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.ComInfo.LinkBlog, null, new { @class = "label label-danger" })
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    //function showPictureUpload() {
+    //    alert("company");
+    //    $('[id=urlImage]').click();
+    //}
+</script>

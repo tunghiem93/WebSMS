@@ -1,0 +1,18 @@
+D:\David\CMS-Web\CMS-Service\bin\Debug\CMS-Service.dll
+D:\David\CMS-Web\CMS-Service\bin\Debug\CMS-Service.pdb
+D:\David\CMS-Web\CMS-Service\obj\Debug\CMS-Service.csprojResolveAssemblyReference.cache
+D:\David\CMS-Web\CMS-Service\obj\Debug\CMS-Service.csproj.CoreCompileInputs.cache
+D:\David\CMS-Web\CMS-Service\obj\Debug\CMS-Service.dll
+D:\David\CMS-Web\CMS-Service\obj\Debug\CMS-Service.pdb
+D:\My Outsource\WebCafegaredalat\CMS-Service\bin\Debug\CMS-Service.dll
+D:\My Outsource\WebCafegaredalat\CMS-Service\bin\Debug\CMS-Service.pdb
+D:\My Outsource\WebCafegaredalat\CMS-Service\obj\Debug\CMS-Service.csprojAssemblyReference.cache
+D:\My Outsource\WebCafegaredalat\CMS-Service\obj\Debug\CMS-Service.csproj.CoreCompileInputs.cache
+D:\My Outsource\WebCafegaredalat\CMS-Service\obj\Debug\CMS-Service.dll
+D:\My Outsource\WebCafegaredalat\CMS-Service\obj\Debug\CMS-Service.pdb
+D:\My Outsource\Admin\CMS-Service\bin\Debug\CMS-Service.dll
+D:\My Outsource\Admin\CMS-Service\bin\Debug\CMS-Service.pdb
+D:\My Outsource\Admin\CMS-Service\obj\Debug\CMS-Service.csprojAssemblyReference.cache
+D:\My Outsource\Admin\CMS-Service\obj\Debug\CMS-Service.csproj.CoreCompileInputs.cache
+D:\My Outsource\Admin\CMS-Service\obj\Debug\CMS-Service.dll
+D:\My Outsource\Admin\CMS-Service\obj\Debug\CMS-Service.pdb
