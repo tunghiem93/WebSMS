@@ -1,0 +1,60 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- container -->
+<div class="container">
+    @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home" }, { "B", "Login" } })
+    <div class="page-header bottom-shadow">
+        <h3>Log-in</h3>
+        <p> Theme Login</p>
+    </div><!-- Section Header /- -->
+</div><!-- container /- -->
+<!-- Page Breadcrumb /- -->
+
+<div class="page-wizard">
+    <!-- container -->
+    <div class="container">
+        <!-- contact-form-details -->
+        <div class="contact-form-details row">
+            <!-- col-md-6 -->
+            <div class="col-md-6 col-sm-6">
+                <div class="section-header">
+                    <h3>Registered User</h3>
+                </div><!-- Section Header Over -->
+                <div class="contact-form bottom-shadow">
+                    <form class="form-horizontal login-page">
+                        <div class="form-group">
+                            <label class="col-md-4">Email Address</label>
+                            <div class="col-md-8">
+                                <input type="email" class="form-control" id="txt_email" placeholder="enter your email" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="col-md-4">Password</label>
+                            <div class="col-md-8">
+                                <input type="password" class="form-control" id="password" placeholder="*****" required />
+                            </div>
+                        </div>
+                        <div class="drop-line bottom-shadow"></div>
+                        <div class="form-group">
+                            <a title=">Forgot Password " href="#">Forgot your Password ?</a>
+                            <input type="submit" value="Login" class="btn btn-default  pull-right">
+                        </div>
+                    </form>
+                </div>
+            </div><!-- col-md-6 /- -->
+            <!-- col-md-6 -->
+            <div class="col-md-6 col-sm-6">
+                <div class="section-header">
+                    <h3>New User/ No registration</h3>
+                </div><!-- Section Header Over -->
+                <div class="contact-details new-user-register register-user bottom-shadow">
+                    <h3>Sed consectetur tempus velit ut tincidunt.</h3>
+                    <p>Aliquam placerat, mi non interdum volutpat, nisi magna euismod arcu, at congue augue ex nec lectus. Phasellus fermentum libero id neque rhoncus, sed posuere sem dictum. In nec fermentum ante. Morbi et massa arcu. Suspendisse tempus mattis viverra. </p>
+                    <div class="drop-line bottom-shadow"></div>
+                    <a title="Continue" href="#" class="btn btn-next btn-fill btn-warning btn-wd btn-sm">Continue</a>
+                </div>
+            </div><!-- col-md-6 /- -->
+        </div><!-- Contact Form details /- -->
+    </div>
+</div>
