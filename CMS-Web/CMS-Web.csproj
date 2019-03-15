@@ -225,7 +225,11 @@
     <Compile Include="Areas\Clients\Controllers\NotFoundController.cs" />
     <Compile Include="Areas\Clients\Controllers\PolicyController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -241,13 +245,18 @@
       <DependentUpon>CMS_WEB.mdf</DependentUpon>
     </Content>
     <Content Include="Content\animate.css" />
+    <Content Include="Content\animate.min.css" />
     <Content Include="Content\Common.css" />
+    <Content Include="Content\components.css" />
     <Content Include="Content\default.css" />
+    <Content Include="Content\flexslider.css" />
     <Content Include="Content\footer.css" />
     <Content Include="Content\header.css" />
+    <Content Include="Content\magnific-popup.css" />
     <Content Include="Content\material-design-iconic-font.css" />
     <Content Include="Content\material-design-iconic-font.min.css" />
     <Content Include="Content\meanmenu.css" />
+    <Content Include="Content\media.css" />
     <Content Include="Content\owl.carousel.css" />
     <Content Include="Content\responsive.css" />
     <Content Include="Content\shortcodes.css" />
@@ -258,6 +267,7 @@
     <Content Include="Global.asax" />
     <Content Include="Images\ajax-loader-main.gif" />
     <Content Include="Images\banner\1.jpg" />
+    <Content Include="Images\banner\cart-hover-1.png" />
     <Content Include="Images\banner\koffee.png" />
     <Content Include="Images\bg\1.jpg" />
     <Content Include="Images\bg\2.jpg" />
@@ -266,6 +276,11 @@
     <Content Include="Images\loading.gif" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\Preloader_21.gif" />
+    <Content Include="Images\register-user.png" />
+    <Content Include="Images\slider\slide-1.jpg" />
+    <Content Include="Images\slider\slide-2.jpg" />
+    <Content Include="Images\slider\slide-3.jpg" />
+    <Content Include="Libraries\css\components.css" />
     <Content Include="Libraries\css\components.min.css" />
     <Content Include="Libraries\css\plugins.min.css" />
     <Content Include="Libraries\layouts\global\scripts\quick-sidebar.min.js" />
@@ -1703,13 +1718,23 @@
     <Content Include="logo.ico" />
     <Content Include="Scripts\ajax-mail.js" />
     <Content Include="Scripts\Common.js" />
+    <Content Include="Scripts\functions.js" />
     <Content Include="Scripts\InputCustom.js" />
     <Content Include="Scripts\jquery.ajaxchimp.min.js" />
+    <Content Include="Scripts\jquery.animateNumber.min.js" />
+    <Content Include="Scripts\jquery.appear.js" />
+    <Content Include="Scripts\jquery.easing.min.js" />
+    <Content Include="Scripts\jquery.flexslider-min.js" />
+    <Content Include="Scripts\jquery.gmap.min.js" />
+    <Content Include="Scripts\jquery.knob.js" />
+    <Content Include="Scripts\jquery.magnific-popup.min.js" />
     <Content Include="Scripts\jquery.meanmenu.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.8.3.min.js" />
+    <Content Include="Scripts\modernizr.custom.js" />
     <Content Include="Scripts\owl.carousel.min.js" />
     <Content Include="Scripts\plugins.js" />
+    <Content Include="Scripts\wow.min.js" />
     <Content Include="Uploads\Silder\1.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1748,6 +1773,10 @@
     <Content Include="Views\Shared\_leftMenu.cshtml" />
     <Content Include="Views\Shared\_footer.cshtml" />
     <Content Include="Views\Shared\_breadcrumb.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Register\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Service\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Base\" />
