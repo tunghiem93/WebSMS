@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -72,6 +75,60 @@ namespace CMS_Shared.Utilities
                 text = text.Replace(arr1[i].ToUpper(), arr2[i].ToUpper());
             }
             return text;
+        }
+
+        public static bool SendContentMail(string EmailTo, string Content, string Name, string Subject, string imgUrl = "", string attachment = "")
+        {
+            bool isOk = false;
+            try
+            {
+
+                string email = ConfigurationManager.AppSettings["Email"];
+                string passWord = ConfigurationManager.AppSettings["Password"];
+                string smtpServer = "smtp.gmail.com";
+                if (email != "" && passWord != "")
+                {
+                    MailMessage mail = new MailMessage(email, EmailTo);
+                    mail.Subject = Subject;
+                    mail.Body = Content;
+                    mail.IsBodyHtml = true;
+                    if (!string.IsNullOrEmpty(imgUrl))
+                        mail.Body = string.Format("<div><img src='{0}'/><div>", imgUrl);
+
+                    SmtpClient client = new SmtpClient();
+                    client.Port = 587;
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = new NetworkCredential(email, passWord);
+                    client.Host = smtpServer;
+                    client.Timeout = 10000;
+                    client.EnableSsl = true;
+                    if (!string.IsNullOrEmpty(attachment))
+                        mail.Attachments.Add(new System.Net.Mail.Attachment(attachment));
+                    client.Send(mail);
+                    isOk = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                NSLog.Logger.Error("Send Mail Error", ex);
+            }
+            return isOk;
+        }
+        private static readonly Random GetRandom = new Random();
+        public static string RandomVerifiCode()
+        {
+            try
+            {
+                lock(GetRandom)
+                {
+                    return GetRandom.Next(0, 9999).ToString("D4");
+                }
+            } catch(Exception ex)
+            {
+                NSLog.Logger.Error("Random Verifi Code", ex);
+            }
+            return "0000";
         }
     }
 }
