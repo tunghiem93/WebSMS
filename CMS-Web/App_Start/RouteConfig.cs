@@ -11,14 +11,27 @@ namespace CMS_Web
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
-            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            //routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            //routes.MapRoute(
+            //    "Default",                                              // Route name
+            //    "{controller}/{action}/{id}",                           // URL with parameters
+            //    new { controller = "Home", action = "Index", id = "" }  // Parameter defaults
+            //);
+            //routes.MapRoute(
+            //     "Default", // Route name
+            //     "{controller}/{action}/{id}", // URL with parameters
+            //     new { area = "Admin", controller = "CMSAccount", action = "Index", id = UrlParameter.Optional }, // Parameter defaults
+            //     null,
+            //     new[] { "CMS_Web.Areas.Admin.Controllers" }
+            // ).DataTokens.Add("area", "Admin");
+
             routes.MapRoute(
-                 "Default", // Route name
-                 "{controller}/{action}/{id}", // URL with parameters
-                 new { area = "Admin", controller = "CMSAccount", action = "Index", id = UrlParameter.Optional }, // Parameter defaults
-                 null,
-                 new[] { "CMS_Web.Areas.Admin.Controllers" }
-             ).DataTokens.Add("area", "Admin");
+                "Default", // Route name
+                "{controller}/{action}/{id}", // URL with parameters
+                new {controller = "Home", action = "Index", id = UrlParameter.Optional }, // Parameter defaults
+                null,
+                new[] { "CMS_Web.Controllers" }
+            );
         }
     }
 }
