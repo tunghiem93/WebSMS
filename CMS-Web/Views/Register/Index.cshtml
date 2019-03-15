@@ -1,0 +1,88 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <!-- container -->
+<div class="container">
+    @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home" }, { "B", "CREATE ACCOUNT" } })
+    <div class="page-header bottom-shadow">
+        <h3>Create Account</h3>
+        <p>It’s free and always will be.</p>
+    </div><!-- Section Header /- -->
+</div><!-- container /- -->
+    <!-- Page Breadcrumb /- -->
+    <!-- contact-form-details -->
+    <div class="contact-form-details">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <!-- User Form -->
+                    <div class="section-header">
+                        <h3>New User</h3>
+                    </div><!-- Section Header /- -->
+                    <div class="contact-form">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="firstname" class="col-md-4">First Name</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="firstname" placeholder="enter your first name" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-md-4">Last Name</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="lastname" placeholder="enter your last name" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4">Email Address</label>
+                                <div class="col-md-8">
+                                    <input type="email" class="form-control" id="txt_email" placeholder="enter your email" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4">Phone</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="txt_phone" placeholder="enter your phone" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-md-4">Password</label>
+                                <div class="col-md-8">
+                                    <input type="password" class="form-control" id="password" placeholder="*****" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-md-4">Password 2</label>
+                                <div class="col-md-8">
+                                    <input type="password" class="form-control" id="password2" placeholder="*****" required />
+                                </div>
+                            </div>
+                            <div class="drop-line bottom-shadow"></div>
+                            <div class="form-group">
+                                <a title="Or Return to Shop" href="#">Or Return to Shop</a>
+                                <input type="submit" value="create an acoount" class="btn btn-default  pull-right">
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- User Form /- -->
+
+                <div class="col-md-6 col-sm-6">
+                    <!-- Section Header -->
+                    <div class="section-header">
+                        <h3>Registered User</h3>
+                    </div><!-- Section Header /- -->
+                    <div class="contact-details register-user">
+                        <div class="register-user-banner">
+                            <img src="@Url.Content("~/Images/register-user.png")" alt="register-user">
+                            <h2>100% Satisfied Customers </h2>
+                        </div>
+                        <h3>If You have Account, Login Directly</h3>
+                        <p>Aliquam placerat, mi non interdum volutpat, nisi magna euismod arcu, at congue augue ex nec lectus</p>
+                        <div class="drop-line bottom-shadow"></div>
+                        <a title="sign in" href="#" class="btn btn-default">sign in</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- Contact Form Details /- -->
+

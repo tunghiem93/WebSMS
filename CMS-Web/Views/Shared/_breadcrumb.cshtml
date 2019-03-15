@@ -1,22 +1,12 @@
 ﻿@{
     Layout = null;
 }
-
-<div class="page-bar">
-    <ul class="page-breadcrumb">
-        <li>
-            <a href="index.html">Home</a>
-            <i class="fa fa-circle"></i>
-        </li>
-        <li>
-            <span>Dashboard</span>
-        </li>
-    </ul>
-    <div class="page-toolbar">
-        <div id="dashboard-report-range" class="pull-right tooltips btn btn-sm" data-container="body" data-placement="bottom" data-original-title="Change dashboard date range">
-            <i class="icon-calendar"></i>&nbsp;
-            <span class="thin uppercase hidden-xs"></span>&nbsp;
-            <i class="fa fa-angle-down"></i>
-        </div>
+<div class="page-breadcrumb">
+    <ol class="breadcrumb">
+        <li><a title="Home" href="@Url.Action("Index","Home")">@Model["A"]</a></li>
+        <li class="active">@Model["B"]</li>
+    </ol>
+    <div class="return-home-link pull-right">
+        <a title="Return to home page" href="@Url.Action("Index","Home")">return to home page</a>
     </div>
 </div>
