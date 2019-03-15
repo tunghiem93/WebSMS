@@ -31,5 +31,14 @@ namespace CMS_Shared
         public static string CompanyTitle = ConfigurationManager.AppSettings["CompanyTitle"];
         public static string HostImage = ConfigurationManager.AppSettings["HostImage"];
         public static string _PublicImages = string.IsNullOrEmpty(ConfigurationManager.AppSettings["PublicImages"]) ? "" : ConfigurationManager.AppSettings["PublicImages"];
+
+        public enum CustomerStatus
+        {
+            Watting = 0,
+            Open = 1,
+            Locked = 2
+        }
     }
+
+    
 }

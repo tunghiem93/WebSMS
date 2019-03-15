@@ -1,8 +1,7 @@
 ﻿@{
-                /**/
-
-                Layout = "~/Views/Shared/_Layout.cshtml";
+   Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model CMS_DTO.CMSCustomer.CustomerViewModels
 <!-- container -->
 <div class="container">
     @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home" }, { "B", "CREATE ACCOUNT" } })
@@ -22,41 +21,51 @@
                     <h3>New User</h3>
                 </div><!-- Section Header /- -->
                 <div class="contact-form">
-                    <form class="form-horizontal">
+                    @using (@Html.BeginForm("AddCustomer", "Register", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal", @enctype = "multipart/form-data" }))
+                    {
                         <div class="form-group">
                             <label for="firstname" class="col-md-4">First Name</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" id="firstname" placeholder="enter your first name" required />
+                                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @placeholder = "First Name", @autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.FirstName, null, new { @class = "label label-danger" })
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label for="lastname" class="col-md-4">Last Name</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" id="lastname" placeholder="enter your last name" required />
+                                @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", @placeholder = "Last Name", @autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.LastName, null, new { @class = "label label-danger" })
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label class="col-md-4">Email Address</label>
                             <div class="col-md-8">
-                                <input type="email" class="form-control" id="txt_email" placeholder="enter your email" required />
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @id = "txt_email", @placeholder = "enter your email", @autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.Email, null, new { @class = "label label-danger" })
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-4">Phone</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" id="txt_phone" placeholder="enter your phone" required />
+                                @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", @id = "txt_phone", @placeholder = "enter your phone", @autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.Phone, null, new { @class = "label label-danger" })
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label for="password" class="col-md-4">Password</label>
                             <div class="col-md-8">
-                                <input type="password" class="form-control" id="password" placeholder="*****" required />
+                                @Html.PasswordFor(model => model.Password, new { @class = "form-control", @id = "password", @placeholder = "*****", @autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.Password, null, new { @class = "label label-danger" })
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="password" class="col-md-4">Password 2</label>
                             <div class="col-md-8">
-                                <input type="password" class="form-control" id="password2" placeholder="*****" required />
+                                @Html.PasswordFor(model => model.Password1, new { @class = "form-control", @id = "password2", @placeholder = "*****", @autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.Password1, null, new { @class = "label label-danger" })
                             </div>
                         </div>
                         <div class="drop-line bottom-shadow"></div>
@@ -64,7 +73,7 @@
                             <a title="Or Return to Shop" href="#">Or Return to Shop</a>
                             <input type="submit" value="create an acoount" class="btn btn-default  pull-right">
                         </div>
-                    </form>
+                    }
                 </div>
             </div><!-- User Form /- -->
 
