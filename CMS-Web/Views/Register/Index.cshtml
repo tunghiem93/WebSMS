@@ -12,16 +12,21 @@
 </div><!-- container /- -->
 <!-- Page Breadcrumb /- -->
 <!-- contact-form-details -->
-<div class="contact-form-details">
+<div class="page-wizard">
     <div class="container">
-        <div class="row">
+        <ul class="bottom-shadow">
+            <li class="active"><a href="@Url.Action("Index","Register")">1# Register</a></li>
+            <li><a title="Verifi code" href="#">2# Verifi code</a></li>
+        </ul>
+
+        <div class="contact-form-details row">
             <div class="col-md-6 col-sm-6">
                 <!-- User Form -->
                 <div class="section-header">
                     <h3>New User</h3>
                 </div><!-- Section Header /- -->
                 <div class="contact-form">
-                    @using (@Html.BeginForm("AddCustomer", "Register", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal", @enctype = "multipart/form-data" }))
+                    @using (@Html.BeginForm("Index", "Register", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal", @enctype = "multipart/form-data" }))
                     {
                         <div class="form-group">
                             <label for="firstname" class="col-md-4">First Name</label>

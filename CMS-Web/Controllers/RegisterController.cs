@@ -15,14 +15,15 @@ namespace CMS_Web.Controllers
             return View();
         }
 
-        public ActionResult AddCustomer(CustomerViewModels model)
+        [HttpPost]
+        public ActionResult Index(CustomerViewModels model)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    return View("Index");
+                    return View(model);
                 }
             }
             catch(Exception ex)
