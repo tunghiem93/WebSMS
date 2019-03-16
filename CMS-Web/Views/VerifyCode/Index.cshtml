@@ -1,0 +1,90 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model CMS_DTO.CMSCustomer.CustomerViewModels
+<!-- container -->
+<div class="container">
+    @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home" }, { "B", "VERIFY CODE" } })
+    <div class="page-header bottom-shadow">
+        <h3>Verify Code</h3>
+        <p>It’s free and always will be.</p>
+    </div><!-- Section Header /- -->
+</div><!-- container /- -->
+<!-- Page Breadcrumb /- -->
+<!-- contact-form-details -->
+<div class="page-wizard">
+    <div class="container">
+        <div class="alert alert-info">
+            <strong>Info!</strong> We are send code to your email. Please check your email. Thank you.
+        </div>
+        <ul class="bottom-shadow">
+            <li class="active"><a href="@Url.Action("Index","Register")">1# Register</a></li>
+            <li class="active"><a title="Verifi code" href="#">2# Verifi code</a></li>
+        </ul>
+
+        <div class="contact-form-details row">
+            <div class="col-md-6 col-sm-6">
+                <!-- User Form -->
+                <div class="section-header">
+                    <h3>Verify Code</h3>
+                </div><!-- Section Header /- -->
+                <div class="contact-form">
+                    @using (@Html.BeginForm("Index", "VerifyCode", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal", @enctype = "multipart/form-data" }))
+                    {
+                        <div class="form-group">
+                            <label for="firstname" class="col-md-4">Code</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @placeholder = "code", @autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.FirstName, null, new { @class = "label label-danger" })
+                            </div>
+                        </div>
+                        <div class="drop-line bottom-shadow"></div>
+                        <div class="form-group">
+                            <a title="Or Return to Shop" href="#">Or Return to Shop</a>
+
+                            <input type="submit" value="verify code" class="btn btn-default  pull-right">
+                            <button type="button" id="txtResendCode" class="btn btn-default  pull-right" disabled style="margin-right:5px"> Resend Code</button>
+                        </div>
+                    }
+                </div>
+            </div><!-- User Form /- -->
+
+            <div class="col-md-6 col-sm-6">
+                <!-- Section Header -->
+                <div class="section-header">
+                    <h3>Registered User</h3>
+                </div><!-- Section Header /- -->
+                <div class="contact-details register-user">
+                    <div class="register-user-banner">
+                        <img src="@Url.Content("~/Images/register-user.png")" alt="register-user">
+                        <h2>100% Satisfied Customers </h2>
+                    </div>
+                    <h3>If You have Account, Login Directly</h3>
+                    <p>Aliquam placerat, mi non interdum volutpat, nisi magna euismod arcu, at congue augue ex nec lectus</p>
+                    <div class="drop-line bottom-shadow"></div>
+                    <a title="sign in" href="#" class="btn btn-default">sign in</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- Contact Form Details /- -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        var CountDown = 60;
+        setInterval(function () {
+            var value = "Resend Code"
+            CountDown = CountDown - 1;
+            if (CountDown > 0) {
+                value = "Resend Code (" + CountDown + ")";
+            } else {
+                $('#txtResendCode').removeAttr("disabled")
+                window.clearInterval(this);
+            }
+            $("#txtResendCode").text(value)
+        }, 1000)
+        //for (var i = 60; i--; i >= 0) {
+        //    var value = "Resend Code (" + i + ")";
+        //    $("#txtResendCode").text(value)
+        //}
+    })
+</script>
