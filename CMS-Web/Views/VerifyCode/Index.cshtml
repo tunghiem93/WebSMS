@@ -43,7 +43,7 @@
                             <a title="Or Return to Shop" href="#">Or Return to Shop</a>
 
                             <input type="submit" value="verify code" class="btn btn-default  pull-right">
-                            <button type="button" id="txtResendCode" class="btn btn-default  pull-right" disabled style="margin-right:5px"> Resend Code</button>
+                            <button type="button" onclick="ResendCode()" id="txtResendCode" class="btn btn-default  pull-right" disabled style="margin-right:5px"> Resend Code</button>
                         </div>
                     }
                 </div>
@@ -70,21 +70,24 @@
 </div><!-- Contact Form Details /- -->
 <script type="text/javascript">
     $(document).ready(function () {
-        var CountDown = 60;
-        setInterval(function () {
+        CountDown()
+    })
+    function ResendCode() {
+        CountDown()
+    }
+    function CountDown() {
+        var CountDown = 60
+        var myVar = setInterval(function () {
             var value = "Resend Code"
-            CountDown = CountDown - 1;
+            CountDown = CountDown - 1
             if (CountDown > 0) {
-                value = "Resend Code (" + CountDown + ")";
+                $('#txtResendCode').attr("disabled","disabled")
+                value = "Resend Code (" + CountDown + ")"
             } else {
                 $('#txtResendCode').removeAttr("disabled")
-                window.clearInterval(this);
+                clearInterval(myVar)
             }
             $("#txtResendCode").text(value)
         }, 1000)
-        //for (var i = 60; i--; i >= 0) {
-        //    var value = "Resend Code (" + i + ")";
-        //    $("#txtResendCode").text(value)
-        //}
-    })
+    }
 </script>
