@@ -32,10 +32,11 @@ namespace CMS_Shared.CMSCustomers
                                 IsActive = model.IsActive,
                                 LastName = model.LastName,
                                 Password = model.Password,
-                                Password2 = model.Password,
+                                Password2 = model.Password2,
                                 Phone = model.Phone,
                                 UpdatedBy = model.UpdatedBy,
-                                UpdatedDate = DateTime.Now
+                                UpdatedDate = DateTime.Now,
+                                Status = model.Status
                             };
                             cxt.CMS_Customers.Add(e);
                         }
@@ -51,6 +52,7 @@ namespace CMS_Shared.CMSCustomers
                                 e.LastName = model.LastName;
                                 e.Password = model.Password;
                                 e.Phone = model.Phone;
+                                e.Status = model.Status;
                             }
                         }
                         cxt.SaveChanges();
