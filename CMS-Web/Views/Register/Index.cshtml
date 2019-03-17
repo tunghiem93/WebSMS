@@ -1,7 +1,7 @@
 ﻿@{
    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model CMS_DTO.CMSCustomer.CustomerViewModels
+@model CMS_DTO.CMSCustomer.CustomerModels
 <!-- container -->
 <div class="container">
     @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home" }, { "B", "CREATE ACCOUNT" } })
@@ -69,8 +69,8 @@
                         <div class="form-group">
                             <label for="password" class="col-md-4">Password 2</label>
                             <div class="col-md-8">
-                                @Html.PasswordFor(model => model.Password1, new { @class = "form-control", @id = "password2", @placeholder = "*****", @autocomplete = "off" })
-                                @Html.ValidationMessageFor(model => model.Password1, null, new { @class = "label label-danger" })
+                                @Html.PasswordFor(model => model.Password2, new { @class = "form-control", @id = "password2", @placeholder = "*****", @autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.Password2, null, new { @class = "label label-danger" })
                             </div>
                         </div>
                         <div class="drop-line bottom-shadow"></div>

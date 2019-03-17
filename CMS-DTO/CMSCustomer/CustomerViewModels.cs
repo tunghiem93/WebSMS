@@ -21,7 +21,7 @@ namespace CMS_DTO.CMSCustomer
         [Required(ErrorMessage ="Please enter your password")]
         public string Password { get; set; }
         [Required(ErrorMessage ="Please enter your password1")]
-        public string Password1 { get; set; }
+        public string Password2 { get; set; }
         public int Status { get; set; }
     }
 }

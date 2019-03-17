@@ -6,12 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using CMS_Shared.Utilities;
 namespace CMS_Shared.CMSCustomers
 {
     public class CMSCustomersFactory
     {
-        public bool InsertOrUpdate(CustomerModels model, ref string msg)
+        public bool InsertOrUpdate(CustomerModels model,ref string ActiveCode, ref string msg)
         {
             var result = true;
             using (var cxt = new CMS_Context())
@@ -22,6 +22,7 @@ namespace CMS_Shared.CMSCustomers
                     {
                         if(string.IsNullOrEmpty(model.ID))
                         {
+                            ActiveCode = CommonHelper.RandomVerifiCode();
                             var e = new CMS_Customers
                             {
                                 Id = Guid.NewGuid().ToString(),
@@ -38,6 +39,15 @@ namespace CMS_Shared.CMSCustomers
                                 UpdatedDate = DateTime.Now,
                                 Status = model.Status
                             };
+                            e.CustomerActiveCode.Add(new CMS_CustomerActiveCode
+                            {
+                                Id = Guid.NewGuid().ToString(),
+                                CustomerId = e.Id,
+                                Code = ActiveCode,
+                                IsActive = true,
+                                CreatedDate = DateTime.Now,
+                                UpdatedDate = DateTime.Now
+                            });
                             cxt.CMS_Customers.Add(e);
                         }
                         else
@@ -60,6 +70,7 @@ namespace CMS_Shared.CMSCustomers
                     }
                     catch(Exception ex) {
                         result = false;
+                        ActiveCode = "";
                         trans.Rollback();
                         msg = "Lỗi đường truyền mạng";
                     }
