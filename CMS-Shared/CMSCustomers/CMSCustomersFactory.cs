@@ -25,24 +25,15 @@ namespace CMS_Shared.CMSCustomers
                             var e = new CMS_Customers
                             {
                                 Id = Guid.NewGuid().ToString(),
-                                Address = model.Address,
-                                BirthDate = model.BirthDate,
-                                City = model.City,
-                                CompanyName = model.CompanyName,
-                                Country = model.Country,
                                 CreatedBy = model.CreatedBy,
                                 CreatedDate = DateTime.Now,
-                                Description = model.Description,
                                 Email = model.Email,
                                 FirstName = model.FirstName,
-                                Gender = model.Gender,
-                                ImageURL = model.ImageURL,
                                 IsActive = model.IsActive,
                                 LastName = model.LastName,
-                                MaritalStatus = model.MaritalStatus,
                                 Password = model.Password,
+                                Password2 = model.Password,
                                 Phone = model.Phone,
-                                Street = model.Street,
                                 UpdatedBy = model.UpdatedBy,
                                 UpdatedDate = DateTime.Now
                             };
@@ -53,23 +44,13 @@ namespace CMS_Shared.CMSCustomers
                             var e = cxt.CMS_Customers.Find(model.ID);
                             if(e != null)
                             {
-                                e.Address = model.Address;
-                                e.BirthDate = model.BirthDate;
-                                e.City = model.City;
-                                e.CompanyName = model.CompanyName;
-                                e.Country = model.Country;
                                 e.UpdatedBy = model.UpdatedBy;
                                 e.FirstName = model.FirstName;
-                                e.Description = model.Description;
                                 e.Email = model.Email;
-                                e.Gender = model.Gender;
-                                e.ImageURL = model.ImageURL;
                                 e.IsActive = model.IsActive;
                                 e.LastName = model.LastName;
-                                e.MaritalStatus = model.MaritalStatus;
                                 e.Password = model.Password;
                                 e.Phone = model.Phone;
-                                e.Street = model.Street;
                             }
                         }
                         cxt.SaveChanges();
@@ -126,25 +107,15 @@ namespace CMS_Shared.CMSCustomers
                     var data = cxt.CMS_Customers.Where(x => x.Id.Equals(Id))
                                                 .Select(x => new CustomerModels
                                                 {
-                                                    Address = x.Address,
-                                                    BirthDate = x.BirthDate,
-                                                    City = x.City,
-                                                    CompanyName = x.CompanyName,
-                                                    Country = x.Country,
                                                     CreatedBy = x.CreatedBy,
                                                     CreatedDate = x.CreatedDate,
-                                                    Description = x.Description,
                                                     Email = x.Email,
                                                     FirstName = x.FirstName,
-                                                    Gender = x.Gender,
                                                     ID = x.Id,
-                                                    ImageURL = x.ImageURL,
                                                     IsActive = x.IsActive,
                                                     LastName = x.LastName,
-                                                    MaritalStatus = x.MaritalStatus,
                                                     Password = x.Password,
                                                     Phone = x.Phone,
-                                                    Street = x.Street,
                                                     UpdatedBy = x.UpdatedBy,
                                                     UpdatedDate = x.UpdatedDate
                                                 }).FirstOrDefault();
@@ -163,25 +134,15 @@ namespace CMS_Shared.CMSCustomers
                 {
                     var data = cxt.CMS_Customers.Select(x => new CustomerModels
                     {
-                        Address = x.Address,
-                        BirthDate = x.BirthDate,
-                        City = x.City,
-                        CompanyName = x.CompanyName,
-                        Country = x.Country,
                         CreatedBy = x.CreatedBy,
                         CreatedDate = x.CreatedDate,
-                        Description = x.Description,
                         Email = x.Email,
                         FirstName = x.FirstName,
-                        Gender = x.Gender,
                         ID = x.Id,
-                        ImageURL = x.ImageURL,
                         IsActive = x.IsActive,
                         LastName = x.LastName,
-                        MaritalStatus = x.MaritalStatus,
                         Password = x.Password,
                         Phone = x.Phone,
-                        Street = x.Street,
                         UpdatedBy = x.UpdatedBy,
                         UpdatedDate = x.UpdatedDate
                     }).ToList();

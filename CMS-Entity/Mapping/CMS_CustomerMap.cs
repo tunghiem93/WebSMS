@@ -14,15 +14,15 @@ namespace CMS_Entity.Mapping
         {
             this.HasKey(x => x.Id);
             this.Property(x => x.Id).HasMaxLength(60).HasColumnType("varchar").IsRequired();
-            this.Property(x => x.Address).HasMaxLength(250).HasColumnType("nvarchar").IsRequired();
-            this.Property(x => x.CompanyName).HasMaxLength(250).HasColumnType("nvarchar").IsOptional();
+            this.Property(x => x.Password2).HasMaxLength(250).HasColumnType("varchar").IsRequired();
             this.Property(x => x.CreatedBy).HasColumnType("varchar").HasMaxLength(60).IsOptional();
             this.Property(x => x.FirstName).HasMaxLength(50).HasColumnType("nvarchar").IsRequired();
             this.Property(x => x.LastName).HasColumnType("nvarchar").HasMaxLength(100).IsRequired();
             this.Property(x => x.Password).HasMaxLength(250).HasColumnType("varchar").IsRequired();
             this.Property(x => x.Phone).HasColumnType("varchar").HasMaxLength(15).IsOptional();
-            this.Property(x => x.Street).HasMaxLength(250).HasColumnType("nvarchar").IsOptional();
             this.Property(x => x.UpdatedBy).HasColumnType("varchar").HasMaxLength(60).IsOptional();
+            this.Property(x => x.Status).HasColumnType("int").IsRequired();
+            this.Property(x => x.Wallet_Receiving_Money).HasMaxLength(60).HasColumnType("varchar").IsOptional();
         }
     }
 }
