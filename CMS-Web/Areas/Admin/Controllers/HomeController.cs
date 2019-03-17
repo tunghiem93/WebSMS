@@ -1,7 +1,9 @@
 ﻿using CMS_DTO.CMSCompany;
 using CMS_DTO.CMSHome;
+using CMS_DTO.CMSSiteMaitain;
 using CMS_Shared;
 using CMS_Shared.CMSCompanies;
+using CMS_Shared.CMSSystemConfig;
 using CMS_Shared.Utilities;
 using CMS_Web.Web.App_Start;
 using System;
@@ -18,7 +20,14 @@ namespace CMS_Web.Areas.Admin.Controllers
     [NuAuth]
     public class HomeController : Controller
     {
-        CMSCompaniesFactory _factory = new CMSCompaniesFactory();
+        CMSCompaniesFactory _factory = null;
+        CMSSystemConfigFactory _fac = null;
+
+        public HomeController()
+        {
+            _factory = new CMSCompaniesFactory();
+            _fac = new CMSSystemConfigFactory();
+        }
 
         // GET: Admin/Home
         public ActionResult Index()
@@ -136,7 +145,7 @@ namespace CMS_Web.Areas.Admin.Controllers
                 //Delete image 
                 if (System.IO.File.Exists(Server.MapPath("~/Uploads/Silder/" + model.Silder.ImageURL3)))
                 {
-                    ImageHelper.Me.TryDeleteImageUpdated(Server.MapPath("~/Uploads/Silder/"+model.Silder.ImageURL3));
+                    ImageHelper.Me.TryDeleteImageUpdated(Server.MapPath("~/Uploads/Silder/" + model.Silder.ImageURL3));
                 }
 
                 Byte[] imgByte = new Byte[model.Silder.PictureUpload3.ContentLength];
@@ -186,7 +195,7 @@ namespace CMS_Web.Areas.Admin.Controllers
             if (model.Silder.PictureUpload5 != null && model.Silder.PictureUpload5.ContentLength > 0)
             {
                 //Delete image 
-                if (System.IO.File.Exists(Server.MapPath("~/Uploads/Silder/"+model.Silder.ImageURL5)))
+                if (System.IO.File.Exists(Server.MapPath("~/Uploads/Silder/" + model.Silder.ImageURL5)))
                 {
                     ImageHelper.Me.TryDeleteImageUpdated(Server.MapPath("~/Uploads/Silder/" + model.Silder.ImageURL5));
                 }
@@ -212,9 +221,9 @@ namespace CMS_Web.Areas.Admin.Controllers
             if (model.Silder.PictureUpload6 != null && model.Silder.PictureUpload6.ContentLength > 0)
             {
                 //Delete image 
-                if (System.IO.File.Exists(Server.MapPath("~/Uploads/Silder/"+model.Silder.ImageURL6)))
+                if (System.IO.File.Exists(Server.MapPath("~/Uploads/Silder/" + model.Silder.ImageURL6)))
                 {
-                    ImageHelper.Me.TryDeleteImageUpdated(Server.MapPath("~/Uploads/Silder/"+model.Silder.ImageURL6));
+                    ImageHelper.Me.TryDeleteImageUpdated(Server.MapPath("~/Uploads/Silder/" + model.Silder.ImageURL6));
                 }
 
                 Byte[] imgByte = new Byte[model.Silder.PictureUpload6.ContentLength];
@@ -319,6 +328,42 @@ namespace CMS_Web.Areas.Admin.Controllers
             }
 
             return PartialView("_CompanyInfo", model);
+        }
+
+        [HttpGet]
+        public ActionResult SiteMaintain(string Id)
+        {
+            var model = _fac.GetDetailSiteMaintain(Id);
+            return PartialView("_SiteMaintain", model);
+        }
+
+        [HttpPost]
+        public ActionResult SiteMaintain(CMS_SiteMaintainModels model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return PartialView("_SiteMaintain", model);
+                }
+
+                var msg = "";
+                var result = _fac.UpdateSiteMaintain(model, ref msg);
+                if (result)
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError("_SiteMaintainError: ", msg);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return PartialView("_SiteMaintain", model);
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return PartialView("_SiteMaintain", model);
+            }
+
         }
     }
 }

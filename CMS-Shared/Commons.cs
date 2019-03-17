@@ -38,7 +38,13 @@ namespace CMS_Shared
             Open = 1,
             Locked = 2
         }
-    }
 
-    
+        public enum RateType
+        {
+            USD = 0,
+            PMUSD = 1,
+            SMSOTP = 2,
+            SMSMarketing = 3,
+        }
+    }    
 }
