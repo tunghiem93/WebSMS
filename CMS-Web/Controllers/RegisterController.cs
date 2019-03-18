@@ -38,15 +38,23 @@ namespace CMS_Web.Controllers
                 model.Password2 = CommonHelper.Encrypt(model.Password2);
                 string msg = "";
                 string ActiveCode = "";
-                var result = fac.InsertOrUpdate(model,ref ActiveCode, ref msg);
+                string key = "";
+                var result = fac.InsertOrUpdate(model,ref ActiveCode, ref msg, ref key);
                 if (result)
                 {
                     // send mail active code
                     string body = "<div>"+ActiveCode+" </div>";
                     var isOk = CommonHelper.SendContentMail(model.Email, body, null, "ACTIVE CODE", null);
+                    TempData["Email_Register"] = model.Email;
                     return RedirectToAction("Index", "VerifyCode");
+                } else
+                {
+                    if (!string.IsNullOrEmpty(key))
+                    {
+                        ModelState.AddModelError(key, msg);
+                        return View(model);
+                    }
                 }
-
             }
             catch(Exception ex)
             {

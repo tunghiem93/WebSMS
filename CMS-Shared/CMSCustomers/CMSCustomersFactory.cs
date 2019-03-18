@@ -11,7 +11,7 @@ namespace CMS_Shared.CMSCustomers
 {
     public class CMSCustomersFactory
     {
-        public bool InsertOrUpdate(CustomerModels model,ref string ActiveCode, ref string msg)
+        public bool InsertOrUpdate(CustomerModels model, ref string ActiveCode, ref string msg, ref string key)
         {
             var result = true;
             using (var cxt = new CMS_Context())
@@ -20,7 +20,22 @@ namespace CMS_Shared.CMSCustomers
                 {
                     try
                     {
-                        if(string.IsNullOrEmpty(model.ID))
+                        var CheckEmail = cxt.CMS_Customers.Any(x => x.Email == model.Email);
+                        if (CheckEmail)
+                        {
+                            msg = "E-mail is exits system";
+                            key = "Email";
+                            return false;
+                        }
+                        var CheckPhone = cxt.CMS_Customers.Any(x => x.Phone == model.Phone);
+                        if (CheckPhone)
+                        {
+                            msg = "Phone is exits system";
+                            key = "Phone";
+                            return false;
+                        }
+
+                        if (string.IsNullOrEmpty(model.ID))
                         {
                             ActiveCode = CommonHelper.RandomVerifiCode();
                             var e = new CMS_Customers
@@ -53,7 +68,7 @@ namespace CMS_Shared.CMSCustomers
                         else
                         {
                             var e = cxt.CMS_Customers.Find(model.ID);
-                            if(e != null)
+                            if (e != null)
                             {
                                 e.UpdatedBy = model.UpdatedBy;
                                 e.FirstName = model.FirstName;
@@ -68,7 +83,8 @@ namespace CMS_Shared.CMSCustomers
                         cxt.SaveChanges();
                         trans.Commit();
                     }
-                    catch(Exception ex) {
+                    catch (Exception ex)
+                    {
                         result = false;
                         ActiveCode = "";
                         trans.Rollback();
@@ -96,7 +112,8 @@ namespace CMS_Shared.CMSCustomers
                         cxt.SaveChanges();
                         trans.Commit();
                     }
-                    catch (Exception ex) {
+                    catch (Exception ex)
+                    {
                         result = false;
                         msg = "Không thể xóa thể loại này";
                         trans.Rollback();
@@ -135,7 +152,7 @@ namespace CMS_Shared.CMSCustomers
                     return data;
                 }
             }
-            catch(Exception ex) { }
+            catch (Exception ex) { }
             return null;
         }
 
@@ -162,8 +179,37 @@ namespace CMS_Shared.CMSCustomers
                     return data;
                 }
             }
-            catch(Exception ex) { }
+            catch (Exception ex) { }
             return null;
+        }
+
+        public bool VerifyCode(string code, string email)
+        {
+            try
+            {
+                using (var cxt = new CMS_Context())
+                {
+                    if (!string.IsNullOrEmpty(email))
+                    {
+                        var Cus = cxt.CMS_Customers.FirstOrDefault(x => x.Email == email);
+                        if (Cus != null)
+                        {
+                            var CusId = Cus.Id;
+                            var result = cxt.CMS_CustomerActiveCode.Any(x => x.CustomerId == CusId && x.Code == code);
+                            if (result)
+                            {
+                                Cus.Status = (int)Commons.CustomerStatus.Open;
+                            }
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                NSLog.Logger.Error("VerifyCode", ex);
+            }
+            return false;
         }
     }
 }
