@@ -44,5 +44,14 @@ namespace CMS_Web.Controllers
             } catch(Exception ex) { }
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult Logout()
+        {
+            if(Session["User"] != null)
+            {
+                Session.Remove("User");
+            }
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
