@@ -22,10 +22,8 @@ namespace CMS_Shared.CMSSystemConfig
                     var data = cxt.CMS_SysConfigs.Select(x => new CMS_SysConfigModels
                     {                        
                         Id = x.Id,
-                        Rate = x.Rate,
-                        RateType = x.RateType,
-                        WaitingTime = x.WaitingTime,
-                        TotalCredit = x.TotalCredit,
+                        Value = x.Value,
+                        ValueType = x.ValueType,
                         SiteContent = x.SiteContent,
                         Description = x.Description,
                         IsActive = x.IsActive,
@@ -96,6 +94,58 @@ namespace CMS_Shared.CMSSystemConfig
             return result;
         }
 
+        public CMS_SysConfigModels GetDetailRateSMS(string Id)
+        {
+            try
+            {
+                using (var cxt = new CMS_Context())
+                {
+                    var data = cxt.CMS_SysConfigs.Select(x => new CMS_SysConfigModels
+                    {
+                        Id = x.Id,
+                        Value = x.Value,
+                        ValueType = x.ValueType,
+                        IsActive = x.IsActive,
+                    }).Where(x => x.Id.Equals(Id)).FirstOrDefault();
+
+                    return data;
+                }
+            }
+            catch (Exception ex) { }
+            return null;
+        }
+
+        public bool UpdateRateSMS(CMS_SysConfigModels model, ref string msg)
+        {
+            var result = true;
+            using (var cxt = new CMS_Context())
+            {
+                using (var beginTran = cxt.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        if (!string.IsNullOrEmpty(model.Id))
+                        {
+                            var e = cxt.CMS_SysConfigs.Find(model.Id);
+                            if (e != null)
+                            {
+                                e.Value = model.Value;
+                            }
+                        }
+                        cxt.SaveChanges();
+                        beginTran.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        msg = "Lỗi đường truyền mạng";
+                        beginTran.Rollback();
+                        result = false;
+                    }
+                }
+            }
+            return result;
+        }
+
         public CMS_SysConfigModels GetDetailRateUSD(string Id)
         {
             try
@@ -105,8 +155,8 @@ namespace CMS_Shared.CMSSystemConfig
                     var data = cxt.CMS_SysConfigs.Select(x => new CMS_SysConfigModels
                     {
                         Id = x.Id,
-                        Rate = x.Rate,
-                        RateType = x.RateType,
+                        Value = x.Value,
+                        ValueType = x.ValueType,
                         IsActive = x.IsActive,
                     }).Where(x => x.Id.Equals(Id)).FirstOrDefault();
 
@@ -131,7 +181,7 @@ namespace CMS_Shared.CMSSystemConfig
                             var e = cxt.CMS_SysConfigs.Find(model.Id);
                             if (e != null)
                             {
-                                e.Rate = model.Rate;
+                                e.Value = model.Value;
                             }
                         }
                         cxt.SaveChanges();
@@ -157,8 +207,8 @@ namespace CMS_Shared.CMSSystemConfig
                     var data = cxt.CMS_SysConfigs.Select(x => new CMS_SysConfigModels
                     {
                         Id = x.Id,
-                        Rate = x.Rate,
-                        RateType = x.RateType,
+                        Value = x.Value,
+                        ValueType = x.ValueType,
                         IsActive = x.IsActive,
                     }).Where(x => x.Id.Equals(Id)).FirstOrDefault();
 
@@ -183,7 +233,7 @@ namespace CMS_Shared.CMSSystemConfig
                             var e = cxt.CMS_SysConfigs.Find(model.Id);
                             if (e != null)
                             {
-                                e.Rate = model.Rate;
+                                e.Value = model.Value;
                             }
                         }
                         cxt.SaveChanges();
@@ -209,9 +259,9 @@ namespace CMS_Shared.CMSSystemConfig
                     var data = cxt.CMS_SysConfigs.Select(x => new CMS_SysConfigModels
                     {
                         Id = x.Id,
-                        Rate = x.Rate,
-                        RateType = x.RateType,
-                    }).Where(x => x.Id.Equals(Id) && x.RateType.Equals((int)Commons.ConfigType.SMSMarketing)).FirstOrDefault();
+                        Value = x.Value,
+                        ValueType = x.ValueType,
+                    }).Where(x => x.Id.Equals(Id) && x.ValueType.Equals((int)Commons.ConfigType.SMSMarketing)).FirstOrDefault();
 
                     return data;
                 }
@@ -234,7 +284,7 @@ namespace CMS_Shared.CMSSystemConfig
                             var e = cxt.CMS_SysConfigs.Find(model.Id);
                             if (e != null)
                             {
-                                e.Rate = model.Rate;
+                                e.Value = model.Value;
                             }
                         }
                         cxt.SaveChanges();
@@ -260,9 +310,9 @@ namespace CMS_Shared.CMSSystemConfig
                     var data = cxt.CMS_SysConfigs.Select(x => new CMS_SysConfigModels
                     {
                         Id = x.Id,
-                        Rate = x.Rate,
-                        RateType = x.RateType,
-                    }).Where(x => x.Id.Equals(Id) && x.RateType.Equals((int)Commons.ConfigType.SMSOTP)).FirstOrDefault();
+                        Value = x.Value,
+                        ValueType = x.ValueType,
+                    }).Where(x => x.Id.Equals(Id) && x.ValueType.Equals((int)Commons.ConfigType.SMSOTP)).FirstOrDefault();
 
                     return data;
                 }
@@ -285,7 +335,7 @@ namespace CMS_Shared.CMSSystemConfig
                             var e = cxt.CMS_SysConfigs.Find(model.Id);
                             if (e != null)
                             {
-                                e.Rate = model.Rate;
+                                e.Value = model.Value;
                             }
                         }
                         cxt.SaveChanges();
@@ -311,8 +361,8 @@ namespace CMS_Shared.CMSSystemConfig
                     var data = cxt.CMS_SysConfigs.Select(x => new CMS_SysConfigModels
                     {
                         Id = x.Id,
-                        TotalCredit = x.TotalCredit,
-                        RateType = (int)Commons.ConfigType.CreditDefault,
+                        Value = x.Value,
+                        ValueType = (int)Commons.ConfigType.CreditDefault,
                     }).Where(x => x.Id.Equals(Id)).FirstOrDefault();
                     if (data == null)
                     {
@@ -339,7 +389,7 @@ namespace CMS_Shared.CMSSystemConfig
                             var e = cxt.CMS_SysConfigs.Find(model.Id);
                             if (e != null)
                             {
-                                e.TotalCredit = model.TotalCredit;
+                                e.Value = model.Value;
                             }
                         }
                         cxt.SaveChanges();
@@ -365,8 +415,8 @@ namespace CMS_Shared.CMSSystemConfig
                     var data = cxt.CMS_SysConfigs.Select(x => new CMS_SysConfigModels
                     {
                         Id = x.Id,
-                        WaitingTime = x.WaitingTime,
-                        RateType = (int)Commons.ConfigType.WaitingTime,
+                        Value = x.Value,
+                        ValueType = (int)Commons.ConfigType.WaitingTime,
                 }).Where(x => x.Id.Equals(Id)).FirstOrDefault();
                     if (data == null)
                     {
@@ -393,7 +443,7 @@ namespace CMS_Shared.CMSSystemConfig
                             var e = cxt.CMS_SysConfigs.Find(model.Id);
                             if (e != null)
                             {
-                                e.WaitingTime = model.WaitingTime;
+                                e.Value = model.Value;
                             }
                         }
                         cxt.SaveChanges();
