@@ -15,7 +15,7 @@ namespace CMS_Entity.Migrations
                     PackageName = c.String(nullable: false, maxLength: 250,unicode: true ),
                     PackageSMS = c.Decimal(nullable: false),
                     PackagePrice = c.Decimal(nullable: false),
-                    Discount = c.Decimal(nullable: false),
+                    Discount = c.Decimal(nullable: false, precision: 2),
                     SMSPrice = c.Decimal(nullable: false),
                     IsActive = c.Boolean(nullable: false),
                     CreatedBy = c.String(maxLength: 60, unicode: false),
