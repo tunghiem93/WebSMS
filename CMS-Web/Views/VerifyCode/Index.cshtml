@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model CMS_DTO.CMSCustomer.CustomerViewModels
+@model CMS_DTO.CMSCustomer.CustomerActiveCode
 <!-- container -->
 <div class="container">
     @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home" }, { "B", "VERIFY CODE" } })
@@ -34,7 +34,7 @@
                         <div class="form-group">
                             <label for="firstname" class="col-md-4">Code</label>
                             <div class="col-md-8">
-                                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @placeholder = "code", @autocomplete = "off" })
+                                @Html.TextBoxFor(model => model., new { @class = "form-control", @placeholder = "code", @autocomplete = "off" })
                                 @Html.ValidationMessageFor(model => model.FirstName, null, new { @class = "label label-danger" })
                             </div>
                         </div>
@@ -73,7 +73,22 @@
         CountDown()
     })
     function ResendCode() {
-        CountDown()
+        $.ajax({
+            beforeSend: function () {
+            },
+            url: '@Url.Action("ResendCode", "VerifyCode")',
+            type: "post",
+            processData: false,
+            contentType: false,
+            success: function () {
+            },
+            complete: function () {
+                CountDown()
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        })
+        
     }
     function CountDown() {
         var CountDown = 60

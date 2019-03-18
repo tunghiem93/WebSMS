@@ -198,6 +198,12 @@ namespace CMS_Shared.CMSCustomers
                             var result = cxt.CMS_CustomerActiveCode.Any(x => x.CustomerId == CusId && x.Code == code);
                             if (result)
                             {
+                                //get Credit default
+                                var Credit = cxt.CMS_ConfigRates.FirstOrDefault(x => x.RateType == (int)Commons.RateType.CreditDefault);
+                                if (Credit != null)
+                                {
+                                    Cus.TotalCredit = Credit.Rate;
+                                }
                                 Cus.Status = (int)Commons.CustomerStatus.Open;
                             }
                         }
@@ -208,6 +214,42 @@ namespace CMS_Shared.CMSCustomers
             catch (Exception ex)
             {
                 NSLog.Logger.Error("VerifyCode", ex);
+            }
+            return false;
+        }
+
+        public bool ResendCode(string email, ref string activeCode)
+        {
+            try
+            {
+                using(var cxt = new CMS_Context())
+                {
+                    var Cus = cxt.CMS_Customers.FirstOrDefault(x => x.Email == email);
+                    if (Cus != null)
+                    {
+                        var CusActiveCode = cxt.CMS_CustomerActiveCode.Where(x => x.CustomerId == Cus.Id).ToList();
+                        if (CusActiveCode != null)
+                        {
+                            CusActiveCode.ForEach(x =>
+                            {
+                                x.IsActive = false;
+                            });
+                            activeCode = CommonHelper.RandomVerifiCode();
+                            cxt.CMS_CustomerActiveCode.Add(new CMS_CustomerActiveCode
+                            {
+                                Code = activeCode,
+                                CustomerId = Cus.Id,
+                                CreatedDate = DateTime.Now,
+                                UpdatedDate = DateTime.Now
+                            });
+                            cxt.SaveChanges();
+                            return true;
+                        }
+                    }
+                }
+            }
+            catch (Exception) {
+                activeCode = "";
             }
             return false;
         }
