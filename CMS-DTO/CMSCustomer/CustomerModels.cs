@@ -23,7 +23,7 @@ namespace CMS_DTO.CMSCustomer
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Please enter your password1")]
+        [Required(ErrorMessage = "Please enter your password 2")]
         public string Password2 { get; set; }
         [Required(ErrorMessage = "Please enter your phone")]
         [RegularExpression("([0-9]+)", ErrorMessage = "Your phone not invalid !")]

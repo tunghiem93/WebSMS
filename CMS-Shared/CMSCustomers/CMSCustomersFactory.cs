@@ -311,5 +311,34 @@ namespace CMS_Shared.CMSCustomers
             }
             return result;
         }
+
+        public bool ChangePassword(CustomerChangePasswordModel model, ref string msg)
+        {
+            var result = true;
+            try
+            {
+                using(var cxt = new CMS_Context())
+                {
+                    var Cus = cxt.CMS_Customers.FirstOrDefault(x => x.Email == model.Email && x.IsActive && (x.Password == model.LastPassword || x.Password2 == model.LastPassword));
+                    if(Cus != null)
+                    {
+                        Cus.Password = model.Password;
+                        Cus.Password2 = model.Password2;
+                        Cus.UpdatedDate = DateTime.Now;
+                        cxt.SaveChanges();
+                    } else
+                    {
+                        msg = "Last password incorrect";
+                        result = false;
+                    }
+                }
+            } catch(Exception ex)
+            {
+                NSLog.Logger.Error("ChangePassword", ex);
+                msg = "Last password incorrect";
+                result = false;
+            }
+            return result;
+        }
     }
 }
