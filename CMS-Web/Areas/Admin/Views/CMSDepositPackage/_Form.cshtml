@@ -48,6 +48,12 @@
                 @Html.ValidationMessageFor(model => model.SMSPrice, null, new { @class = "label label-danger" })
             </div>
         </div>
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">Status</label>
+            <div class="col-md-1 col-sm-1 col-xs-12">
+                <label>@Html.CheckBoxFor(model => model.IsActive, new { @class = "icheck" })</label>
+            </div>
+        </div>
     </fieldset>
 </div>
 <script src="@Url.Content("~/Scripts/InputCustom.js")"></script>

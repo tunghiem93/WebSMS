@@ -60,7 +60,6 @@ namespace CMS_Web.Areas.Admin.Controllers
                 var msg = "";
                 model.CreatedBy = CurrentUser.UserId;
                 model.UpdatedBy = CurrentUser.UserId;
-                model.IsActive = true;
                 var result = _factory.CreateOrUpdate(model, ref msg);
                 if (result)
                 {
@@ -97,7 +96,6 @@ namespace CMS_Web.Areas.Admin.Controllers
                 }
                 
                 var msg = "";
-                model.IsActive = true;
                 model.UpdatedBy = CurrentUser.UserId;
                 var result = _factory.CreateOrUpdate(model, ref msg);
                 if (result)

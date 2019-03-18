@@ -26,6 +26,7 @@
                             <th class="text-center"> Package Price </th>
                             <th class="text-center"> Discount </th>
                             <th class="text-center"> SMS Price </th>
+                            <th class="text-center"> Status </th>
                             <th class="text-center"> Action </th>
                         </tr>
                     </thead>
@@ -40,6 +41,18 @@
                                     <td class="text-center">@string.Format("{0:N0}", item.PackagePrice)</td>
                                     <td class="text-center">@string.Format("{0}", item.Discount)</td>
                                     <td class="text-center">@string.Format("{0:N0}", item.SMSPrice)</td>
+                                    <td class="text-center">
+                                        @{
+                                            if (item.IsActive)
+                                            {
+                                                <span class="label label-sm label-success"> Running </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="label label-sm label-danger"> Pending </span>
+                                            }
+                                        }
+                                    </td>
                                     <td class="text-center">
                                         @*<a href="javascript:void(0)"
                                            onclick='ShowView("@Url.Action("View", "CMSDepositPackage", new { Id = item.Id })")'
