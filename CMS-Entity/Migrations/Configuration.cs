@@ -9,7 +9,7 @@ namespace CMS_Entity.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(CMS_Entity.CMS_Context context)
