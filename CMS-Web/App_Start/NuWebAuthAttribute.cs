@@ -24,10 +24,10 @@ namespace CMS_Web.Web.App_Start
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            if (HttpContext.Current.Session["User"] == null)
+            if (HttpContext.Current.Session["UserC"] == null)
                 _CurrentUser = new CustomerModels();
             else
-                _CurrentUser = (CustomerModels)HttpContext.Current.Session["User"];
+                _CurrentUser = (CustomerModels)HttpContext.Current.Session["UserC"];
                         
             //Alias Controller //Action
             Controller = httpContext.Request.RequestContext.RouteData.Values["controller"].ToString();

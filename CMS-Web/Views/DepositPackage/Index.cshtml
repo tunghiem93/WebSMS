@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model List<CMS_DTO.CMS_DepositPackageModel>
 <!-- container -->
 <div class="container">
     @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home" }, { "B", "DEPOSIT PACKAGE" } })
@@ -22,15 +23,34 @@
                                 <th>SMS Package (credits)</th>
                                 <th>Package price (VND)</th>
                                 <th>Discount (%)</th>
-                                <th>Package price (VND)</th>
                                 <th>USD</th>
                                 <th>VND/SMS</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td colspan="7" style="text-align:center">No content</td>
-                            </tr>
+                            @if (Model == null || Model.Count <= 0)
+                            {
+                                <tr>
+                                    <td colspan="7" style="text-align:center">No content</td>
+                                </tr>
+                            } else
+                            {
+                                foreach(var item in Model)
+                                {
+                                <tr>
+                                    <th>@item.PackageName</th>
+                                    <th>@item.PackageSMS</th>
+                                    <th>@item.PackagePrice</th>
+                                    <th>@item.Discount</th>
+
+                                    <th>USD</th>
+                                    <th>@item.SMSPrice</th>
+                                    <th></th>
+                                </tr>
+                                }
+                            }
+
                         </tbody>
                     </table>
                 </div>

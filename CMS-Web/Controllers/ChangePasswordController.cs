@@ -29,7 +29,7 @@ namespace CMS_Web.Controllers
         {
             try
             {
-                var User = Session["User"] as CustomerModels;
+                var User = Session["UserC"] as CustomerModels;
                 if (User == null)
                     return RedirectToAction("Index", "Home");
                 if (!ModelState.IsValid)

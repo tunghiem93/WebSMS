@@ -39,7 +39,7 @@ namespace CMS_Web.Controllers
                     ModelState.AddModelError("UserName", "Your username or password not correct");
                     return View(model);
                 }
-                Session["User"] = data; 
+                Session["UserC"] = data; 
                 
             } catch(Exception ex) { }
             return RedirectToAction("Index", "Home");
@@ -47,9 +47,9 @@ namespace CMS_Web.Controllers
 
         public ActionResult Logout()
         {
-            if(Session["User"] != null)
+            if(Session["UserC"] != null)
             {
-                Session.Remove("User");
+                Session.Remove("UserC");
             }
             return RedirectToAction("Index", "Home");
         }
