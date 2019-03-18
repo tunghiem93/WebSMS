@@ -13,9 +13,11 @@ namespace CMS_DTO.CMSSysConfig
         public decimal Rate { get; set; }
         public int RateType { get; set; }// otp, marketing ....
         public int WaitingTime { get; set; }
+        public decimal TotalCredit { get; set; }
         [AllowHtml]
         public string SiteContent { get; set; }
         public string Description { get; set; }
+        public bool IsActive { get; set; }
 
         //show html
         public string RateUSD { get; set; }

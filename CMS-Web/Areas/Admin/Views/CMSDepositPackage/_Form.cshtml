@@ -1,0 +1,59 @@
+﻿
+@model CMS_DTO.CMS_DepositPackageModel
+@using CMS_Shared
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    var _ID = Model.Id;
+}
+@Html.HiddenFor(model =>model.Id)
+<div class="row form-horizontal form-label-left" style="margin-bottom:15px;">
+    @*Image*@
+    <fieldset>
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">Package Name</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.PackageName, new { @class = "form-control", @placeholder = "Package Name", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.PackageName, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Package SMS</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.PackageSMS, new { @class = "form-control", @placeholder = "Package SMS", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.PackageSMS, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Package Price</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.PackagePrice, new { @class = "form-control", @placeholder = "Package Price", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.PackagePrice, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Discount</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.Discount, new { @class = "form-control", @placeholder = "Discount", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.Discount, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">SMS Price</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.SMSPrice, new { @class = "form-control", @placeholder = "SMSPrice", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.SMSPrice, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">Status</label>
+            <div class="col-md-1 col-sm-1 col-xs-12">
+                <label>@Html.CheckBoxFor(model => model.IsActive, new { @class = "icheck" })</label>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<script src="@Url.Content("~/Scripts/InputCustom.js")"></script>

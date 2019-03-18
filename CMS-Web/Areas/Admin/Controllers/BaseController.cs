@@ -12,16 +12,16 @@ namespace CMS_Web.Areas.Admin.Controllers
         // GET: Admin/Base
         public string List { get; set; }
         // GET: Base
-        //public UserSession CurrentUser
-        //{
-        //    get
-        //    {
-        //        if (System.Web.HttpContext.Current.Session["User"] != null)
-        //            return (UserSession)System.Web.HttpContext.Current.Session["User"];
-        //        else
-        //            return new UserSession();
-        //    }
-        //}
+        public UserSession CurrentUser
+        {
+            get
+            {
+                if (System.Web.HttpContext.Current.Session["User"] != null)
+                    return (UserSession)System.Web.HttpContext.Current.Session["User"];
+                else
+                    return new UserSession();
+            }
+        }
 
         public BaseController()
         {

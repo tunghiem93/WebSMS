@@ -1,0 +1,21 @@
+﻿
+@model CMS_DTO.CMSSysConfig.CMS_SysConfigModels
+@using CMS_Shared
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    var _ID = Model.Id;
+}
+@Html.HiddenFor(model =>model.Id)
+
+<div class="row form-horizontal form-label-left" style="margin-bottom:15px;">
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Rate USD</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Rate, new { @class = "form-control", @placeholder = "Rate USD", @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.Rate, null, new { @class = "label label-danger" })
+        </div>
+    </div>
+</div>
+
+<script src="@Url.Content("~/Scripts/InputCustom.js")"></script>
+<script type="text/javascript"></script>

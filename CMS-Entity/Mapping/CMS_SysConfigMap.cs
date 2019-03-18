@@ -18,6 +18,7 @@ namespace CMS_Entity.Mapping
             this.Property(x => x.Rate).HasColumnType("decimal").IsRequired();
             this.Property(x => x.RateType).HasColumnType("int").IsRequired();
             this.Property(x => x.WaitingTime).HasColumnType("int").IsRequired();
+            this.Property(x => x.TotalCredit).HasColumnType("decimal").IsOptional();
             this.Property(x => x.UpdatedBy).HasMaxLength(60).HasColumnType("varchar").IsOptional();
             this.Property(x => x.SiteContent).HasColumnType("ntext");
             this.Property(x => x.CreatedBy).HasMaxLength(60).HasColumnType("varchar").IsOptional();
