@@ -25,7 +25,7 @@ namespace CMS_Shared.CMSSystemConfig
                         Rate = x.Rate,
                         RateType = x.RateType,
                         WaitingTime = x.WaitingTime,
-                        TotalCredit = (x.TotalCredit == null) ? 0 : x.TotalCredit,
+                        TotalCredit = x.TotalCredit,
                         SiteContent = x.SiteContent,
                         Description = x.Description,
                         IsActive = x.IsActive,
