@@ -39,19 +39,15 @@ namespace CMS_Shared
             Locked = 2
         }
 
-        public enum RateType
+        public enum ConfigType
         {
             USD = 0,
             PMUSD = 1,
             SMSOTP = 2,
             SMSMarketing = 3,
             CreditDefault = 4,
-        }
-
-        public enum ConfigType
-        {            
-            WaitingTime = 1,
-            SiteHTML = 2,
+            WaitingTime = 5,
+            SiteHTML = 6,
         }
     }    
 }
