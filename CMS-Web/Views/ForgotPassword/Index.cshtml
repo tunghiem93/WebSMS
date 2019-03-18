@@ -1,13 +1,13 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model CMS_DTO.CMSCustomer.CustomerLoginModels
+@model CMS_DTO.CMSCustomer.CustomerForgotPassword
 <!-- container -->
 <div class="container">
-    @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home" }, { "B", "Login" } })
+    @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home" }, { "B", "Forgot Password" } })
     <div class="page-header bottom-shadow">
-        <h3>Log-in</h3>
-        <p> Theme Login</p>
+        <h3>Forgot Password</h3>
+        <p> Theme Forgot Password</p>
     </div><!-- Section Header /- -->
 </div><!-- container /- -->
 <!-- Page Breadcrumb /- -->
@@ -20,29 +20,21 @@
             <!-- col-md-6 -->
             <div class="col-md-6 col-sm-6">
                 <div class="section-header">
-                    <h3>Login</h3>
+                    <h3>Forgot Password</h3>
                 </div><!-- Section Header Over -->
                 <div class="contact-form bottom-shadow">
-                    @using (@Html.BeginForm("Index", "Login", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal login-page", @enctype = "multipart/form-data" }))
+                    @using (@Html.BeginForm("Index", "ForgotPassword", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal login-page", @enctype = "multipart/form-data" }))
                     {
                         <div class="form-group">
                             <label class="col-md-4">Email Address</label>
                             <div class="col-md-8">
-                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @placeholder = "enter your email or phone", @autocomplete = "off" })
-                                @Html.ValidationMessageFor(model => model.UserName, null, new { @class = "label label-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="col-md-4">Password</label>
-                            <div class="col-md-8">
-                                @Html.PasswordFor(model => model.Password, new { @class = "form-control", @id = "password", @placeholder = "*****", @autocomplete = "off" })
-                                @Html.ValidationMessageFor(model => model.Password, null, new { @class = "label label-danger" })
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "enter your email or phone", @autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.Email, null, new { @class = "label label-danger" })
                             </div>
                         </div>
                         <div class="drop-line bottom-shadow"></div>
                         <div class="form-group">
-                            <a title=">Forgot Password " href="@Url.Action("Index","ForgotPassword")">Forgot your Password ?</a>
-                            <input type="submit" value="Login" class="btn btn-default  pull-right">
+                            <input type="submit" value="Forgot Password" class="btn btn-default  pull-right">
                         </div>
                     }
                 </div>

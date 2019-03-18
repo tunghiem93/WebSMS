@@ -130,5 +130,23 @@ namespace CMS_Shared.Utilities
             }
             return "0000";
         }
+
+        public static string GeneralPassword()
+        {
+            try
+            {
+                StringBuilder builder = new StringBuilder();
+                Random random = new Random();
+                char ch;
+                for (int i = 0; i < 8; i++)
+                {
+                    ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
+                    builder.Append(ch);
+                }
+                return builder.ToString();
+            }
+            catch (Exception) { }
+            return null;
+        }
     }
 }

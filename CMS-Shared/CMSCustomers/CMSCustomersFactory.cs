@@ -283,5 +283,33 @@ namespace CMS_Shared.CMSCustomers
             }
             return null;
         }
+
+        public bool ForgotPassword(string email,string newPassword, ref string msg)
+        {
+            var result = true;
+            try
+            {
+                using(var cxt = new CMS_Context())
+                {
+                    var Cus = cxt.CMS_Customers.FirstOrDefault(x => x.Email == email && x.IsActive && x.IsActive);
+                    if (Cus != null)
+                    {
+                        Cus.Password = newPassword;
+                        Cus.UpdatedDate = DateTime.Now;
+                        cxt.SaveChanges();
+                    }
+                    else
+                    {
+                        msg = "E-mail dose not exits";
+                        result = false;
+                    }
+                }
+            } catch(Exception ex)
+            {
+                NSLog.Logger.Error("ForgotPassword", ex);
+                result = false;
+            }
+            return result;
+        }
     }
 }
