@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewBag.Title = "Hệ thống - Danh sách";
+}
+<div role="main">
+    <div class="se-pre-con" style="display: none;"></div>
+    <div class="_gridview">
+        <div class="page-title">
+            <!-- BEGIN PAGE BAR -->
+            @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Hệ thống" }, { "B", "Hệ thống - Danh sách" } })
+            <!-- END PAGE BAR -->
+        </div>
+        <div class="page-main">
+            @using (Html.BeginForm("LoadGrid", "CMSSysConfigs", FormMethod.Post, new { @class = "form-horizontal search-form" }))
+            {
+            }
+        </div>      
+    </div>
+    <div class="detail-view" style="height:100%;">
+        <!-- detail partial view -->
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadGrid();
+        $('input.icheck').iCheck({
+            checkboxClass: 'icheckbox_square-grey',
+            radioClass: 'iradio_square-green'
+        });
+    })
+
+</script>

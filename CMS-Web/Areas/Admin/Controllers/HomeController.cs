@@ -1,6 +1,5 @@
 ﻿using CMS_DTO.CMSCompany;
 using CMS_DTO.CMSHome;
-using CMS_DTO.CMSSiteMaitain;
 using CMS_Shared;
 using CMS_Shared.CMSCompanies;
 using CMS_Shared.CMSSystemConfig;
@@ -21,12 +20,12 @@ namespace CMS_Web.Areas.Admin.Controllers
     public class HomeController : Controller
     {
         CMSCompaniesFactory _factory = null;
-        CMSSystemConfigFactory _fac = null;
+        CMSSysConfigFactory _fac = null;
 
         public HomeController()
         {
             _factory = new CMSCompaniesFactory();
-            _fac = new CMSSystemConfigFactory();
+            _fac = new CMSSysConfigFactory();
         }
 
         // GET: Admin/Home
@@ -328,42 +327,6 @@ namespace CMS_Web.Areas.Admin.Controllers
             }
 
             return PartialView("_CompanyInfo", model);
-        }
-
-        [HttpGet]
-        public ActionResult SiteMaintain(string Id)
-        {
-            var model = _fac.GetDetailSiteMaintain(Id);
-            return PartialView("_SiteMaintain", model);
-        }
-
-        [HttpPost]
-        public ActionResult SiteMaintain(CMS_SiteMaintainModels model)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    return PartialView("_SiteMaintain", model);
-                }
-
-                var msg = "";
-                var result = _fac.UpdateSiteMaintain(model, ref msg);
-                if (result)
-                {
-                    return RedirectToAction("Index");
-                }
-                ModelState.AddModelError("_SiteMaintainError: ", msg);
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return PartialView("_SiteMaintain", model);
-            }
-            catch (Exception ex)
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return PartialView("_SiteMaintain", model);
-            }
-
-        }
+        }        
     }
 }
