@@ -205,6 +205,7 @@ namespace CMS_Shared.CMSCustomers
                                     Cus.TotalCredit = Credit.Rate;
                                 }
                                 Cus.Status = (int)Commons.CustomerStatus.Open;
+                                Cus.IsVerifiedEmail = true;
                                 cxt.SaveChanges();
                                 return true;
                             }
@@ -272,7 +273,8 @@ namespace CMS_Shared.CMSCustomers
                                                     LastName = x.LastName,
                                                     Phone = x.Phone,
                                                     TotalCredit = x.TotalCredit,
-                                                    ID = x.Id
+                                                    ID = x.Id,
+                                                    IsAuthenticated = true
                                                 }).FirstOrDefault();
                     return data;
                                                 
@@ -307,6 +309,35 @@ namespace CMS_Shared.CMSCustomers
             } catch(Exception ex)
             {
                 NSLog.Logger.Error("ForgotPassword", ex);
+                result = false;
+            }
+            return result;
+        }
+
+        public bool ChangePassword(CustomerChangePasswordModel model, ref string msg)
+        {
+            var result = true;
+            try
+            {
+                using(var cxt = new CMS_Context())
+                {
+                    var Cus = cxt.CMS_Customers.FirstOrDefault(x => x.Email == model.Email && x.IsActive && (x.Password == model.LastPassword || x.Password2 == model.LastPassword));
+                    if(Cus != null)
+                    {
+                        Cus.Password = model.Password;
+                        Cus.Password2 = model.Password2;
+                        Cus.UpdatedDate = DateTime.Now;
+                        cxt.SaveChanges();
+                    } else
+                    {
+                        msg = "Last password incorrect";
+                        result = false;
+                    }
+                }
+            } catch(Exception ex)
+            {
+                NSLog.Logger.Error("ChangePassword", ex);
+                msg = "Last password incorrect";
                 result = false;
             }
             return result;

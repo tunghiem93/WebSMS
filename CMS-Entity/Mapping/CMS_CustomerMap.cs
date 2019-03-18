@@ -23,8 +23,10 @@ namespace CMS_Entity.Mapping
             this.Property(x => x.UpdatedBy).HasColumnType("varchar").HasMaxLength(60).IsOptional();
             this.Property(x => x.Status).HasColumnType("int").IsRequired();
             this.Property(x => x.TotalCredit).HasColumnType("decimal").IsOptional();
-            this.Property(x => x.Wallet_Receiving_Money).HasMaxLength(60).HasColumnType("varchar").IsOptional();
+            this.Property(x => x.CreditNumber).HasMaxLength(60).HasColumnType("varchar").IsOptional();
             this.Property(x => x.TotalCredit).HasColumnType("decimal").IsOptional();
+            this.Property(x => x.APIKey).HasColumnType("varchar").HasMaxLength(100).IsOptional();
+            this.Property(x => x.APIPass).HasColumnType("varchar").HasMaxLength(100).IsOptional();
         }
     }
 }
