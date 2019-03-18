@@ -6,8 +6,8 @@
 <div class="container">
     @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home" }, { "B", "Change Password" } })
     <div class="page-header bottom-shadow">
-        <h3>Log-in</h3>
-        <p> Theme Login</p>
+        <h3>Change Password</h3>
+        <p> Theme Change Password</p>
     </div><!-- Section Header /- -->
 </div><!-- container /- -->
 <!-- Page Breadcrumb /- -->
@@ -15,18 +15,25 @@
 <div class="page-wizard">
     <!-- container -->
     <div class="container">
+        @if (Model != null && Model.Status)
+        {
+            <div class="alert alert-success">
+                <strong>Successful!</strong> Your password change successful
+            </div>
+        }
+
         <!-- contact-form-details -->
         <div class="contact-form-details row">
             <!-- col-md-6 -->
             <div class="col-md-6 col-sm-6">
                 <div class="section-header">
-                    <h3>Login</h3>
+                    <h3>Change Password</h3>
                 </div><!-- Section Header Over -->
                 <div class="contact-form bottom-shadow">
                     @using (@Html.BeginForm("Index", "ChangePassword", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal login-page", @enctype = "multipart/form-data" }))
                     {
                         <div class="form-group">
-                            <label class="col-md-4">Email Address</label>
+                            <label class="col-md-4">Old Password</label>
                             <div class="col-md-8">
                                 @Html.PasswordFor(model => model.LastPassword, new { @class = "form-control", @placeholder = "*****", @autocomplete = "off" })
                                 @Html.ValidationMessageFor(model => model.LastPassword, null, new { @class = "label label-danger" })
@@ -49,21 +56,9 @@
                         </div>
                         <div class="drop-line bottom-shadow"></div>
                         <div class="form-group">
-                            <input type="submit" value="Login" class="btn btn-default  pull-right">
+                            <input type="submit" value="Change password" class="btn btn-default  pull-right">
                         </div>
                     }
-                </div>
-            </div><!-- col-md-6 /- -->
-            <!-- col-md-6 -->
-            <div class="col-md-6 col-sm-6">
-                <div class="section-header">
-                    <h3>New User/ No registration</h3>
-                </div><!-- Section Header Over -->
-                <div class="contact-details new-user-register register-user bottom-shadow">
-                    <h3>Sed consectetur tempus velit ut tincidunt.</h3>
-                    <p>Aliquam placerat, mi non interdum volutpat, nisi magna euismod arcu, at congue augue ex nec lectus. Phasellus fermentum libero id neque rhoncus, sed posuere sem dictum. In nec fermentum ante. Morbi et massa arcu. Suspendisse tempus mattis viverra. </p>
-                    <div class="drop-line bottom-shadow"></div>
-                    <a title="Continue" href="#" class="btn btn-next btn-fill btn-warning btn-wd btn-sm">Continue</a>
                 </div>
             </div><!-- col-md-6 /- -->
         </div><!-- Contact Form details /- -->

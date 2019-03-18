@@ -205,6 +205,7 @@ namespace CMS_Shared.CMSCustomers
                                     Cus.TotalCredit = Credit.Rate;
                                 }
                                 Cus.Status = (int)Commons.CustomerStatus.Open;
+                                Cus.IsVerifiedEmail = true;
                                 cxt.SaveChanges();
                                 return true;
                             }
@@ -272,7 +273,8 @@ namespace CMS_Shared.CMSCustomers
                                                     LastName = x.LastName,
                                                     Phone = x.Phone,
                                                     TotalCredit = x.TotalCredit,
-                                                    ID = x.Id
+                                                    ID = x.Id,
+                                                    IsAuthenticated = true
                                                 }).FirstOrDefault();
                     return data;
                                                 

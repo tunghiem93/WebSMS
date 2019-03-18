@@ -1,5 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = Session["User"] as CMS_DTO.CMSCustomer.CustomerModels;
+}
 }
 <!-- container -->
 <div class="container">
@@ -7,7 +9,10 @@
     <div class="page-header bottom-shadow">
         <h3>Profile</h3>
         <p>It’s free and always will be.</p>
-        <p><a href="@Url.Action("Index","ChangePassword")">Change Password</a></p>
+        @if (user != null)
+        {
+            <p><a href="@Url.Action("Index","ChangePassword")">Change Password</a></p>
+        }
     </div><!-- Section Header /- -->
 </div><!-- container /- -->
 <!-- Page Breadcrumb /- -->

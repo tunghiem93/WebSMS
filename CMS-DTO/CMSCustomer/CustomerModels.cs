@@ -53,6 +53,7 @@ namespace CMS_DTO.CMSCustomer
         public DateTime UpdatedDate { get; set; }
         public DateTime CreatedDate { get; set; }
         public decimal TotalCredit { get; set; }
+        public bool IsAuthenticated { get; set; }
         public CustomerModels()
         {
             IsActive = true;

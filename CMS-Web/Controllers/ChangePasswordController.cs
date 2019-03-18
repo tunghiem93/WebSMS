@@ -5,8 +5,12 @@ using System.Web;
 using System.Web.Mvc;
 using CMS_Shared.CMSCustomers;
 using CMS_DTO.CMSCustomer;
+using CMS_Shared.Utilities;
+using CMS_Web.Web.App_Start;
+
 namespace CMS_Web.Controllers
 {
+    [NuWebAuth]
     public class ChangePasswordController : Controller
     {
         private readonly CMSCustomersFactory fac;
@@ -33,6 +37,10 @@ namespace CMS_Web.Controllers
                     return View(model);
                 }
                 var msg = "";
+                model.LastPassword = CommonHelper.Encrypt(model.LastPassword);
+                model.Password = CommonHelper.Encrypt(model.Password);
+                model.Password2 = CommonHelper.Encrypt(model.Password2);
+                model.Email = User.Email;
                 var result = fac.ChangePassword(model, ref msg);
                 if(result)
                 {
