@@ -45,6 +45,13 @@ namespace CMS_Shared
             PMUSD = 1,
             SMSOTP = 2,
             SMSMarketing = 3,
+            CreditDefault = 4,
+        }
+
+        public enum ConfigType
+        {            
+            WaitingTime = 1,
+            SiteHTML = 2,
         }
     }    
 }
