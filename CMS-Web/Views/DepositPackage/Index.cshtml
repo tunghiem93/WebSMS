@@ -40,12 +40,12 @@
                                 {
                                 <tr>
                                     <th>@item.PackageName</th>
-                                    <th>@item.PackageSMS</th>
-                                    <th>@item.PackagePrice</th>
+                                    <th>@string.Format("{0}", item.PackageSMS.ToString("#,0"))</th>
+                                    <th>@string.Format("{0}", item.PackagePrice.ToString("#,0"))</th>
                                     <th>@item.Discount</th>
 
                                     <th>USD</th>
-                                    <th>@item.SMSPrice</th>
+                                    <th>@string.Format("{0}", item.SMSPrice.ToString("#,0"))</th>
                                     <th></th>
                                 </tr>
                                 }
