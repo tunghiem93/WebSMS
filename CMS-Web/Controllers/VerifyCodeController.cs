@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using CMS_DTO.CMSCustomer;
 using CMS_Shared;
 using CMS_Shared.CMSCustomers;
 using CMS_Shared.Utilities;
@@ -28,6 +30,7 @@ namespace CMS_Web.Controllers
             try
             {
                 var email = TempData["Email_Register"].ToString();
+                TempData.Keep();
                 string activeCode = "";
                 var result = fac.ResendCode(email, ref activeCode);
                 if (result)
@@ -45,23 +48,29 @@ namespace CMS_Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult VerifyCode (string code)
+        public ActionResult Index(CustomerActiveCode model)
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return View(model);
+                }
                 var email = TempData["Email_Register"].ToString();
-                var result = fac.VerifyCode(code, email);
+                TempData.Keep();
+                var result = fac.VerifyCode(model.Code, email);
                 if (result)
                 {
                     return RedirectToAction("Index", "Login");
+                } else
+                {
+                    ModelState.AddModelError("Code", "Code InCorrect");
+                    return View(model);
                 }
             }
-            catch (Exception) { }
-            var obj = new
-            {
-                msg = "Code not correct"
-            };
-            return Json(obj);
+            catch (Exception ex) { }
+            return View();
         }
     }
 }

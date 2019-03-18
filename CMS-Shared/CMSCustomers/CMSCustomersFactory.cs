@@ -195,16 +195,18 @@ namespace CMS_Shared.CMSCustomers
                         if (Cus != null)
                         {
                             var CusId = Cus.Id;
-                            var result = cxt.CMS_CustomerActiveCode.Any(x => x.CustomerId == CusId && x.Code == code);
+                            var result = cxt.CMS_CustomerActiveCode.Any(x => x.CustomerId == CusId && x.Code == code && x.IsActive);
                             if (result)
                             {
                                 //get Credit default
-                                var Credit = cxt.CMS_ConfigRates.FirstOrDefault(x => x.RateType == (int)Commons.RateType.CreditDefault);
+                                var Credit = cxt.CMS_SysConfigs.FirstOrDefault(x => x.RateType == (int)Commons.RateType.CreditDefault);
                                 if (Credit != null)
                                 {
                                     Cus.TotalCredit = Credit.Rate;
                                 }
                                 Cus.Status = (int)Commons.CustomerStatus.Open;
+                                cxt.SaveChanges();
+                                return true;
                             }
                         }
                     }
@@ -237,8 +239,10 @@ namespace CMS_Shared.CMSCustomers
                             activeCode = CommonHelper.RandomVerifiCode();
                             cxt.CMS_CustomerActiveCode.Add(new CMS_CustomerActiveCode
                             {
-                                Code = activeCode,
+                                Id = Guid.NewGuid().ToString(),
                                 CustomerId = Cus.Id,
+                                Code = activeCode,
+                                IsActive = true,
                                 CreatedDate = DateTime.Now,
                                 UpdatedDate = DateTime.Now
                             });
@@ -248,7 +252,7 @@ namespace CMS_Shared.CMSCustomers
                     }
                 }
             }
-            catch (Exception) {
+            catch (Exception ex) {
                 activeCode = "";
             }
             return false;

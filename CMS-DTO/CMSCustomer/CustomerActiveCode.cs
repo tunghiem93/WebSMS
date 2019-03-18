@@ -9,7 +9,7 @@ namespace CMS_DTO.CMSCustomer
 {
     public class CustomerActiveCode
     {
-        [Required(ErrorMessage ="Please enter code")]
+        [Required(ErrorMessage ="Please enter coe")]
         public string Code { get; set; }
     }
 }
