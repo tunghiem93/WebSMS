@@ -18,7 +18,7 @@ namespace CMS_Entity
             Database.SetInitializer<CMS_Context>(new ContextHandler());
             ((IObjectContextAdapter)this).ObjectContext.ContextOptions.LazyLoadingEnabled = true;
         }
-        public virtual DbSet<CMS_ConfigRates> CMS_ConfigRates { get; set; }
+        public virtual DbSet<CMS_SysConfigs> CMS_SysConfigs { get; set; }
         public virtual DbSet<CMS_Employee> CMS_Employees { get; set; }
         public virtual DbSet<CMS_Categories> CMS_Categories { get; set; }
         public virtual DbSet<CMS_Products> CMS_Products { get; set; }

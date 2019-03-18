@@ -1,0 +1,49 @@
+﻿@model CMS_DTO.CMSSiteMaitain.CMS_SiteMaintainModels
+<div role="main">
+    <div class="se-pre-con" style="display: none;"></div>
+    <div class="_gridview">
+        <div class="page-title">
+            <!-- BEGIN PAGE BAR -->
+            @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Trang chủ" }, { "B", "Site duy trì - Chỉnh sửa" } })
+            <!-- END PAGE BAR -->
+        </div>
+        <div class="page-main">
+            @using (Html.BeginForm("Edit", "CMSSiteMaintain", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.Partial("_Form", Model)
+            }
+        </div>
+    </div>
+    <div class="detail-view" style="height:100%;">
+        <!-- detail partial view -->
+    </div>
+</div>
+
+<script>
+    $("#form-edit").submit(function (e) {
+        for (instance in CKEDITOR.instances) {
+            CKEDITOR.instances[instance].updateElement();
+        }
+        $.ajax({
+            beforeSend: function () {
+                $('.se-pre-con').show();
+            },
+            url: $(this).attr('action'),
+            type: "post",
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            success: function () {
+                CloseDetail();
+                LoadGrid();
+            },
+            complete: function () {
+                $('.se-pre-con').hide();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $(".detail-view").html(jqXHR.responseText);
+            }
+        });
+        e.preventDefault();
+    });
+</script>

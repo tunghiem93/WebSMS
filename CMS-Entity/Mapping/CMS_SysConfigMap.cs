@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace CMS_Entity.Mapping
 {
-    public class CMS_ConfigRatesMap : EntityTypeConfiguration<CMS_ConfigRates>
+    public class CMS_SysConfigMap : EntityTypeConfiguration<CMS_SysConfigs>
     {
-        public CMS_ConfigRatesMap()
+        public CMS_SysConfigMap()
         {
 
             this.HasKey(x => x.Id);

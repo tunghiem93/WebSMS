@@ -1,0 +1,133 @@
+﻿@{
+    Layout = null;
+}
+@model List<CMS_DTO.CMSSysConfig.CMS_SysConfigModels>
+
+<div class="table-responsive">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box red">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs"></i>Tham số hệ thống
+                </div>                
+            </div>
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered table-hover dt-responsive" id="sample_3">
+                    <thead>
+                        <tr>
+                            <th class="text-center"> Rate USD </th>
+                            <th class="text-center"> Rate PM/USD </th>
+                            <th class="text-center"> Rate SMS OTP </th>
+                            <th class="text-center"> Rate SMS Marketing </th>
+                            <th class="text-center"> Credit thành viên mới </th>
+                            <th class="text-center"> Thời gian chờ </th>
+                            <th class="text-center"> Site bảo trì </th>
+                            <th class="text-center"> Tùy chỉnh </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr class="odd gradeX">
+                                    <td class="text-center">
+                                        @item.RateUSD
+                                    </td>
+                                    <td> @item.RatePMUSD </td>
+                                    <td class="text-center">
+                                        @item.RateOTP
+                                    </td>
+                                    <td class="text-center">
+                                        @item.RateMarketing
+                                    </td>
+                                    <td class="text-center">
+                                        @item.CreditNewMember
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="javascript:void(0)"
+                                           onclick='ShowView("@Url.Action("View","CMSCategories",new { Id=item.Id})")'
+                                           class="btn btn-primary btn-xs view details"><i class="fa fa-eye"></i>&nbsp;Xem</a>&nbsp;&nbsp;
+                                        <a href="javascript:void(0)"
+                                           onclick='ShowView("@Url.Action("Edit","CMSCategories",new { Id=item.Id})")'
+                                           class="btn btn-info btn-xs edit details"><i class="fa fa-edit"></i>&nbsp;Cập nhập</a>&nbsp;&nbsp;
+                                        <a href="javascript:void(0)"
+                                           onclick='ShowView("@Url.Action("Delete","CMSCategories",new { Id=item.Id})")'
+                                           class="btn btn-danger btn-xs delete details"><i class="fa fa-trash-o"></i>&nbsp;Xóa</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+
+<script type="text/javascript">
+    var _tableCategory = null;
+    var _settingsOptionTableCategory = {
+        "language": {
+            "aria": {
+                "sortAscending": ": activate to sort column ascending",
+                "sortDescending": ": activate to sort column descending"
+            },
+            "emptyTable": "No data available in table",
+            "info": "Showing _START_ to _END_ of _TOTAL_ records",
+            "infoEmpty": "No records found",
+            "infoFiltered": "(filtered1 from _MAX_ total records)",
+            "lengthMenu": "Show _MENU_",
+            "search": "Search:",
+            "zeroRecords": "No matching records found",
+            "paginate": {
+                "previous": "Prev",
+                "next": "Next",
+                "last": "Last",
+                "first": "First"
+            }
+        },
+        "oLanguage": {
+
+            "sSearch": "Tìm Kiếm:",
+            "sLengthMenu": "Xem _MENU_",
+            "sProcessing": "Đang xử lý...",
+            "sZeroRecords": "Không tìm thấy dòng nào phù hợp",
+            "sInfo": "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+            "sInfoEmpty": "Đang xem 0 đến 0 trong tổng số 0 mục",
+            "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+            "sInfoPostFix": "",
+        },
+        "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+
+        "lengthMenu": [
+            [6, 15, 20, -1],
+            [6, 15, 20, "All"] // change per page values here
+        ],
+        // set the initial value
+        "pageLength": 6,
+        "columnDefs": [
+            { "orderable": false, "targets": [0, 4] },
+            { "width": "3%", "targets": [0] },
+            { "width": "8%", "targets": [1] },
+            { "width": "5%", "targets": [4] },
+            { "width": "3%", "targets": [2, 3] },
+        ],
+        //"responsive": true,
+        //"autoWitdh": false,
+        "order": [
+            [1, "asc"]
+        ] // set first column as a default sort by asc
+    };
+
+    $(document).ready(function () {
+        _tableCategory = $('#sample_3').DataTable($.extend(true, {}, _settingsOptionTableCategory));
+       
+    })
+    function ShowView(url)
+    {
+        ShowViewOrEdit(url);
+    }
+</script>

@@ -1,8 +1,6 @@
 ﻿using CMS_DTO.CMSCategories;
 using CMS_DTO.CMSCustomer;
-using CMS_DTO.CMSRate;
-using CMS_DTO.CMSSiteMaitain;
-using CMS_DTO.CMSTime;
+using CMS_DTO.CMSSysConfig;
 using CMS_Entity;
 using CMS_Entity.Entity;
 using System;
@@ -13,20 +11,28 @@ using System.Threading.Tasks;
 
 namespace CMS_Shared.CMSSystemConfig
 {
-    public class CMSSystemConfigFactory
+    public class CMSSysConfigFactory
     {
-        public CMS_SiteMaintainModels GetDetailSiteMaintain(string Id)
+        public List<CMS_SysConfigModels> GetList()
         {
             try
             {
                 using (var cxt = new CMS_Context())
                 {
-                    var data = cxt.CMS_ConfigRates.Select(x => new CMS_SiteMaintainModels
-                    {
+                    var data = cxt.CMS_SysConfigs.Select(x => new CMS_SysConfigModels
+                    {                        
                         Id = x.Id,
-                        Content = x.Description,
-                    }).Where(x => x.Id.Equals(Id)).FirstOrDefault();
-
+                        Rate = x.Rate,
+                        RateType = x.RateType,
+                        WaitingTime = x.WaitingTime,
+                        SiteContent = x.SiteContent,
+                        Description = x.Description
+                    }).ToList();
+                    if (data == null)
+                    {
+                        data = new List<CMS_SysConfigModels>();
+                    }
+                    /* response data */
                     return data;
                 }
             }
@@ -34,7 +40,29 @@ namespace CMS_Shared.CMSSystemConfig
             return null;
         }
 
-        public bool UpdateSiteMaintain(CMS_SiteMaintainModels model, ref string msg)
+        public CMS_SysConfigModels GetDetailSiteMaintain(string id)
+        {
+            try
+            {
+                using (var cxt = new CMS_Context())
+                {
+                    var data = cxt.CMS_SysConfigs.Select(x => new CMS_SysConfigModels
+                    {
+                        Id = x.Id,
+                        SiteContent = x.SiteContent,
+                    }).Where(o=>o.Id.Equals(id)).FirstOrDefault();
+                    if (data == null)
+                    {
+                        data = new CMS_SysConfigModels();
+                    }
+                    return data;
+                }
+            }
+            catch (Exception ex) { }
+            return null;
+        }
+
+        public bool UpdateSiteMaintain(CMS_SysConfigModels model, ref string msg)
         {
             var result = true;
             using (var cxt = new CMS_Context())
@@ -45,10 +73,10 @@ namespace CMS_Shared.CMSSystemConfig
                     {
                         if (!string.IsNullOrEmpty(model.Id))
                         {
-                            var e = cxt.CMS_ConfigRates.Find(model.Id);
+                            var e = cxt.CMS_SysConfigs.Find(model.Id);
                             if (e != null)
                             {
-                                e.Description = model.Content;
+                                e.SiteContent = model.SiteContent;
                             }
                         }
                         cxt.SaveChanges();
@@ -65,13 +93,13 @@ namespace CMS_Shared.CMSSystemConfig
             return result;
         }
 
-        public CMS_RateModels GetDetailRatePMUSD(string Id)
+        public CMS_SysConfigModels GetDetailRatePMUSD(string Id)
         {
             try
             {
                 using (var cxt = new CMS_Context())
                 {
-                    var data = cxt.CMS_ConfigRates.Select(x => new CMS_RateModels
+                    var data = cxt.CMS_SysConfigs.Select(x => new CMS_SysConfigModels
                     {
                         Id = x.Id,
                         Rate = x.Rate,
@@ -85,7 +113,7 @@ namespace CMS_Shared.CMSSystemConfig
             return null;
         }
 
-        public bool UpdateRatePMUSD(CMS_RateModels model, ref string msg)
+        public bool UpdateRatePMUSD(CMS_SysConfigModels model, ref string msg)
         {
             var result = true;
             using (var cxt = new CMS_Context())
@@ -96,7 +124,7 @@ namespace CMS_Shared.CMSSystemConfig
                     {
                         if (!string.IsNullOrEmpty(model.Id))
                         {
-                            var e = cxt.CMS_ConfigRates.Find(model.Id);
+                            var e = cxt.CMS_SysConfigs.Find(model.Id);
                             if (e != null)
                             {
                                 e.Rate = model.Rate;
@@ -117,13 +145,13 @@ namespace CMS_Shared.CMSSystemConfig
             return result;
         }
 
-        public CMS_RateModels GetDetailRateSMSMarketing(string Id)
+        public CMS_SysConfigModels GetDetailRateSMSMarketing(string Id)
         {
             try
             {
                 using (var cxt = new CMS_Context())
                 {
-                    var data = cxt.CMS_ConfigRates.Select(x => new CMS_RateModels
+                    var data = cxt.CMS_SysConfigs.Select(x => new CMS_SysConfigModels
                     {
                         Id = x.Id,
                         Rate = x.Rate,
@@ -137,7 +165,7 @@ namespace CMS_Shared.CMSSystemConfig
             return null;
         }
 
-        public bool UpdateRateSMSMarketing(CMS_RateModels model, ref string msg)
+        public bool UpdateRateSMSMarketing(CMS_SysConfigModels model, ref string msg)
         {
             var result = true;
             using (var cxt = new CMS_Context())
@@ -148,7 +176,7 @@ namespace CMS_Shared.CMSSystemConfig
                     {
                         if (!string.IsNullOrEmpty(model.Id))
                         {
-                            var e = cxt.CMS_ConfigRates.Find(model.Id);
+                            var e = cxt.CMS_SysConfigs.Find(model.Id);
                             if (e != null)
                             {
                                 e.Rate = model.Rate;
@@ -169,13 +197,13 @@ namespace CMS_Shared.CMSSystemConfig
             return result;
         }
 
-        public CMS_RateModels GetDetailRateSMSOTP(string Id)
+        public CMS_SysConfigModels GetDetailRateSMSOTP(string Id)
         {
             try
             {
                 using (var cxt = new CMS_Context())
                 {
-                    var data = cxt.CMS_ConfigRates.Select(x => new CMS_RateModels
+                    var data = cxt.CMS_SysConfigs.Select(x => new CMS_SysConfigModels
                     {
                         Id = x.Id,
                         Rate = x.Rate,
@@ -189,7 +217,7 @@ namespace CMS_Shared.CMSSystemConfig
             return null;
         }
 
-        public bool UpdateRateSMSOTP(CMS_RateModels model, ref string msg)
+        public bool UpdateRateSMSOTP(CMS_SysConfigModels model, ref string msg)
         {
             var result = true;
             using (var cxt = new CMS_Context())
@@ -200,7 +228,7 @@ namespace CMS_Shared.CMSSystemConfig
                     {
                         if (!string.IsNullOrEmpty(model.Id))
                         {
-                            var e = cxt.CMS_ConfigRates.Find(model.Id);
+                            var e = cxt.CMS_SysConfigs.Find(model.Id);
                             if (e != null)
                             {
                                 e.Rate = model.Rate;
@@ -240,13 +268,13 @@ namespace CMS_Shared.CMSSystemConfig
         }
                 
 
-        public CMS_TimeModels GetDetailWaitingTime(string Id)
+        public CMS_SysConfigModels GetDetailWaitingTime(string Id)
         {
             try
             {
                 using (var cxt = new CMS_Context())
                 {
-                    var data = cxt.CMS_Times.Select(x => new CMS_TimeModels
+                    var data = cxt.CMS_SysConfigs.Select(x => new CMS_SysConfigModels
                     {
                         WaitingTime = x.WaitingTime,
                     }).Where(x => x.Id.Equals(Id)).FirstOrDefault();
@@ -258,7 +286,7 @@ namespace CMS_Shared.CMSSystemConfig
             return null;
         }
 
-        public bool UpdateWaitingTime(CMS_TimeModels model, ref string msg)
+        public bool UpdateWaitingTime(CMS_SysConfigModels model, ref string msg)
         {
             var result = true;
             using (var cxt = new CMS_Context())
@@ -269,7 +297,7 @@ namespace CMS_Shared.CMSSystemConfig
                     {
                         if (!string.IsNullOrEmpty(model.Id))
                         {                            
-                            var e = cxt.CMS_Times.Find(model.Id);
+                            var e = cxt.CMS_SysConfigs.Find(model.Id);
                             if (e != null)
                             {
                                 e.WaitingTime = model.WaitingTime;

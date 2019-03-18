@@ -4,17 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMS_DTO.CMSRate
+namespace CMS_Entity.Entity
 {
-    public class CMS_RateModels
+    public class CMS_SysConfigs : CMS_EntityBase
     {
         public string Id { get; set; }
         public decimal Rate { get; set; }
         public int RateType { get; set; }// otp, marketing ....
         public int WaitingTime { get; set; }
-
-        public CMS_RateModels()
-        {
-        }
+        public string SiteContent { get; set; }
+        public string Description { get; set; }
     }
 }
