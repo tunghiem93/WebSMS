@@ -32,14 +32,14 @@ namespace CMS_Web.Controllers
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return View(model);
                 }
-                model.Password = CommonHelper.Decrypt(model.Password);
+                model.Password = CommonHelper.Encrypt(model.Password);
                 var data = fac.CustomerLogin(model);
                 if (data == null)
                 {
                     ModelState.AddModelError("UserName", "Your username or password not correct");
                     return View(model);
                 }
-                Session.Add("User", data);
+                Session["User"] = data; 
                 
             } catch(Exception ex) { }
             return RedirectToAction("Index", "Home");
