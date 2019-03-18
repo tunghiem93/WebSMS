@@ -257,5 +257,31 @@ namespace CMS_Shared.CMSCustomers
             }
             return false;
         }
+
+        public CustomerModels CustomerLogin(CustomerLoginModels model)
+        {
+            try
+            {
+                using(var cxt = new CMS_Context())
+                {
+                    var data = cxt.CMS_Customers.Where(x => (x.Email == model.UserName || x.Phone == model.UserName) && (x.Password == model.Password || x.Password2 == model.Password) && x.IsActive && x.Status != (int)Commons.CustomerStatus.Watting)
+                                                .Select(x => new CustomerModels
+                                                {
+                                                    Email = x.Email,
+                                                    FirstName = x.FirstName,
+                                                    LastName = x.LastName,
+                                                    Phone = x.Phone,
+                                                    TotalCredit = x.TotalCredit,
+                                                    ID = x.Id
+                                                }).FirstOrDefault();
+                    return data;
+                                                
+                }
+            } catch(Exception ex)
+            {
+                NSLog.Logger.Error("CustomerLogin", ex);
+            }
+            return null;
+        }
     }
 }

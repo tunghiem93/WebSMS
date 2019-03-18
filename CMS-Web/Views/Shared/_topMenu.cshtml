@@ -1,6 +1,8 @@
 ﻿@{
     Layout = null;
+    var user = Session["User"] as CMS_DTO.CMSCustomer.CustomerModels
 }
+
 <header id="header" class="header">
     <!-- top-header -->
     <div class="top-header">
@@ -14,7 +16,16 @@
             </ul>
             <div class="col-md-6 ow-right-padding col-sm-8">
                 <ul class="top-menu">
-                    <li><a title="Login" href="@Url.Action("Index","Login")">Login</a></li>
+
+                    @if(user != null)
+                    {
+                        <li><a title="info" href="@Url.Action("Index","Profile")">@user.LastName</a></li>
+                        <li><a title="Login" href="@Url.Action("Logout","Login")">Logout</a></li>
+                    }
+                    else
+                    {
+                        <li><a title="Login" href="@Url.Action("Index","Login")">Login</a></li>
+                    }
                     <li><a title="Register" href="@Url.Action("Index","Register")">Register</a></li>
                 </ul>
             </div>

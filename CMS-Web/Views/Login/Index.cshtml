@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model CMS_DTO.CMSCustomer.CustomerLoginModels
 <!-- container -->
 <div class="container">
     @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home" }, { "B", "Login" } })
@@ -22,17 +23,20 @@
                     <h3>Registered User</h3>
                 </div><!-- Section Header Over -->
                 <div class="contact-form bottom-shadow">
-                    <form class="form-horizontal login-page">
+                    @using (@Html.BeginForm("Index", "Login", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal login-page", @enctype = "multipart/form-data" }))
+                    {
                         <div class="form-group">
                             <label class="col-md-4">Email Address</label>
                             <div class="col-md-8">
-                                <input type="email" class="form-control" id="txt_email" placeholder="enter your email" required />
+                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @placeholder = "enter your email or phone", @autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.UserName, null, new { @class = "label label-danger" })
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="password" class="col-md-4">Password</label>
                             <div class="col-md-8">
-                                <input type="password" class="form-control" id="password" placeholder="*****" required />
+                                @Html.PasswordFor(model => model.Password, new { @class = "form-control", @id = "password", @placeholder = "*****", @autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.Password, null, new { @class = "label label-danger" })
                             </div>
                         </div>
                         <div class="drop-line bottom-shadow"></div>
@@ -40,7 +44,7 @@
                             <a title=">Forgot Password " href="#">Forgot your Password ?</a>
                             <input type="submit" value="Login" class="btn btn-default  pull-right">
                         </div>
-                    </form>
+                    }
                 </div>
             </div><!-- col-md-6 /- -->
             <!-- col-md-6 -->
