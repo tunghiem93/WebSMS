@@ -12,6 +12,7 @@ namespace CMS_Entity.Entity
         public decimal Rate { get; set; }
         public int RateType { get; set; }// otp, marketing ....
         public int WaitingTime { get; set; }
+        public decimal TotalCredit { get; set; }
         public string SiteContent { get; set; }
         public string Description { get; set; }
     }

@@ -1,0 +1,32 @@
+﻿@model CMS_DTO.CMSSysConfig.CMS_SysConfigModels 
+@using CMS_Shared
+<div role="main" style="display:inline-block;height:100%;width:100%">
+    @*<div class="se-pre-con" style="display: none;"></div>*@
+    <div class="page-title">
+        <!-- BEGIN PAGE BAR -->
+        @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Trang chủ" }, { "B", "Site duy trì - Chi tiết" } })
+        <!-- END PAGE BAR -->
+    </div>
+    <div class="page-main">
+        <div class="col-md-12 col-sm-12 col-xs-12 x_panel">
+            <div class="x_content">
+                <div class="row text-right">
+                    <ul class="header-buttons pull-right list-inline">
+                        <li>
+                            <a href="javascript:void(0)" class="btn btn-danger" id="btn-delete" onclick="CloseDetail()">
+                                <i class="fa fa-times"></i>
+                                &nbsp;Hủy
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="box-body" style="display: block;">
+                    <div class="row form-horizontal form-label-left" style="margin-bottom:15px;">
+                        @Html.Raw(Model.SiteContent)
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

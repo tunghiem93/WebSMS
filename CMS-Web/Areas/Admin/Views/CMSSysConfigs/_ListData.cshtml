@@ -31,13 +31,13 @@
                                 {
                                     <tr class="odd gradeX">
                                         <td class="text-center bold"> Rate USD </td>
-                                        <td class="text-center"> @item.RateUSD </td>
+                                        <td class="text-center"> @item.Rate </td>
                                         <td class="text-center">
                                             <a href="javascript:void(0)"
-                                               onclick='ShowView("@Url.Action("View","CMSSysConfigs",new { Id=item.Id})")'
+                                               onclick='ShowView("@Url.Action("ViewRateUSD","CMSSysConfigs",new { Id=item.Id})")'
                                                class="btn btn-primary btn-xs view details"><i class="fa fa-eye"></i>&nbsp;Xem</a>&nbsp;&nbsp;
                                             <a href="javascript:void(0)"
-                                               onclick='ShowView("@Url.Action("Edit","CMSSysConfigs",new { Id=item.Id})")'
+                                               onclick='ShowView("@Url.Action("EditRateUSD","CMSSysConfigs",new { Id=item.Id})")'
                                                class="btn btn-info btn-xs edit details"><i class="fa fa-edit"></i>&nbsp;Sửa</a>&nbsp;&nbsp;
                                         </td>
                                     </tr>
@@ -46,13 +46,13 @@
                                 {
                                     <tr class="odd gradeX">
                                         <td class="text-center bold"> Rate PM/USD </td>
-                                        <td class="text-center"> @item.RatePMUSD </td>
+                                        <td class="text-center"> @item.Rate </td>
                                         <td class="text-center">
                                             <a href="javascript:void(0)"
-                                               onclick='ShowView("@Url.Action("View","CMSSysConfigs",new { Id=item.Id})")'
+                                               onclick='ShowView("@Url.Action("ViewRatePMUSD","CMSSysConfigs",new { Id=item.Id})")'
                                                class="btn btn-primary btn-xs view details"><i class="fa fa-eye"></i>&nbsp;Xem</a>&nbsp;&nbsp;
                                             <a href="javascript:void(0)"
-                                               onclick='ShowView("@Url.Action("Edit","CMSSysConfigs",new { Id=item.Id})")'
+                                               onclick='ShowView("@Url.Action("EditRatePMUSD","CMSSysConfigs",new { Id=item.Id})")'
                                                class="btn btn-info btn-xs edit details"><i class="fa fa-edit"></i>&nbsp;Sửa</a>&nbsp;&nbsp;
                                         </td>
                                     </tr>
@@ -61,13 +61,13 @@
                                 {
                                     <tr class="odd gradeX">
                                         <td class="text-center bold"> Rate SMS Marketing </td>
-                                        <td class="text-center"> @item.RateMarketing </td>
+                                        <td class="text-center"> @item.Rate </td>
                                         <td class="text-center">
                                             <a href="javascript:void(0)"
-                                               onclick='ShowView("@Url.Action("View","CMSSysConfigs",new { Id=item.Id})")'
+                                               onclick='ShowView("@Url.Action("ViewRateSMSMarketing","CMSSysConfigs",new { Id=item.Id})")'
                                                class="btn btn-primary btn-xs view details"><i class="fa fa-eye"></i>&nbsp;Xem</a>&nbsp;&nbsp;
                                             <a href="javascript:void(0)"
-                                               onclick='ShowView("@Url.Action("Edit","CMSSysConfigs",new { Id=item.Id})")'
+                                               onclick='ShowView("@Url.Action("EditRateSMSMarketing","CMSSysConfigs",new { Id=item.Id})")'
                                                class="btn btn-info btn-xs edit details"><i class="fa fa-edit"></i>&nbsp;Sửa</a>&nbsp;&nbsp;
                                         </td>
                                     </tr>
@@ -76,13 +76,13 @@
                                 {
                                     <tr class="odd gradeX">
                                         <td class="text-center bold"> Rate SMS OTP </td>
-                                        <td class="text-center"> @item.RateOTP </td>
+                                        <td class="text-center"> @item.Rate </td>
                                         <td class="text-center">
                                             <a href="javascript:void(0)"
-                                               onclick='ShowView("@Url.Action("View","CMSSysConfigs",new { Id=item.Id})")'
+                                               onclick='ShowView("@Url.Action("ViewRateSMSOTP","CMSSysConfigs",new { Id=item.Id})")'
                                                class="btn btn-primary btn-xs view details"><i class="fa fa-eye"></i>&nbsp;Xem</a>&nbsp;&nbsp;
                                             <a href="javascript:void(0)"
-                                               onclick='ShowView("@Url.Action("Edit","CMSSysConfigs",new { Id=item.Id})")'
+                                               onclick='ShowView("@Url.Action("EditRateSMSOTP","CMSSysConfigs",new { Id=item.Id})")'
                                                class="btn btn-info btn-xs edit details"><i class="fa fa-edit"></i>&nbsp;Sửa</a>&nbsp;&nbsp;
                                         </td>
                                     </tr>
@@ -91,13 +91,13 @@
                                 {
                                     <tr class="odd gradeX">
                                         <td class="text-center bold"> Credit thành viên mới </td>
-                                        <td class="text-center"> @item.CreditNewMember </td>
+                                        <td class="text-center"> @item.TotalCredit </td>
                                         <td class="text-center">
                                             <a href="javascript:void(0)"
-                                               onclick='ShowView("@Url.Action("View","CMSSysConfigs",new { Id=item.Id})")'
+                                               onclick='ShowView("@Url.Action("ViewCreditNewMember","CMSSysConfigs",new { Id=item.Id})")'
                                                class="btn btn-primary btn-xs view details"><i class="fa fa-eye"></i>&nbsp;Xem</a>&nbsp;&nbsp;
                                             <a href="javascript:void(0)"
-                                               onclick='ShowView("@Url.Action("Edit","CMSSysConfigs",new { Id=item.Id})")'
+                                               onclick='ShowView("@Url.Action("EditCreditNewMember","CMSSysConfigs",new { Id=item.Id})")'
                                                class="btn btn-info btn-xs edit details"><i class="fa fa-edit"></i>&nbsp;Sửa</a>&nbsp;&nbsp;
                                         </td>
                                     </tr>
@@ -109,35 +109,61 @@
                                         <td class="text-center"> @item.WaitingTime </td>
                                         <td class="text-center">
                                             <a href="javascript:void(0)"
-                                               onclick='ShowView("@Url.Action("View","CMSSysConfigs",new { Id=item.Id})")'
+                                               onclick='ShowView("@Url.Action("ViewWaitingTime","CMSSysConfigs",new { Id=item.Id})")'
                                                class="btn btn-primary btn-xs view details"><i class="fa fa-eye"></i>&nbsp;Xem</a>&nbsp;&nbsp;
                                             <a href="javascript:void(0)"
-                                               onclick='ShowView("@Url.Action("Edit","CMSSysConfigs",new { Id=item.Id})")'
+                                               onclick='ShowView("@Url.Action("EditWaitingTime","CMSSysConfigs",new { Id=item.Id})")'
                                                class="btn btn-info btn-xs edit details"><i class="fa fa-edit"></i>&nbsp;Sửa</a>&nbsp;&nbsp;
                                         </td>
                                     </tr>
                                 }
                                 if (item.RateType == (int)Commons.ConfigType.SiteHTML)
                                 {
+                                    if (item.IsActive == true)
+                                    {
                                     <tr class="odd gradeX">
                                         <td class="text-center bold"> Site duy trì </td>
                                         <td class="text-center">
                                             <a href="javascript:void(0)"
-                                               onclick='ShowView("@Url.Action("View","CMSSysConfigs",new { Id=item.Id})")'
-                                               class="btn btn-success btn-xs view details"><i class="fa fa-eye"></i>&nbsp;OPEN</a>&nbsp;||
+                                               onclick='ShowView("@Url.Action("OpenSiteMaintain","CMSSysConfigs",new { Id=item.Id})")'
+                                               class="btn btn-info btn-xs view details"><i class="fa fa-folder-open"></i>&nbsp;OPEN</a>&nbsp;||
                                             <a href="javascript:void(0)"
-                                               onclick='ShowView("@Url.Action("Edit","CMSSysConfigs",new { Id=item.Id})")'
-                                               class="btn btn-info btn-xs edit default"><i class="fa fa-edit"></i>&nbsp;LOCKED</a>&nbsp;&nbsp;
+                                               onclick='ShowView("@Url.Action("LockSiteMaintain","CMSSysConfigs",new { Id=item.Id})")'
+                                               class="btn btn-default btn-xs edit details"><i class="fa fa-lock"></i>&nbsp;LOCKED</a>&nbsp;&nbsp;
                                         </td>
                                         <td class="text-center">
                                             <a href="javascript:void(0)"
-                                               onclick='ShowView("@Url.Action("View","CMSSysConfigs",new { Id=item.Id})")'
+                                               onclick='ShowView("@Url.Action("ViewSiteMaintain","CMSSysConfigs",new { Id=item.Id})")'
                                                class="btn btn-primary btn-xs view details"><i class="fa fa-eye"></i>&nbsp;Xem</a>&nbsp;&nbsp;
                                             <a href="javascript:void(0)"
-                                               onclick='ShowView("@Url.Action("Edit","CMSSysConfigs",new { Id=item.Id})")'
+                                               onclick='ShowView("@Url.Action("EditSiteMaintain","CMSSysConfigs",new { Id=item.Id})")'
                                                class="btn btn-info btn-xs edit details"><i class="fa fa-edit"></i>&nbsp;Sửa</a>&nbsp;&nbsp;
                                         </td>
                                     </tr>
+                                    }
+                                    else
+                                    {
+                                    <tr class="odd gradeX">
+                                        <td class="text-center bold"> Site duy trì </td>
+                                        <td class="text-center">
+                                            <a href="javascript:void(0)"
+                                               onclick='ShowView("@Url.Action("OpenSiteMaintain", "CMSSysConfigs", new { Id = item.Id })")'
+                                               class="btn btn-default btn-xs view details"><i class="fa fa-lock"></i>&nbsp;OPEN</a>&nbsp;||
+                                            <a href="javascript:void(0)"
+                                               onclick='ShowView("@Url.Action("LockSiteMaintain", "CMSSysConfigs", new { Id = item.Id })")'
+                                               class="btn btn-info btn-xs edit details"><i class="fa fa-folder-open"></i>&nbsp;LOCKED</a>&nbsp;&nbsp;
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="javascript:void(0)"
+                                               onclick='ShowView("@Url.Action("ViewSiteMaintain","CMSSysConfigs",new { Id=item.Id})")'
+                                               class="btn btn-primary btn-xs view details"><i class="fa fa-eye"></i>&nbsp;Xem</a>&nbsp;&nbsp;
+                                            <a href="javascript:void(0)"
+                                               onclick='ShowView("@Url.Action("EditSiteMaintain","CMSSysConfigs",new { Id=item.Id})")'
+                                               class="btn btn-info btn-xs edit details"><i class="fa fa-edit"></i>&nbsp;Sửa</a>&nbsp;&nbsp;
+                                        </td>
+                                    </tr>
+                                    }
+
                                 }
                             }
                         }
