@@ -12,6 +12,11 @@
 <div role="main">
     <div class="se-pre-con" style="display: none;"></div>
     <div class="_gridview">
+        <div class="page-title">
+            <!-- BEGIN PAGE BAR -->
+            @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Trang chủ" }, { "B", "Hệ thống" } })
+            <!-- END PAGE BAR -->
+        </div>
         <div class="page-main">
             <div id="div-silder">
                 <fieldset>
@@ -51,9 +56,9 @@
                     </div>
                     @using (@Html.BeginForm("UpdateCompanyInfo", "Home", FormMethod.Post, new { @class = "form-horizontal form-edit-com", @enctype = "multipart/form-data" }))
                     {
-                       <div class="div-partial-company">
-                           @Html.Partial("_CompanyInfo", Model)
-                       </div>
+                        <div class="div-partial-company">
+                            @Html.Partial("_CompanyInfo", Model)
+                        </div>
                     }
                 </fieldset>
 
