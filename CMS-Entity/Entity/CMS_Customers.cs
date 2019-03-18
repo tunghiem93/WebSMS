@@ -19,6 +19,7 @@ namespace CMS_Entity.Entity
         public int Status { get; set; }
         public string Wallet_Receiving_Money { get; set; } // ví nhận tiền
         public decimal TotalCredit { get; set; }
+
         public virtual List<CMS_CustomerActiveCode> CustomerActiveCode { get; set; }
 
         public CMS_Customers()
