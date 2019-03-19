@@ -16,14 +16,15 @@ using System.Web.Mvc;
 namespace CMS_Web.Areas.Admin.Controllers
 {
     [NuAuth]
-    public class CMSPaymentMethodController : BaseController
+    public class CMSPaymentMethodController : HQController
     {
         private CMSPaymentMethodFactory _factory;
         public CMSPaymentMethodController()
         {
             _factory = new CMSPaymentMethodFactory();
+            ViewBag.ExChange = GetListExChange();
         }
-        // GET: Admin/CMSCategories
+        // GET: Admin/CMSPaymentMethod
         public ActionResult Index()
         {
             return View();
@@ -59,8 +60,8 @@ namespace CMS_Web.Areas.Admin.Controllers
                 }
 
                 var msg = "";
-                model.CreatedBy = CurrentUser.UserId;
-                model.UpdatedBy = CurrentUser.UserId;
+                //model.CreatedBy = CurrentUser.UserId;
+                //model.UpdatedBy = CurrentUser.UserId;
                 var result = _factory.CreateOrUpdate(model, ref msg);
                 if (result)
                 {
@@ -97,7 +98,7 @@ namespace CMS_Web.Areas.Admin.Controllers
                 }
                 
                 var msg = "";
-                model.UpdatedBy = CurrentUser.UserId;
+                //model.UpdatedBy = CurrentUser.UserId;
                 var result = _factory.CreateOrUpdate(model, ref msg);
                 if (result)
                 {                   

@@ -46,9 +46,16 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Reference Exchange</label>
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight">Reference Exchange</label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-                @Html.TextBoxFor(model => model.ReferenceExchange, new { @class = "form-control", @placeholder = "Reference Exchange", @autocomplete = "off" })
+                @Html.DropDownListFor(model => model.ReferenceExchange,
+                    new SelectList(ViewBag.ExChange, "Value", "Text", Model.ReferenceExchange), "Reference Exchange",
+                    new
+                    {
+                        @class = "form-control select2_multiple",
+                        @id = "ExChangeDdl",
+                        @style = "width:100%;"
+                    })
                 @Html.ValidationMessageFor(model => model.ReferenceExchange, null, new { @class = "label label-danger" })
             </div>
         </div>
@@ -61,3 +68,14 @@
     </fieldset>
 </div>
 <script src="@Url.Content("~/Scripts/InputCustom.js")"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#ExChangeDdl").select2({
+            placeholder: "Reference Exchange",
+            //allowClear: true
+        });
+    });    
+    
+</script>

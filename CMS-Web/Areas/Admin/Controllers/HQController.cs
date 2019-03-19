@@ -1,4 +1,5 @@
 ﻿using CMS_DTO.CMSBase;
+using CMS_Shared;
 using CMS_Shared.CMSCategories;
 using System;
 using System.Collections.Generic;
@@ -55,5 +56,17 @@ namespace CMS_Web.Areas.Admin.Controllers
 
             return models;
         }
+
+        public List<SelectListItem> GetListExChange()
+        {
+            var _lstEXChange = new List<SelectListItem>() {
+                new SelectListItem() {Text=Commons.ExchangeType.None.ToString(),Value=Commons.ExchangeType.None.ToString("d") },
+                new SelectListItem() {Text=Commons.ExchangeType.Binance.ToString(),Value=Commons.ExchangeType.Binance.ToString("d")},
+                new SelectListItem() {Text=Commons.ExchangeType.Bittrex.ToString(),Value=Commons.ExchangeType.Bittrex.ToString("d") },
+                //new SelectListItem() {Text=Commons.ExchangeType.None.ToString(),Value=Commons.ETimeType.ToolIncrease.ToString("d")},
+            };
+
+            return _lstEXChange;
+        }        
     }
 }
