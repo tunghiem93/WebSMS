@@ -11,7 +11,7 @@ namespace CMS_Entity.Entity
         public string Id { get; set; }
         public string PackageName { get; set; }
         public decimal PackageSMS { get; set; }
-        public decimal PackagePrice { get; set; }
+        //public decimal PackagePrice { get; set; }
         public decimal Discount { get; set; }
         public decimal SMSPrice { get; set; }
     }

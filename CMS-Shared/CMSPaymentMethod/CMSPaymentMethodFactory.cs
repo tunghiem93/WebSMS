@@ -30,6 +30,10 @@ namespace CMS_Shared.CMSEmployees
                                 Id = _Id,
                                 PaymentName = model.PaymentName,
                                 PaymentType = model.PaymentType,
+                                WalletMoney = model.WalletMoney,
+                                ReferenceExchange = model.ReferenceExchange,
+                                ScaleNumber = model.ScaleNumber,
+                                TagContent = model.TagContent,
                                 IsActive = model.IsActive,
                                 UpdatedBy = model.UpdatedBy,
                                 UpdatedDate = DateTime.Now,
@@ -45,6 +49,10 @@ namespace CMS_Shared.CMSEmployees
                             {
                                 e.PaymentName = model.PaymentName;
                                 e.PaymentType = model.PaymentType;
+                                e.WalletMoney = model.WalletMoney;
+                                e.ReferenceExchange = model.ReferenceExchange;
+                                e.ScaleNumber = model.ScaleNumber;
+                                e.TagContent = model.TagContent;
                                 e.IsActive = model.IsActive;
                                 e.UpdatedDate = DateTime.Now;
                                 e.UpdatedBy = model.UpdatedBy;
@@ -100,6 +108,10 @@ namespace CMS_Shared.CMSEmployees
                                                     Id = x.Id,
                                                     PaymentName = x.PaymentName,
                                                     PaymentType = x.PaymentType,
+                                                    WalletMoney = x.WalletMoney,
+                                                    ReferenceExchange = x.ReferenceExchange,
+                                                    ScaleNumber = x.ScaleNumber,
+                                                    TagContent = x.TagContent,
                                                     IsActive = x.IsActive,
                                                     UpdatedBy = x.UpdatedBy,
                                                     UpdatedDate = x.UpdatedDate,
@@ -124,6 +136,10 @@ namespace CMS_Shared.CMSEmployees
                         Id = x.Id,
                         PaymentName = x.PaymentName,
                         PaymentType = x.PaymentType,
+                        WalletMoney = x.WalletMoney,
+                        ReferenceExchange = x.ReferenceExchange,
+                        ScaleNumber = x.ScaleNumber,
+                        TagContent = x.TagContent,
                         IsActive = x.IsActive,
                         UpdatedBy = x.UpdatedBy,
                         UpdatedDate = x.UpdatedDate,

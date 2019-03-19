@@ -23,6 +23,10 @@
                         <tr>
                             <th class="text-center"> Payment Name </th>
                             <th class="text-center"> Payment Type </th>
+                            <th class="text-center"> Wallet For Money </th>
+                            <th class="text-center"> Tag Content </th>
+                            <th class="text-center"> Scale Number </th>
+                            <th class="text-center"> Reference Exchange </th>
                             <th class="text-center"> Status </th>
                             <th class="text-center"> Action </th>
                         </tr>
@@ -32,33 +36,37 @@
                         {
                             foreach (var item in Model)
                             {
-                                <tr class="odd gradeX">
-                                    <td class="text-center">@item.PaymentName</td>
-                                    <td class="text-center">@item.PaymentType</td>
-                                    <td class="text-center">
-                                        @{
-                                            if (item.IsActive)
-                                            {
-                                                <span class="label label-sm label-success"> Running </span>
-                                            }
-                                            else
-                                            {
-                                                <span class="label label-sm label-danger"> Pending </span>
-                                            }
-                                        }
-                                    </td>
-                                    <td class="text-center">
-                                        @*<a href="javascript:void(0)"
-                                           onclick='ShowView("@Url.Action("View", "CMSDepositPackage", new { Id = item.Id })")'
-                                           class="btn btn-primary btn-xs view details"><i class="fa fa-eye"></i>&nbsp;View</a>&nbsp;&nbsp;*@
-                                        <a href="javascript:void(0)"
-                                           onclick='ShowView("@Url.Action("Edit", "CMSPaymentMethod", new { Id = item.Id })")'
-                                           class="btn btn-info btn-xs edit details"><i class="fa fa-edit"></i>&nbsp;Edit</a>&nbsp;&nbsp;
-                                        <a href="javascript:void(0)"
-                                            onclick='ShowView("@Url.Action("Delete","CMSPaymentMethod",new { Id=item.Id})")'
-                                            class="btn btn-danger btn-xs delete details"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>
-                                    </td>
-                                </tr>
+                        <tr class="odd gradeX">
+                            <td class="text-center">@item.PaymentName</td>
+                            <td class="text-center">@item.PaymentType</td>
+                            <td class="text-center">@item.WalletMoney</td>
+                            <td class="text-center">@item.TagContent</td>
+                            <td class="text-center">@item.ScaleNumber</td>
+                            <td class="text-center">@item.ReferenceExchange</td>
+                            <td class="text-center">
+                                @{
+                                    if (item.IsActive)
+                                    {
+                                        <span class="label label-sm label-success"> Running </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="label label-sm label-danger"> Pending </span>
+                                    }
+                                }
+                            </td>
+                            <td class="text-center">
+                                @*<a href="javascript:void(0)"
+            onclick='ShowView("@Url.Action("View", "CMSDepositPackage", new { Id = item.Id })")'
+            class="btn btn-primary btn-xs view details"><i class="fa fa-eye"></i>&nbsp;View</a>&nbsp;&nbsp;*@
+                                <a href="javascript:void(0)"
+                                   onclick='ShowView("@Url.Action("Edit", "CMSPaymentMethod", new { Id = item.Id })")'
+                                   class="btn btn-info btn-xs edit details"><i class="fa fa-edit"></i>&nbsp;Edit</a>&nbsp;&nbsp;
+                                <a href="javascript:void(0)"
+                                   onclick='ShowView("@Url.Action("Delete","CMSPaymentMethod",new { Id=item.Id})")'
+                                   class="btn btn-danger btn-xs delete details"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>
+                            </td>
+                        </tr>
                             }
                         }
                     </tbody>
@@ -109,10 +117,10 @@
         ],
         "pageLength": 6,
         "columnDefs": [
-            { "orderable": false, "targets": [0,2] },
+            { "orderable": false, "targets": [0,7] },
             { "width": "8%", "targets": [0] },
-            { "width": "5%", "targets": [1, 2] },
-            { "width": "20%", "targets": [3] },
+            { "width": "5%", "targets": [1, 2, 3, 4, 5, 6] },
+            { "width": "20%", "targets": [7] },
         ],
         "order": [
             [0, "asc"]

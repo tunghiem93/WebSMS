@@ -25,6 +25,34 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Wallet For Money</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.WalletMoney, new { @class = "form-control", @placeholder = "Wallet For Money", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.WalletMoney, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Tag Content</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.TagContent, new { @class = "form-control", @placeholder = "Tag Content", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.TagContent, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Scale Number</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.ScaleNumber, new { @class = "form-control", @placeholder = "Scale Number", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.ScaleNumber, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Reference Exchange</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.ReferenceExchange, new { @class = "form-control", @placeholder = "Reference Exchange", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.ReferenceExchange, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+        <div class="form-group">
             <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">Status</label>
             <div class="col-md-1 col-sm-1 col-xs-12">
                 <label>@Html.CheckBoxFor(model => model.IsActive, new { @class = "icheck" })</label>

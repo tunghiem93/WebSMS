@@ -14,7 +14,9 @@ namespace CMS_DTO
         public string PackageName { get; set; }
         [Required]
         public decimal PackageSMS { get; set; }
-        [Required]
+        public decimal RateSMS {
+            get;set;
+        }
         public decimal PackagePrice { get; set; }
         [Required]
         public decimal Discount { get; set; }
