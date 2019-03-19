@@ -139,3 +139,15 @@
         </div><!-- container /- -->
     </div><!-- menu-block /- -->
 </header>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var str = location.href.toLowerCase();
+        $("#navbar ul li a").each(function () {
+            if (str.indexOf(this.href.toLowerCase()) >= 0) {
+                $("#navbar ul li").removeClass("active");
+                $(this).parent().addClass("active");
+            }
+        });
+    });
+</script>
