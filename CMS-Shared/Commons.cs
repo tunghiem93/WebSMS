@@ -44,10 +44,11 @@ namespace CMS_Shared
             USD = 0,
             PMUSD = 1,
             SMSOTP = 2,
-            SMSMarketing = 3,
-            CreditDefault = 4,
-            WaitingTime = 5,
-            SiteHTML = 6,
+            SMS = 3,
+            SMSMarketing = 4,
+            CreditDefault = 5,
+            WaitingTime = 6,
+            SiteHTML = 7,
         }
     }    
 }

@@ -29,6 +29,51 @@ namespace CMS_Web.Areas.Admin.Controllers
             return PartialView("_ListData", model);
         }
 
+        #region Rate SMS 
+        [HttpGet]
+        public ActionResult ViewRateSMS(string Id)
+        {
+            var model = _fac.GetDetailRateSMS(Id);
+            return PartialView("_ViewRateSMS", model);
+        }
+
+        [HttpGet]
+        public ActionResult EditRateSMS(string Id)
+        {
+            var model = _fac.GetDetailRateSMS(Id);
+            return PartialView("_EditRateSMS", model);
+        }
+
+        [HttpPost]
+        public ActionResult EditRateSMS(CMS_SysConfigModels model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return PartialView("_EditRateSMS", model);
+                }
+
+                var msg = "";
+                var result = _fac.UpdateRateSMS(model, ref msg);
+                if (result)
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError("__EditRateSMSError: ", msg);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return PartialView("_EditRateSMS", model);
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return PartialView("_EditRateSMS", model);
+            }
+
+        }
+        #endregion
+
         #region Rate USD 
         [HttpGet]
         public ActionResult ViewRateUSD(string Id)

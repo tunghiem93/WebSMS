@@ -11,5 +11,9 @@ namespace CMS_Entity.Entity
         public string Id { get; set; }
         public string PaymentName { get; set; }
         public int PaymentType { get; set; }
+        public string WalletMoney { get; set; }
+        public string TagContent { get; set; }
+        public int? ScaleNumber { get; set; }
+        public string ReferenceExchange { get; set; }
     }
 }

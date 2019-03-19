@@ -1,9 +1,9 @@
-﻿@model CMS_DTO.CMS_DepositPackageModel
+﻿@model CMS_DTO.CMSSysConfig.CMS_SysConfigModels
 <div role="main" style="display:inline-block;height:100%;width:100%">
     @*<div class="se-pre-con" style="display: none;"></div>*@
     <div class="page-title">
         <!-- BEGIN PAGE BAR -->
-        @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home Page" }, { "B", "Deposit Package - Delete" } })
+        @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Trang chủ" }, { "B", "Rate SMS - Chỉnh sửa" } })
         <!-- END PAGE BAR -->
     </div>
     <div class="page-main">
@@ -14,28 +14,21 @@
                         <li>
                             <a href="javascript:void(0)" class="btn btn-danger" id="btn-delete" onclick="CloseDetail()">
                                 <i class="fa fa-times"></i>
-                                &nbsp;Cancel
+                                &nbsp;Hủy
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:void(0);" class="btn btn-success" id="btn-edit-save" onclick="SubmitForm('#form-delete')">
+                            <a href="javascript:void(0);" class="btn btn-success" id="btn-edit-save" onclick="SubmitForm('#form-edit')">
                                 <i class="fa fa-save"></i>
-                                &nbsp;Save
+                                &nbsp;Lưu
                             </a>
                         </li>
                     </ul>
                 </div>
                 <div class="box-body" style="display: block;">
-                    @using (@Html.BeginForm("Delete", "CMSDepositPackage", FormMethod.Post, new { @id = "form-delete", @class = "form-horizontal", @enctype = "multipart/form-data" }))
+                    @using (@Html.BeginForm("EditRateSMS", "CMSSysConfigs", FormMethod.Post, new { @id = "form-edit", @class = "form-horizontal", @enctype = "multipart/form-data" }))
                     {
-                        <div class="form-group">
-                            <label class="col-md-2 control-label"></label>
-                            <div class="col-md-6" style="font-size: 20px; width: 100%;">
-                                Do you want delete <strong>[ @Model.PackageName ]</strong>?
-                                <br />
-                                @Html.HiddenFor(model => model.Id)
-                            </div>
-                        </div>
+                        @Html.Partial("_FormRateSMS", Model)
                     }
                 </div>
 
@@ -46,7 +39,10 @@
 </div>
 
 <script>
-    $("#form-delete").submit(function (e) {
+    $("#form-edit").submit(function (e) {
+        for (instance in CKEDITOR.instances) {
+            CKEDITOR.instances[instance].updateElement();
+        }
         $.ajax({
             beforeSend: function () {
                 $('.se-pre-con').show();
