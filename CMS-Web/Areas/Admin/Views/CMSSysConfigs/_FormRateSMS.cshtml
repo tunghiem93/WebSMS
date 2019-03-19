@@ -9,9 +9,9 @@
 
 <div class="row form-horizontal form-label-left" style="margin-bottom:15px;">
     <div class="form-group">
-        <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Rate PM/USD</label>
+        <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Rate SMS</label>
         <div class="col-md-6 col-sm-6 col-xs-12">
-            @Html.TextBoxFor(model => model.Value, new { @class = "form-control", @placeholder = "Rate PM/USD", @autocomplete = "off" })
+            @Html.TextBoxFor(model => model.Value, new { @class = "form-control", @placeholder = "Rate SMS", @autocomplete = "off" })
             @Html.ValidationMessageFor(model => model.Value, null, new { @class = "label label-danger" })
         </div>
     </div>

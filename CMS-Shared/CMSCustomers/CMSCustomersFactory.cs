@@ -199,10 +199,10 @@ namespace CMS_Shared.CMSCustomers
                             if (result)
                             {
                                 //get Credit default
-                                var Credit = cxt.CMS_SysConfigs.FirstOrDefault(x => x.RateType == (int)Commons.ConfigType.CreditDefault);
+                                var Credit = cxt.CMS_SysConfigs.FirstOrDefault(x => x.ValueType == (int)Commons.ConfigType.CreditDefault);
                                 if (Credit != null)
                                 {
-                                    Cus.TotalCredit = Credit.Rate;
+                                    Cus.TotalCredit = Credit.Value;
                                 }
                                 Cus.Status = (int)Commons.CustomerStatus.Open;
                                 Cus.IsVerifiedEmail = true;
