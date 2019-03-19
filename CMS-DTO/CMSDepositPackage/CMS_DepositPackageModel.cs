@@ -27,5 +27,7 @@ namespace CMS_DTO
         public string CreatedBy { get; set; }
         public DateTime UpdatedDate { get; set; }
         public string UpdatedBy { get; set; }
+        public decimal PriceUSD { get; set; }
+        public decimal PriceDefault { get; set; }
     }
 }

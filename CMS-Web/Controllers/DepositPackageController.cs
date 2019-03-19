@@ -1,4 +1,5 @@
-﻿using CMS_Shared.CMSEmployees;
+﻿using CMS_DTO;
+using CMS_Shared.CMSEmployees;
 using CMS_Web.Web.App_Start;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,12 @@ namespace CMS_Web.Controllers
         {
             var model = fac.GetList();
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddDepositPackage(CMS_DepositPackageModel item)
+        {
+            return View();
         }
     }
 }
