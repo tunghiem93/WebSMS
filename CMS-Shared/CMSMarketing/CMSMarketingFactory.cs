@@ -13,6 +13,8 @@ namespace CMS_Shared.CMSMarketing
 {
     public class CMSMarketingFactory
     {
+        BaseFactory _baseFactory = new BaseFactory();
+
         public CMS_ReportModels Export(ref IXLWorksheet wsMarketing, ref IXLWorksheet wsTime)
         {
             var result = new CMS_ReportModels();
@@ -66,7 +68,7 @@ namespace CMS_Shared.CMSMarketing
                 {
                     try
                     {
-                        //DataTable dtMarketing = _productFactory.ReadExcelFile(@filePath, "Ingredients");
+                        DataTable dtMarketing = _baseFactory.ReadExcelFile(@filePath, "Ingredients");
                         NSLog.Logger.Info("Import marketing susscess");
                         cxt.SaveChanges();
                         trans.Commit();
