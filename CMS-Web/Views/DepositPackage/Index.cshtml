@@ -75,7 +75,7 @@
                             <tr>
                                 <td colspan="2" style="text-align:right">Choose your payment</td>
                                 <td>
-                                    <select class="form-control" style="width:50%"  onchange="ChangePayment(this)">
+                                    <select class="form-control" style="width:50%" id="txtPayment"  onchange="ChangePayment(this)">
                                         <option value="-1">Choose payment</option>
                                         @if(Payments !=null && Payments.Count > 0)
                                         {
@@ -103,22 +103,36 @@
 <script type="text/javascript">
     var Deposits = []
     function AddDepositPackage(that, Id, PackageName, PriceDefault) {
-        var html = "";
         $(that).addClass("hidden")
         $('.tfoot').removeClass('hidden')
-        html += "<tr class='tr_" + Id + "'>";
-        html += "<td>" + PackageName + "</td>";
-        html += "<td>" + numeral(PriceDefault).format('0,0') + "</td>";
-        html += "<td> <a href='javascript:void(0)' class='remove_" + Id + "' onclick='removepackage(\"" + Id + "\")'> Remove </a> </td>";
-        html += "</tr>";
-        $('[id=tbodydeposite]').append(html)
+        let typePayment = parseInt($('#txtPayment').val())
         var isExits = Deposits.some((x) => x.Id === Id);
         if (!isExits) {
             Deposits.push({
                 Id: Id,
                 PackageName: PackageName,
+                PayCoin: PriceDefault,
                 Price: PriceDefault
             });
+        }
+        switch (typePayment) {
+            case enumPaymentType.Perfect_Money:
+                RenderDepositNow()
+                break;
+            case enumPaymentType.XRP:
+                GetPriceFromApi()
+                break;
+            case enumPaymentType.Tron:
+                GetPriceFromApi()
+                break;
+            case enumPaymentType.ETH:
+                GetPriceFromApi()
+                break;
+            case enumPaymentType.ETC:
+                GetPriceFromApi()
+                break;
+            default:
+                RenderDepositNow()
         }
     }
 
@@ -140,24 +154,73 @@
     }
 
     function ChangePayment(that) {
-        var typePayment = $(that).val()
+        var typePayment = parseInt($(that).val())
         if (typePayment > 0) {
             $('#paynow').removeAttr("disabled")
         } else {
             $('#paynow').attr("disabled","disabled")
         }
+        
         switch (typePayment) {
             case enumPaymentType.Perfect_Money:
+                Deposits.forEach((x) => {
+                    x.PayCoin = x.Price
+                })
+                RenderDepositNow()
                 break;
             case enumPaymentType.XRP:
+                GetPriceFromApi()
                 break;
             case enumPaymentType.Tron:
+                GetPriceFromApi()
                 break;
             case enumPaymentType.ETH:
+                GetPriceFromApi()
                 break;
             case enumPaymentType.ETC:
+                GetPriceFromApi()
                 break;
             default:
+                Deposits.forEach((x) => {
+                    x.PayCoin = x.Price
+                })
+                RenderDepositNow()
         }
+        
+    }
+
+    function RenderDepositNow() {
+        var html = "";
+        Deposits.forEach((x) => {
+            let _PayCoin = parseInt(x.PayCoin) > 0 ? numeral(x.PayCoin).format('0,0') : x.PayCoin
+            html += "<tr class='tr_" + x.Id + "'>";
+            html += "<td>" + x.PackageName + "</td>";
+            html += "<td>" + _PayCoin + "</td>";
+            html += "<td> <a href='javascript:void(0)' class='remove_" + x.Id + "' onclick='removepackage(\"" + x.Id + "\")'> Remove </a> </td>";
+            html += "</tr>";
+        })
+        $('[id=tbodydeposite]').html(html)
+    }
+
+    function GetPriceFromApi() {
+        $.ajax({
+            beforeSend: function () {
+            },
+            url: '@Url.Action("GetPrice", "DepositPackage")',
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                if (data !== undefined || data !== null) {
+                    Deposits.forEach((x) => {
+                        x.PayCoin = data.lastPrice
+                    });
+                    RenderDepositNow()
+                }
+            },
+            complete: function () {
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        })
     }
 </script>
