@@ -54,6 +54,11 @@ namespace CMS_DTO.CMSCustomer
         public DateTime CreatedDate { get; set; }
         public decimal TotalCredit { get; set; }
         public bool IsAuthenticated { get; set; }
+        public int SMSBalances { get; set; }
+        public string APIKey { get; set; }
+        public string APIPass { get; set; }
+        public bool IsVerifiedEmail { get; set; }
+        public bool IsVerifiedPhone { get; set; }
         public CustomerModels()
         {
             IsActive = true;
