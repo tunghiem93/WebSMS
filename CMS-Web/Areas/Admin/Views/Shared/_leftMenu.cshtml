@@ -17,15 +17,15 @@
             </li>
             <li class="nav-item active">
                 <a href="@Url.Action("Index","Home")" class="nav-link nav-toggle">
-                    <i class="fa fa-dot-circle-o"></i>
-                    <span class="title">Trang Chủ</span>
+                    <i class="fa fa-home"></i>
+                    <span class="title">Home</span>
                 </a>
             </li>
 
             <li class="nav-item">
                 <a href="@Url.Action("Index","CMSEmployees")" class="nav-link nav-toggle">
                     <i class="fa fa-dot-circle-o"></i>
-                    <span class="title">Nhân Viên</span>
+                    <span class="title">Employee</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -36,14 +36,14 @@
             </li>
             <li class="nav-item">
                 <a href="@Url.Action("Index","CMSPaymentMethod")" class="nav-link nav-toggle">
-                    <i class="fa fa-dot-circle-o"></i>
+                    <i class="icon-clock"></i>
                     <span class="title">Payment Method Manager</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="javascript:;" class="nav-link nav-toggle">
-                    <i class="fa fa-dot-circle-o"></i>
-                    <span class="title">Khách Hàng</span>
+                <a href="@Url.Action("Index","CMSCustomers")" class="nav-link nav-toggle">
+                    <i class="icon-user"></i>
+                    <span class="title">Customer Manager</span>
                 </a>
             </li>
 
@@ -54,31 +54,38 @@
                 </a>
             </li>
 
-            <li class="nav-item">
+            @*<li class="nav-item">
                 <a href="@Url.Action("Index","CMSProducts")" class="nav-link nav-toggle">
                     <i class="fa fa-dot-circle-o"></i>
                     <span class="title">Sản Phẩm</span>
                 </a>
-            </li>
+            </li>*@
 
-            <li class="nav-item">
+            @*<li class="nav-item">
                 <a href="@Url.Action("Index","CMSPolicy")" class="nav-link nav-toggle">
                     <i class="fa fa-dot-circle-o"></i>
                     <span class="title">Chính Sách</span>
                 </a>
-            </li>
+            </li>*@
 
-            <li class="nav-item">
+            @*<li class="nav-item">
                 <a href="@Url.Action("Index","CMSNews")" class="nav-link nav-toggle">
                     <i class="fa fa-dot-circle-o"></i>
                     <span class="title">Tin Tức</span>
                 </a>
-            </li>
+            </li>*@
 
             <li class="nav-item">
                 <a href="@Url.Action("Index","CMSSysConfigs")" class="nav-link nav-toggle">
                     <i class="icon-layers"></i>
-                    <span class="title">Hệ Thống</span>
+                    <span class="title">System</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="@Url.Action("Index","CMSAPI")" class="nav-link nav-toggle">
+                    <i class="icon-link"></i>
+                    <span class="title">API</span>
                 </a>
             </li>
         </ul>

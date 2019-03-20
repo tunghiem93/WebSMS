@@ -3,7 +3,7 @@
     @*<div class="se-pre-con" style="display: none;"></div>*@
     <div class="page-title">
         <!-- BEGIN PAGE BAR -->
-        @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Trang chủ" }, { "B", "Khách hàng - Xóa" } })
+        @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home Page" }, { "B", "Customer - Delete" } })
         <!-- END PAGE BAR -->
     </div>
     <div class="page-main">
@@ -14,13 +14,13 @@
                         <li>
                             <a href="javascript:void(0)" class="btn btn-danger" id="btn-delete" onclick="CloseDetail()">
                                 <i class="fa fa-times"></i>
-                                &nbsp;Hủy
+                                &nbsp;Cancel
                             </a>
                         </li>
                         <li>
                             <a href="javascript:void(0);" class="btn btn-success" id="btn-edit-save" onclick="SubmitForm('#form-delete')">
                                 <i class="fa fa-save"></i>
-                                &nbsp;Lưu
+                                &nbsp;Save
                             </a>
                         </li>
                     </ul>
@@ -31,11 +31,9 @@
                         <div class="form-group">
                             <label class="col-md-2 control-label"></label>
                             <div class="col-md-6" style="font-size: 20px; width: 100%;">
-                                Bạn có chắc chắn muốn xóa <strong>[ @Model.Name ]</strong>?
+                                Do you want delete <strong>[ @Model.Name ]</strong>?
                                 <br />
                                 @Html.HiddenFor(model => model.ID)
-                                @Html.HiddenFor(model => model.FirstName)
-                                @Html.ValidationMessageFor(model => model.FirstName, null, new { @class = "label" })
                             </div>
                         </div>
                     }

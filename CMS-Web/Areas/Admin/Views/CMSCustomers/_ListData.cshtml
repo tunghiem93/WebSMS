@@ -1,31 +1,19 @@
 ﻿@{
     Layout = null;
 }
-@model List<CMS_DTO.CMSEmployee.CMS_EmployeeModels >
-@*<style type="text/css">
-    #sample_3 ul {
-        width: 100% !important;
-    }
-
-        #sample_3 ul li .dtr-title {
-            width: 25% !important;
-        }
-
-        #sample_3 ul li .dtr-data {
-            width: 75% !important;
-        }
-</style>*@
+@model List<CMS_DTO.CMSCustomer.CustomerModels>
+@using CMS_Shared
 <div class="table-responsive">
     <div class="col-md-12">
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
         <div class="portlet box red">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-cogs"></i>Nhân viên
+                    <i class="fa fa-cogs"></i>Customers
                 </div>
                 <div class="actions">
-                    <a href="javascript:;" class="btn btn-default btn-sm" onclick='ShowView("@Url.Action("Create","CMSEmployees")")'>
-                        <i class="fa fa-plus"></i> Thêm mới
+                    <a href="javascript:;" class="btn btn-default btn-sm" onclick='ShowView("@Url.Action("Create","CMSCustomers")")'>
+                        <i class="fa fa-plus"></i> Add New
                     </a>
                 </div>
             </div>
@@ -33,13 +21,14 @@
                 <table class="table table-striped table-bordered table-hover dt-responsive" id="sample_3">
                     <thead>
                         <tr>
-                            <th class="text-center"> Họ Tên </th>
+                            <th class="text-center"> Name </th>
                             <th class="text-center"> Email </th>
-                            <th class="text-center"> Điện thoại </th>
-                            <th class="text-center"> Ngày sinh</th>
-                            <th class="text-center"> Địa chỉ</th>
-                            <th class="text-center"> Trạng thái </th>
-                            <th class="text-center"> Tùy chỉnh </th>
+                            <th class="text-center"> Phone </th>
+                            <th class="text-center"> SMS Balances </th>
+                            <th class="text-center"> Status </th>
+                            <th class="text-center"> Is Verified Email </th>
+                            <th class="text-center"> Is Verified Phone </th>
+                            <th class="text-center"> Action </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,28 +37,63 @@
                             foreach (var item in Model)
                             {
                                 <tr class="odd gradeX">
+                                    <td class="text-center">@item.Name </td>
+                                    <td class="text-center">@item.Email</td>
+                                    <td class="text-center">@item.Phone</td>
+                                    <td class="text-center">@string.Format("{0:N0}", item.SMSBalances)</td>
                                     <td class="text-center">
-                                        @item.FullName
+                                        @{
+                                            switch (item.Status)
+                                            {
+                                                case (int)Commons.CustomerStatus.Open:
+                                                    <span class="label label-sm label-success"> Openning </span>
+                                                    break;
+                                                case (int)Commons.CustomerStatus.Watting:
+                                                    <span class="label label-sm label-warning"> Watting </span>
+                                                    break;
+                                                case (int)Commons.CustomerStatus.Locked:
+                                                    <span class="label label-sm label-danger"> Locked </span>
+                                                    break;
+                                            }
+
+                                        }
                                     </td>
-                                    <td class="text-center"> @item.Employee_Email </td>
                                     <td class="text-center">
-                                        @item.Employee_Phone
+                                        @{
+                                            if (item.IsVerifiedEmail)
+                                            {
+                                                <span class="label label-sm label-success"> Verfied </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="label label-sm label-danger"> Unverified </span>
+                                            }
+
+                                        }
                                     </td>
-                                    <td class="text-center">@item.BirthDate.ToString("dd/MM/yyyy")</td>
-                                    <td>@item.Employee_Address</td>
                                     <td class="text-center">
-                                        <span class="label label-sm label-success"> @item.sStatus </span>
+                                        @{
+                                            if (item.IsVerifiedPhone)
+                                            {
+                                                <span class="label label-sm label-success"> Verfied </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="label label-sm label-danger"> Unverified </span>
+                                            }
+
+                                        }
                                     </td>
                                     <td class="text-center">
+                                        @*<a href="javascript:void(0)"
+                                            onclick='ShowView("@Url.Action("View", "CMSDepositPackage", new { Id = item.Id })")'
+                                            class="btn btn-primary btn-xs view details"><i class="fa fa-eye"></i>&nbsp;View</a>&nbsp;&nbsp;*@
                                         <a href="javascript:void(0)"
-                                           onclick='ShowView("@Url.Action("View","CMSEmployees",new { Id=item.Id})")'
-                                           class="btn btn-primary btn-xs view details"><i class="fa fa-eye"></i>&nbsp;Xem</a>&nbsp;&nbsp;
+                                           onclick='ShowView("@Url.Action("Edit", "CMSCustomers", new { Id = item.ID })")'
+                                           class="btn btn-info btn-xs edit details"><i class="fa fa-edit"></i>&nbsp;Edit</a>&nbsp;&nbsp;
                                         <a href="javascript:void(0)"
-                                           onclick='ShowView("@Url.Action("Edit","CMSEmployees",new { Id=item.Id})")'
-                                           class="btn btn-info btn-xs edit details"><i class="fa fa-edit"></i>&nbsp;Cập nhập</a>&nbsp;&nbsp;
-                                        <a href="javascript:void(0)"
-                                           onclick='ShowView("@Url.Action("Delete","CMSEmployees",new { Id=item.Id})")'
-                                           class="btn btn-danger btn-xs delete details"><i class="fa fa-trash-o"></i>&nbsp;Xóa</a>
+                                           onclick='ShowView("@Url.Action("Delete","CMSCustomers",new { Id=item.ID})")'
+                                           class="btn btn-danger btn-xs delete details"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>
                                     </td>
                                 </tr>
                             }
@@ -83,8 +107,8 @@
 </div>
 
 <script type="text/javascript">
-    var _tableEmployee = null;
-    var _settingsOptionTableEmployee = {
+    var _tableDepositPackage = null;
+    var _settingsOptionTableDepositPackage = {
         "language": {
             "aria": {
                 "sortAscending": ": activate to sort column ascending",
@@ -106,12 +130,12 @@
         },
         "oLanguage": {
 
-            "sSearch": "Tìm Kiếm:",
-            "sLengthMenu": "Xem _MENU_",
-            "sProcessing": "Đang xử lý...",
-            "sZeroRecords": "Không tìm thấy dòng nào phù hợp",
-            "sInfo": "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
-            "sInfoEmpty": "Đang xem 0 đến 0 trong tổng số 0 mục",
+            "sSearch": "Search:",
+            "sLengthMenu": "Show _MENU_",
+            "sProcessing": "Processing...",
+            "sZeroRecords": "No matching records found",
+            "sInfo": "Showing _START_ to _END_ of _TOTAL_ records",
+            "sInfoEmpty": "No records found",
             "sInfoFiltered": "(được lọc từ _MAX_ mục)",
             "sInfoPostFix": "",
         },
@@ -122,18 +146,18 @@
         ],
         "pageLength": 6,
         "columnDefs": [
-            { "orderable": false, "targets": [6] },
+            { "orderable": false, "targets": [0, 7] },
             { "width": "8%", "targets": [0] },
-            { "width": "5%", "targets": [1, 2, 3, 4, 5] },
-            { "width": "20%", "targets": [6] },
+            { "width": "5%", "targets": [1, 2, 3, 4, 5, 6] },
+            { "width": "20%", "targets": [7] },
         ],
         "order": [
-            [1, "asc"]
+            [0, "asc"]
         ]
     };
 
     $(document).ready(function () {
-        _tableEmployee = $('#sample_3').DataTable($.extend(true, {}, _settingsOptionTableEmployee));
+        _tableDepositPackage = $('#sample_3').DataTable($.extend(true, {}, _settingsOptionTableDepositPackage));
     })
 
     function ShowView(url) {

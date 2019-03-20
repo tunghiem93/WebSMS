@@ -167,8 +167,8 @@ namespace CMS_Shared.CMSEmployees
         }
         private decimal GetSMSRate(CMS_Context cxt)
         {
-            var configSMS = cxt.CMS_SysConfigs.Where(x => x.ValueType.Equals((int)Commons.ConfigType.SMS)).Select(x => new { SmsRate = x.Value }).ToList();
-            return configSMS.Select(o => o.SmsRate).FirstOrDefault();
+            decimal configSMS = cxt.CMS_SysConfigs.Where(x => x.ValueType.Equals((int)Commons.ConfigType.SMS)).Select(x => x.Value ).FirstOrDefault();
+            return configSMS;
         }
 
         private decimal GetUSDRate(CMS_Context cxt)

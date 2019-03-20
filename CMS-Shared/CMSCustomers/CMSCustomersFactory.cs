@@ -99,7 +99,95 @@ namespace CMS_Shared.CMSCustomers
             return result;
         }
 
-        public bool Delete(string Id, ref string msg)
+        public bool InsertOrUpdateByAdminSite(CustomerModels model, ref string msg)
+        {
+            var result = true;
+            using (var cxt = new CMS_Context())
+            {
+                using (var trans = cxt.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var CheckEmail = cxt.CMS_Customers.Any(x => x.Email == model.Email && x.Id != model.ID);
+                        if (CheckEmail)
+                        {
+                            msg = "E-mail is exits system";
+                            return false;
+                        }
+                        var CheckPhone = cxt.CMS_Customers.Any(x => x.Phone == model.Phone && x.Id != model.ID);
+                        if (CheckPhone)
+                        {
+                            msg = "Phone is exits system";
+                            return false;
+                        }
+
+                        if (string.IsNullOrEmpty(model.ID))
+                        {
+                            var e = new CMS_Customers
+                            {
+                                Id = Guid.NewGuid().ToString(),
+                                
+                                Email = model.Email,
+                                FirstName = model.FirstName,
+                                LastName = model.LastName,
+                                Password = model.Password,
+                                Password2 = model.Password2,
+                                Phone = model.Phone,
+                                Status = model.Status,
+                                APIKey = model.APIKey,
+                                APIPass = model.APIKey,
+                                IsVerifiedEmail = model.IsVerifiedEmail,
+                                IsVerifiedPhone= model.IsVerifiedPhone,
+                                SMSBalances = model.SMSBalances,
+                                TotalCredit = model.TotalCredit,
+                                IsActive = model.IsActive,
+                                UpdatedBy = model.UpdatedBy,
+                                UpdatedDate = DateTime.Now,
+                                CreatedBy = model.CreatedBy,
+                                CreatedDate = DateTime.Now,
+                                
+                            };
+                            cxt.CMS_Customers.Add(e);
+                        }
+                        else
+                        {
+                            var e = cxt.CMS_Customers.Find(model.ID);
+                            if (e != null)
+                            {
+                                e.UpdatedBy = model.UpdatedBy;
+                                e.FirstName = model.FirstName;
+                                e.Email = model.Email;
+                                e.IsActive = model.IsActive;
+                                e.LastName = model.LastName;
+                                e.Password = model.Password;
+                                e.Phone = model.Phone;
+                                e.Status = model.Status;
+                                e.APIKey = model.APIKey;
+                                e.APIPass = model.APIKey;
+                                e.IsVerifiedEmail = model.IsVerifiedEmail;
+                                e.IsVerifiedPhone = model.IsVerifiedPhone;
+                                e.SMSBalances = model.SMSBalances;
+                                e.TotalCredit = model.TotalCredit;
+                            }
+                        }
+                        cxt.SaveChanges();
+                        trans.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        result = false;
+                        trans.Rollback();
+                        msg = "Lỗi đường truyền mạng";
+                    }
+                    finally
+                    {
+                        cxt.Dispose();
+                    }
+                }
+            }
+            return result;
+        }
+        public bool Delete(string Id, string userID, ref string msg)
         {
             var result = true;
             using (var cxt = new CMS_Context())
@@ -109,6 +197,13 @@ namespace CMS_Shared.CMSCustomers
                     try
                     {
                         var e = cxt.CMS_Customers.Find(Id);
+                        if (e != null)
+                        {
+                            e.UpdatedBy = userID;
+                            e.UpdatedDate = DateTime.Now;
+                            e.IsActive = false;
+                            e.Status = (int)Commons.CustomerStatus.Locked;
+                        }
                         cxt.SaveChanges();
                         trans.Commit();
                     }
@@ -134,7 +229,7 @@ namespace CMS_Shared.CMSCustomers
             {
                 using (var cxt = new CMS_Context())
                 {
-                    var data = cxt.CMS_Customers.Where(x => x.Id.Equals(Id))
+                    var data = cxt.CMS_Customers.Where(x => x.Id.Equals(Id) )
                                                 .Select(x => new CustomerModels
                                                 {
                                                     CreatedBy = x.CreatedBy,
@@ -145,7 +240,15 @@ namespace CMS_Shared.CMSCustomers
                                                     IsActive = x.IsActive,
                                                     LastName = x.LastName,
                                                     Password = x.Password,
+                                                    Status = x.Status,
                                                     Phone = x.Phone,
+                                                    APIKey = x.APIKey,
+                                                    APIPass = x.APIPass,
+                                                    IsVerifiedEmail = x.IsVerifiedEmail,
+                                                    IsVerifiedPhone = x.IsVerifiedPhone,
+                                                    Password2 = x.Password2,
+                                                    SMSBalances = x.SMSBalances,
+                                                    TotalCredit = x.TotalCredit,
                                                     UpdatedBy = x.UpdatedBy,
                                                     UpdatedDate = x.UpdatedDate
                                                 }).FirstOrDefault();
@@ -162,7 +265,7 @@ namespace CMS_Shared.CMSCustomers
             {
                 using (var cxt = new CMS_Context())
                 {
-                    var data = cxt.CMS_Customers.Select(x => new CustomerModels
+                    var data = cxt.CMS_Customers.Where(x=>x.IsActive).Select(x => new CustomerModels
                     {
                         CreatedBy = x.CreatedBy,
                         CreatedDate = x.CreatedDate,
@@ -172,7 +275,15 @@ namespace CMS_Shared.CMSCustomers
                         IsActive = x.IsActive,
                         LastName = x.LastName,
                         Password = x.Password,
+                        Status = x.Status,
                         Phone = x.Phone,
+                        APIKey = x.APIKey,
+                        APIPass = x.APIPass,
+                        IsVerifiedEmail = x.IsVerifiedEmail,
+                        IsVerifiedPhone = x.IsVerifiedPhone,
+                        Password2 = x.Password2,
+                        SMSBalances = x.SMSBalances,
+                        TotalCredit = x.TotalCredit,
                         UpdatedBy = x.UpdatedBy,
                         UpdatedDate = x.UpdatedDate
                     }).ToList();

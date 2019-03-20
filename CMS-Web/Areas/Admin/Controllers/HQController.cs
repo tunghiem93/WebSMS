@@ -67,6 +67,17 @@ namespace CMS_Web.Areas.Admin.Controllers
             };
 
             return _lstEXChange;
-        }        
+        }
+
+        public List<SelectListItem> GetListAPI()
+        {
+            var _lstEXChange = new List<SelectListItem>() {
+                new SelectListItem() {Text=Commons.APIType.APISMS.ToString(),Value=Commons.APIType.APISMS.ToString("d") },
+                new SelectListItem() {Text=Commons.APIType.APISim.ToString(),Value=Commons.APIType.APISim.ToString("d")},
+                //new SelectListItem() {Text=Commons.APIType.None.ToString(),Value=Commons.APIType.ToString("d")},
+            };
+
+            return _lstEXChange;
+        }
     }
 }

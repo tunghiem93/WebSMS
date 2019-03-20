@@ -1,0 +1,74 @@
+﻿
+@model CMS_DTO.CMSAPI.CMS_APIModels
+@using CMS_Shared
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    var _ID = Model.Id;
+}
+@Html.HiddenFor(model =>model.Id)
+
+<div class="row form-horizontal form-label-left" style="margin-bottom:15px;">
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Tên API</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.APIName, new { @class = "form-control", @placeholder = "Tên API", @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.APIName, null, new { @class = "label label-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Link API</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.LinkAPI, new { @class = "form-control", @placeholder = "Link API", @autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.LinkAPI, null, new { @class = "label label-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight">Reference Exchange</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.DropDownListFor(model => model.APIType,
+                new SelectList(ViewBag.ListAPI, "Value", "Text", Model.APIType), "Type API",
+                new
+                {
+                    @class = "form-control select2_multiple",
+                    @id = "APITypeDdl",
+                    @style = "width:100%;"
+                })
+            @Html.ValidationMessageFor(model => model.APIType, null, new { @class = "label label-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">Trạng thái</label>
+        <div class="col-md-1 col-sm-1 col-xs-12">
+            <label>@Html.CheckBoxFor(model => model.IsActive, new { @class = "icheck" })</label>
+        </div>
+    </div>
+
+    <!--Description-->
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">Mô tả</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            @Html.TextAreaFor(model => model.Description, new { @class = "form-control ckeditor", placeholder = "Mô tả" })
+            @Html.ValidationMessageFor(model => model.Description, null, new { @class = "label" })
+        </div>
+    </div>
+</div>
+<script src="@Url.Content("~/Scripts/InputCustom.js")"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#CategoryDdl").select2({
+            placeholder: "Làm ơn chọn thể loại",
+            //allowClear: true
+        });
+
+        $("#APITypeDdl").select2({
+            placeholder: "Type API",
+            //allowClear: true
+        });
+    })
+    function showPictureUpload() {
+        $('[id=urlImage]').click();
+    }
+</script>

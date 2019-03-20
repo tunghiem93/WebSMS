@@ -57,5 +57,18 @@ namespace CMS_Shared
             Binance = 1,
             Bittrex = 2,
         }
+
+        public enum APIType
+        {
+            APISMS = 0,
+            APISim = 1,
+        }
+
+        public enum SMSType
+        {
+            OTP = 0,
+            Marketing = 1,
+            Internal = 2,
+        }
     }    
 }

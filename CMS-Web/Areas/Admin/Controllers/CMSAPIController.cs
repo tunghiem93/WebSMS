@@ -1,6 +1,6 @@
-﻿using CMS_DTO.CMSCustomer;
-using CMS_Shared.CMSCustomers;
-using CMS_Shared.Utilities;
+﻿using CMS_DTO.CMSAPI;
+using CMS_Shared;
+using CMS_Shared.CMSAPI;
 using CMS_Web.Web.App_Start;
 using System;
 using System.Collections.Generic;
@@ -12,14 +12,16 @@ using System.Web.Mvc;
 namespace CMS_Web.Areas.Admin.Controllers
 {
     [NuAuth]
-    public class CMSCustomersController : BaseController
+    public class CMSAPIController : HQController
     {
-        private CMSCustomersFactory _factory;
-        public CMSCustomersController()
+        private CMSAPIFactory _fac = null;
+
+        public CMSAPIController()
         {
-            _factory = new CMSCustomersFactory();
+            _fac = new CMSAPIFactory();
+            ViewBag.ListAPI = GetListAPI();
         }
-        // GET: Admin/CMSCategories
+        // GET: Admin/CMSAPI
         public ActionResult Index()
         {
             return View();
@@ -27,24 +29,43 @@ namespace CMS_Web.Areas.Admin.Controllers
 
         public ActionResult LoadGrid()
         {
-            var model = _factory.GetList();
+            var model = _fac.GetList();
+            model.ForEach(x =>
+            {
+                x.sStatus = x.IsActive ? "Kích hoạt" : "Chưa kích hoạt";
+                if (x.APIType == (int)Commons.APIType.APISMS)
+                {
+                    x.sTypeName = Commons.APIType.APISMS.ToString();
+                }
+                if (x.APIType == (int)Commons.APIType.APISim)
+                {
+                    x.sTypeName = Commons.APIType.APISim.ToString();
+                }
+            });
             return PartialView("_ListData", model);
         }
 
         public ActionResult Create()
         {
-            CustomerModels model = new CustomerModels();
+            CMS_APIModels model = new CMS_APIModels();
             return PartialView("_Create", model);
         }
 
-        public CustomerModels GetDetail(string Id)
+        public CMS_APIModels GetDetail(string Id)
         {
-            var data = _factory.GetDetail(Id);
+            var data = _fac.GetDetail(Id);
+            if (data != null)
+            {
+                if (data.APIType == (int)Commons.APIType.APISMS)
+                    data.sTypeName = Commons.APIType.APISMS.ToString();
+                if (data.APIType == (int)Commons.APIType.APISim)
+                    data.sTypeName = Commons.APIType.APISim.ToString();
+            }
             return data;
         }
 
         [HttpPost]
-        public ActionResult Create(CustomerModels model)
+        public ActionResult Create(CMS_APIModels model)
         {
             try
             {
@@ -53,19 +74,16 @@ namespace CMS_Web.Areas.Admin.Controllers
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return PartialView("_Create", model);
                 }
-
-                string msg = "";
-                model.CreatedBy = CurrentUser.UserId;
-                model.UpdatedBy = CurrentUser.UserId;
-                model.Password = CommonHelper.Encrypt(model.Password);
-                model.Password2 = CommonHelper.Encrypt(model.Password2);
-                var result = _factory.InsertOrUpdateByAdminSite(model, ref msg);
+                var Id = "";
+                var msg = "";
+                model.CreatedBy = "admin";
+                model.UpdatedBy = "admin";
+                var result = _fac.CreateOrUpdate(model, ref Id, ref msg);
                 if (result)
-                {
+                {                   
                     return RedirectToAction("Index");
                 }
-
-                ModelState.AddModelError("ErrorMessage", msg);
+                ModelState.AddModelError("APIName", msg);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return PartialView("_Create", model);
             }
@@ -84,7 +102,7 @@ namespace CMS_Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(CustomerModels model)
+        public ActionResult Edit(CMS_APIModels model)
         {
             try
             {
@@ -93,16 +111,14 @@ namespace CMS_Web.Areas.Admin.Controllers
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return PartialView("_Edit", model);
                 }
-
-                string msg = "";
-                model.UpdatedBy = CurrentUser.UserId;
-                var result = _factory.InsertOrUpdateByAdminSite(model, ref msg);
+                var Id = "";
+                var msg = "";
+                var result = _fac.CreateOrUpdate(model, ref Id, ref msg);
                 if (result)
                 {
                     return RedirectToAction("Index");
                 }
-
-                ModelState.AddModelError("ErrorMessage", msg);
+                ModelState.AddModelError("APIName", msg);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return PartialView("_Edit", model);
             }
@@ -128,21 +144,22 @@ namespace CMS_Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(CustomerModels model)
+        public ActionResult Delete(CMS_APIModels model)
         {
             try
             {
-                ModelState.Clear();
                 if (!ModelState.IsValid)
                 {
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return PartialView("_Delete", model);
                 }
                 var msg = "";
-                var result = _factory.Delete(model.ID, CurrentUser.UserId, ref msg);
+                var result = _fac.Delete(model.Id, ref msg);
                 if (result)
+                {
                     return RedirectToAction("Index");
-                ModelState.AddModelError("ErrorMessage", msg);
+                }
+                ModelState.AddModelError("APIName", msg);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return PartialView("_Delete", model);
             }

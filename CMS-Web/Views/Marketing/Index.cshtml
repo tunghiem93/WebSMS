@@ -47,14 +47,18 @@
                     @using (@Html.BeginForm("Import", "Marketing", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal login-page", @enctype = "multipart/form-data" }))
                     {
                         <div class="form-group">
-                            <label class="col-md-6"><i>Upload your file at here: </i></label>
-                            <div class="col-md-6">
-                                <input type="submit" value="Upload file" class="btn btn-default  pull-right">
+                            <label class="col-md-1"></label>
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(model => model.ExcelUpload, new { @type = "file", @accept = "*.xlsx", @class = "pull-right" })
+                                @Html.ValidationMessageFor(model => model.ExcelUpload, null, new { @class = "label" })                                
+                            </div>  
+                            <div class="col-md-2" style="float: right">
+                                <div class="col-md-2"><input type="submit" value="Send" class="btn btn-default  pull-right"></div>
                             </div>
                         </div>
                     }
                 </div>
             </div><!-- col-md-6 /- -->
-        </div><!-- Contact Form details /- -->
+        </div><!-- Contact Form details /- -->        
     </div>
 </div>
