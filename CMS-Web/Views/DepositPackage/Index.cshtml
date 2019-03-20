@@ -1,5 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var Payments = ViewBag.Payment as List<CMS_DTO.CMSPaymentMethod.CMS_PaymentMethodModels>;
 }
 @model List<CMS_DTO.CMS_DepositPackageModel>
 <!-- container -->
@@ -74,10 +75,21 @@
                             <tr>
                                 <td colspan="2" style="text-align:right">Choose your payment</td>
                                 <td>
-                                    <select class="form-control" style="width:50%">
-                                        <option>ETC</option>
-                                        <option>ETH</option>
+                                    <select class="form-control" style="width:50%"  onchange="ChangePayment(this)">
+                                        <option value="-1">Choose payment</option>
+                                        @if(Payments !=null && Payments.Count > 0)
+                                        {
+                                            foreach(var itemP in Payments)
+                                            {
+                                                <option value="@itemP.PaymentType">@itemP.PaymentName</option>
+                                            }
+                                        }
                                     </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="text-align:right;margin-right:20%">
+                                    <button class="btn btn-success" disabled id="paynow" style="margin-right:27%">Pay now</button>
                                 </td>
                             </tr>
                         </tfoot>
@@ -113,8 +125,39 @@
     function removepackage(id) {
         $('.add_' + id).removeClass('hidden')
         $('.tr_' + id).remove()
+        var item = Deposits.find((x) => x.Id == id);
+        Deposits.splice($.inArray(item, Deposits), 1);
         if (Deposits.length === 0) {
             $('.tfoot').addClass('hidden')
+        }
+    }
+    var enumPaymentType = {
+        Perfect_Money: 1,
+        XRP: 2,
+        Tron: 3,
+        ETH: 4,
+        ETC: 5
+    }
+
+    function ChangePayment(that) {
+        var typePayment = $(that).val()
+        if (typePayment > 0) {
+            $('#paynow').removeAttr("disabled")
+        } else {
+            $('#paynow').attr("disabled","disabled")
+        }
+        switch (typePayment) {
+            case enumPaymentType.Perfect_Money:
+                break;
+            case enumPaymentType.XRP:
+                break;
+            case enumPaymentType.Tron:
+                break;
+            case enumPaymentType.ETH:
+                break;
+            case enumPaymentType.ETC:
+                break;
+            default:
         }
     }
 </script>

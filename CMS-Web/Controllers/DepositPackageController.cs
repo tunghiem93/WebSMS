@@ -13,14 +13,17 @@ namespace CMS_Web.Controllers
     public class DepositPackageController : Controller
     {
         private readonly CMSDepositPackageFactory fac;
+        private readonly CMSPaymentMethodFactory facP;
         public DepositPackageController()
         {
             fac = new CMSDepositPackageFactory();
+            facP = new CMSPaymentMethodFactory();
         }
         // GET: DepositPackage
         public ActionResult Index()
         {
             var model = fac.GetList();
+            ViewBag.Payment = facP.GetList();
             return View(model);
         }
 
