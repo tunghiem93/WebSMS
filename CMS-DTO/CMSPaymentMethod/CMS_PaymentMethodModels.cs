@@ -14,6 +14,10 @@ namespace CMS_DTO.CMSPaymentMethod
         public string PaymentName { get; set; }
         [Required]
         public int PaymentType { get; set; }
+        public string WalletMoney { get; set; }
+        public string TagContent { get; set; }
+        public int? ScaleNumber { get; set; }
+        public string ReferenceExchange { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }

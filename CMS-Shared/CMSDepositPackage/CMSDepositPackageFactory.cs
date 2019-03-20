@@ -12,6 +12,15 @@ namespace CMS_Shared.CMSEmployees
 {
     public class CMSDepositPackageFactory
     {
+        public CMS_DepositPackageModel CreateNew()
+        {
+            using (var cxt = new CMS_Context())
+            {
+                CMS_DepositPackageModel model = new CMS_DepositPackageModel();
+                model.RateSMS = GetSMSRate(cxt);
+                return model;
+            }
+        }
         public bool CreateOrUpdate(CMS_DepositPackageModel model , ref string msg)
         {
             var result = true;
@@ -29,7 +38,7 @@ namespace CMS_Shared.CMSEmployees
                                 Id = _Id,
                                 PackageName = model.PackageName,
                                 PackageSMS = model.PackageSMS,
-                                PackagePrice = model.PackagePrice,
+                                //PackagePrice = model.PackagePrice,
                                 Discount = model.Discount,
                                 SMSPrice = model.SMSPrice,
                                 IsActive = model.IsActive,
@@ -47,7 +56,7 @@ namespace CMS_Shared.CMSEmployees
                             {
                                 e.PackageName = model.PackageName;
                                 e.PackageSMS = model.PackageSMS;
-                                e.PackagePrice = model.PackagePrice;
+                                //e.PackagePrice = model.PackagePrice;
                                 e.Discount = model.Discount;
                                 e.SMSPrice = model.SMSPrice;
                                 e.IsActive = model.IsActive;
@@ -97,15 +106,18 @@ namespace CMS_Shared.CMSEmployees
         {
             try
             {
+                
                 using (var cxt = new CMS_Context())
                 {
+                    decimal smsRate = GetSMSRate(cxt);
                     var data = cxt.CMS_DepositPackage.Where(x => x.Id.Equals(Id))
                                                 .Select(x => new CMS_DepositPackageModel
                                                 {
                                                     Id = x.Id,
                                                     PackageName = x.PackageName,
                                                     PackageSMS = x.PackageSMS,
-                                                    PackagePrice = x.PackagePrice,
+                                                    PackagePrice = x.PackageSMS * smsRate,
+                                                    RateSMS = smsRate,
                                                     Discount = x.Discount,
                                                     SMSPrice = x.SMSPrice,
                                                     IsActive = x.IsActive,
@@ -127,12 +139,16 @@ namespace CMS_Shared.CMSEmployees
             {
                 using (var cxt = new CMS_Context())
                 {
+                    decimal smsRate = GetSMSRate(cxt);
+                    decimal usdRate = GetUSDRate(cxt);
+                    decimal pmRate = GetPMRate(cxt);
                     var data = cxt.CMS_DepositPackage.Select(x => new CMS_DepositPackageModel
                     {
                         Id = x.Id,
                         PackageName = x.PackageName,
                         PackageSMS = x.PackageSMS,
-                        PackagePrice = x.PackagePrice,
+                        PackagePrice = x.PackageSMS * smsRate,
+                        RateSMS = smsRate,
                         Discount = x.Discount,
                         SMSPrice = x.SMSPrice,
                         IsActive = x.IsActive,
@@ -140,12 +156,31 @@ namespace CMS_Shared.CMSEmployees
                         UpdatedDate = x.UpdatedDate,
                         CreatedBy = x.CreatedBy,
                         CreatedDate = x.CreatedDate,
+                        PriceUSD =  usdRate != 0 ? (x.Discount != 0 ? ((x.PackageSMS * smsRate ) * x.Discount) / usdRate : (x.PackageSMS * smsRate)/ usdRate) : 0,
+                        PriceDefault = pmRate == 0 ? 0 : usdRate/ pmRate
                     }).ToList();
                     return data;
                 }
             }
-            catch (Exception) { }
+            catch (Exception ex) { }
             return null;
+        }
+        private decimal GetSMSRate(CMS_Context cxt)
+        {
+            var configSMS = cxt.CMS_SysConfigs.Where(x => x.ValueType.Equals((int)Commons.ConfigType.SMS)).Select(x => new { SmsRate = x.Value }).ToList();
+            return configSMS.Select(o => o.SmsRate).FirstOrDefault();
+        }
+
+        private decimal GetUSDRate(CMS_Context cxt)
+        {
+            var configUSD = cxt.CMS_SysConfigs.FirstOrDefault(x => x.ValueType == (int)Commons.ConfigType.USD);
+            return configUSD != null ? configUSD.Value : 0;
+        }
+
+        private decimal GetPMRate(CMS_Context cxt)
+        {
+            var configPM = cxt.CMS_SysConfigs.FirstOrDefault(x => x.ValueType == (int)Commons.ConfigType.PMUSD);
+            return configPM != null ? configPM.Value : 0;
         }
     }
 }

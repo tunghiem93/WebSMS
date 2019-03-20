@@ -43,10 +43,9 @@
                                     <th>@string.Format("{0}", item.PackageSMS.ToString("#,0"))</th>
                                     <th>@string.Format("{0}", item.PackagePrice.ToString("#,0"))</th>
                                     <th>@item.Discount</th>
-
-                                    <th>USD</th>
+                                    <th>@item.PriceUSD</th>
                                     <th>@string.Format("{0}", item.SMSPrice.ToString("#,0"))</th>
-                                    <th></th>
+                                    <th><a href="javascript:void(0)" class="add_@item.Id" onclick="AddDepositPackage(this,'@item.Id','@item.PackageName','@item.PriceDefault')">Add</a></th>
                                 </tr>
                                 }
                             }
@@ -65,19 +64,57 @@
                         <thead>
                             <tr>
                                 <th>Choose your package</th>
-                                <th>Choose your payment</th>
                                 <th>Price</th>
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td colspan="4" style="text-align:center">No content</td>
-                            </tr>
+                        <tbody id="tbodydeposite">
                         </tbody>
+                        <tfoot class="hidden tfoot">
+                            <tr>
+                                <td colspan="2" style="text-align:right">Choose your payment</td>
+                                <td>
+                                    <select class="form-control" style="width:50%">
+                                        <option>ETC</option>
+                                        <option>ETH</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    var Deposits = []
+    function AddDepositPackage(that, Id, PackageName, PriceDefault) {
+        var html = "";
+        $(that).addClass("hidden")
+        $('.tfoot').removeClass('hidden')
+        html += "<tr class='tr_" + Id + "'>";
+        html += "<td>" + PackageName + "</td>";
+        html += "<td>" + numeral(PriceDefault).format('0,0') + "</td>";
+        html += "<td> <a href='javascript:void(0)' class='remove_" + Id + "' onclick='removepackage(\"" + Id + "\")'> Remove </a> </td>";
+        html += "</tr>";
+        $('[id=tbodydeposite]').append(html)
+        var isExits = Deposits.some((x) => x.Id === Id);
+        if (!isExits) {
+            Deposits.push({
+                Id: Id,
+                PackageName: PackageName,
+                Price: PriceDefault
+            });
+        }
+    }
+
+    function removepackage(id) {
+        $('.add_' + id).removeClass('hidden')
+        $('.tr_' + id).remove()
+        if (Deposits.length === 0) {
+            $('.tfoot').addClass('hidden')
+        }
+    }
+</script>

@@ -16,7 +16,7 @@ namespace CMS_Entity.Mapping
             this.Property(x => x.Id).HasMaxLength(60).HasColumnType("varchar").IsRequired();
             this.Property(x => x.PackageName).HasMaxLength(250).HasColumnType("nvarchar").IsRequired();
             this.Property(x => x.PackageSMS).HasColumnType("decimal").IsRequired();
-            this.Property(x => x.PackagePrice).HasColumnType("decimal").IsRequired();
+            //this.Property(x => x.PackagePrice).HasColumnType("decimal").IsRequired();
             this.Property(x => x.Discount).HasColumnType("decimal").IsRequired();
             this.Property(x => x.SMSPrice).HasColumnType("decimal").IsRequired();
             this.Property(x => x.UpdatedBy).HasColumnType("varchar").HasMaxLength(60).IsOptional();

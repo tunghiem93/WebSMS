@@ -28,7 +28,7 @@
         <div class="form-group">
             <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Package Price</label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-                @Html.TextBoxFor(model => model.PackagePrice, new { @class = "form-control", @placeholder = "Package Price", @autocomplete = "off" })
+                @Html.TextBoxFor(model => model.PackagePrice, new { @class = "form-control", @placeholder = "Package Price", @disabled="disabled", @autocomplete = "off" })
                 @Html.ValidationMessageFor(model => model.PackagePrice, null, new { @class = "label label-danger" })
             </div>
         </div>
@@ -54,6 +54,26 @@
                 <label>@Html.CheckBoxFor(model => model.IsActive, new { @class = "icheck" })</label>
             </div>
         </div>
+        <div>
+            @Html.HiddenFor(model => model.RateSMS)
+        </div>
     </fieldset>
 </div>
 <script src="@Url.Content("~/Scripts/InputCustom.js")"></script>
+<script type="text/javascript">
+    var id = $("#Id").val();
+    if (id != "") {
+        $("#PackagePrice").val(calPackagePrice())
+    }
+    $("#PackageSMS").on("change", function () {
+        var packageSMS = parseFloat($(this).val());
+        if ($.isNumeric(packageSMS)) {
+            $("#PackagePrice").val(calPackagePrice())
+        }
+    })
+    function calPackagePrice() {
+        var smsRate = parseFloat($("#RateSMS").val());
+        var packageSMS = parseFloat($("#PackageSMS").val());
+        return smsRate * packageSMS;
+    }
+</script>

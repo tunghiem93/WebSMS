@@ -36,7 +36,7 @@ namespace CMS_Web.Areas.Admin.Controllers
 
         public ActionResult Create()
         {
-            CMS_DepositPackageModel model = new CMS_DepositPackageModel();
+            CMS_DepositPackageModel model = _factory.CreateNew();
             return PartialView("_Create", model);
         }
 
