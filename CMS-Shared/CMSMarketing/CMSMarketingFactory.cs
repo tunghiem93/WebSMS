@@ -68,7 +68,11 @@ namespace CMS_Shared.CMSMarketing
                 {
                     try
                     {
-                        DataTable dtMarketing = _baseFactory.ReadExcelFile(@filePath, "Ingredients");
+                        DataTable dtMarketing = _baseFactory.ReadExcelFile(@filePath, "Marketing");
+                        DataTable dtTime = _baseFactory.ReadExcelFile(@filePath, "Time");
+                        string tmpExcelPath = System.Web.HttpContext.Current.Server.MapPath("~/ImportExportTemplate") + "/MarketingImportTemplate.xlsx";
+                        DataTable dtTmpMarketing = _baseFactory.ReadExcelFile(@tmpExcelPath, "Marketing");
+                        DataTable dtTmpTime = _baseFactory.ReadExcelFile(@tmpExcelPath, "Time");
                         NSLog.Logger.Info("Import marketing susscess");
                         cxt.SaveChanges();
                         trans.Commit();
