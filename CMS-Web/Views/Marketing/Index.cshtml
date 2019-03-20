@@ -1,0 +1,60 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model CMS_DTO.CMSMarketing.CMS_MarketingModels
+<!-- container -->
+<div class="container">
+    @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home" }, { "B", "Marketing" } })
+    <div class="page-header bottom-shadow">
+        <h3>Marketing</h3>
+        <p> Page Marketing</p>
+    </div><!-- Section Header /- -->
+</div><!-- container /- -->
+<!-- Page Breadcrumb /- -->
+
+<div class="page-wizard">
+    <!-- container -->
+    <div class="container">
+        <ul class="bottom-shadow">
+            <li class="active"><a href="javascript:void(0);">Step 1: Dowload file</a></li>
+            <li><a title="Verifi code" href="javascript:void(0);">Step 2: Upload your file</a></li>
+        </ul>
+        <!-- contact-form-details -->
+        <div class="contact-form-details row">
+            <!-- col-md-6 -->
+            <div class="col-md-6 col-sm-6">
+                <div class="section-header">
+                    <h3>Dowload file</h3>
+                </div><!-- Section Header Over -->
+                <div class="contact-form bottom-shadow">
+                    @using (@Html.BeginForm("Export", "Marketing", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal login-page", @enctype = "multipart/form-data" }))
+                    {
+                        <div class="form-group">
+                            <label class="col-md-6"><i>Dowload file form at here: </i></label>
+                            <div class="col-md-6">
+                                <input type="submit" value="Dowload file" class="btn btn-default  pull-right">
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div><!-- col-md-6 /- -->
+            <!-- col-md-6 -->
+            <div class="col-md-6 col-sm-6">
+                <div class="section-header">
+                    <h3>Upload your file</h3>
+                </div><!-- Section Header Over -->
+                <div class="contact-form bottom-shadow">
+                    @using (@Html.BeginForm("Import", "Marketing", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal login-page", @enctype = "multipart/form-data" }))
+                    {
+                        <div class="form-group">
+                            <label class="col-md-6"><i>Upload your file at here: </i></label>
+                            <div class="col-md-6">
+                                <input type="submit" value="Upload file" class="btn btn-default  pull-right">
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div><!-- col-md-6 /- -->
+        </div><!-- Contact Form details /- -->
+    </div>
+</div>

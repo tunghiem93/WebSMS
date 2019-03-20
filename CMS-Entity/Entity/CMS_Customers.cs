@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CMS_Entity.Mapping;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,7 @@ namespace CMS_Entity.Entity
         public bool IsVerifiedEmail { get; set; }
         public bool IsVerifiedPhone { get; set; }
         public virtual List<CMS_CustomerActiveCode> CustomerActiveCode { get; set; }
+        public virtual List<CMS_Marketing> Marketing { get; set; }
 
         public CMS_Customers()
         {

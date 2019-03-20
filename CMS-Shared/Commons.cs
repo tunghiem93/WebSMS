@@ -50,5 +50,12 @@ namespace CMS_Shared
             WaitingTime = 6,
             SiteHTML = 7,
         }
+
+        public enum ExchangeType
+        {
+            None = 0,
+            Binance = 1,
+            Bittrex = 2,
+        }
     }    
 }
