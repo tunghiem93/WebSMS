@@ -22,6 +22,7 @@ namespace CMS_Entity.Mapping
             this.Property(x => x.ReferenceExchange).HasMaxLength(60).HasColumnType("nvarchar").IsUnicode(true).IsOptional();
             this.Property(x => x.UpdatedBy).HasColumnType("varchar").HasMaxLength(60).IsOptional();
             this.Property(x => x.CreatedBy).HasColumnType("varchar").HasMaxLength(60).IsOptional();
+            this.Property(x => x.URLApi).HasColumnType("nvarchar").HasMaxLength(500).IsOptional();
         }
     }
 }

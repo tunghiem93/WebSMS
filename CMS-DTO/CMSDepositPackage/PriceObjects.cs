@@ -14,5 +14,6 @@ namespace CMS_DTO.CMSDepositPackage
         public decimal? weightedAvgPrice { get; set; }
         public decimal? prevClosePrice { get; set; }
         public decimal? lastPrice { get; set; }
+        public decimal? last { get; set; }
     }
 }

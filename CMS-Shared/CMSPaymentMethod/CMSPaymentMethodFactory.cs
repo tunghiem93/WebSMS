@@ -39,6 +39,7 @@ namespace CMS_Shared.CMSEmployees
                                 UpdatedDate = DateTime.Now,
                                 CreatedBy = model.CreatedBy,
                                 CreatedDate = DateTime.Now,
+                                URLApi = model.URLApi
                             };
                             cxt.CMS_PaymentMethod.Add(e);
                         }
@@ -56,6 +57,7 @@ namespace CMS_Shared.CMSEmployees
                                 e.IsActive = model.IsActive;
                                 e.UpdatedDate = DateTime.Now;
                                 e.UpdatedBy = model.UpdatedBy;
+                                e.URLApi = model.URLApi;
                             }
                         }
                         cxt.SaveChanges();
@@ -117,6 +119,7 @@ namespace CMS_Shared.CMSEmployees
                                                     UpdatedDate = x.UpdatedDate,
                                                     CreatedBy = x.CreatedBy,
                                                     CreatedDate = x.CreatedDate,
+                                                    URLApi = x.URLApi
                                                 }).FirstOrDefault();
                     return data;
                 }
@@ -145,6 +148,7 @@ namespace CMS_Shared.CMSEmployees
                         UpdatedDate = x.UpdatedDate,
                         CreatedBy = x.CreatedBy,
                         CreatedDate = x.CreatedDate,
+                        URLApi = x.URLApi
                     }).ToList();
                     return data;
                 }

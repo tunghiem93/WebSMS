@@ -46,7 +46,7 @@
                                     <th>@item.Discount</th>
                                     <th>@item.PriceUSD</th>
                                     <th>@string.Format("{0}", item.SMSPrice.ToString("#,0"))</th>
-                                    <th><a href="javascript:void(0)" class="add_@item.Id" onclick="AddDepositPackage(this,'@item.Id','@item.PackageName','@item.PriceDefault')">Add</a></th>
+                                    <th><a href="javascript:void(0)" class="add_@item.Id" onclick="AddDepositPackage(this,'@item.Id','@item.PackageName','@item.PriceDefault','@item.PackageSMS','@item.SMSPrice','@item.PackagePrice','@item.sPrice')">Add</a></th>
                                 </tr>
                                 }
                             }
@@ -81,7 +81,7 @@
                                         {
                                             foreach(var itemP in Payments)
                                             {
-                                                <option value="@itemP.PaymentType">@itemP.PaymentName</option>
+                                                <option value="@itemP.Id">@itemP.PaymentName</option>
                                             }
                                         }
                                     </select>
@@ -89,7 +89,7 @@
                             </tr>
                             <tr>
                                 <td colspan="3" style="text-align:right;margin-right:20%">
-                                    <button class="btn btn-success" disabled id="paynow" style="margin-right:27%">Pay now</button>
+                                    <button class="btn btn-success" disabled id="paynow" onclick="PayNow();" style="margin-right:27%">Pay now</button>
                                 </td>
                             </tr>
                         </tfoot>
@@ -102,120 +102,103 @@
 
 <script type="text/javascript">
     var Deposits = []
-    function AddDepositPackage(that, Id, PackageName, PriceDefault) {
+    function AddDepositPackage(that, PackageId, PackageName, PriceDefault, PackageSMS, SMSPrice, PackagePrice, sPrice) {
         $(that).addClass("hidden")
         $('.tfoot').removeClass('hidden')
-        let typePayment = parseInt($('#txtPayment').val())
-        var isExits = Deposits.some((x) => x.Id === Id);
+        let PaymentId = $('#txtPayment').val()
+        var isExits = Deposits.some((x) => x.PackageId === PackageId);
         if (!isExits) {
             Deposits.push({
-                Id: Id,
+                PackageId: PackageId,
                 PackageName: PackageName,
                 PayCoin: PriceDefault,
-                Price: PriceDefault
+                Price: PriceDefault,
+                PackageSMS: PackageSMS,
+                SMSPrice: SMSPrice,
+                PackagePrice: PackagePrice,
+                PaymentMethodId: null,
+                sPrice: sPrice,
+                sTempPrice: sPrice
             });
         }
-        switch (typePayment) {
-            case enumPaymentType.Perfect_Money:
-                RenderDepositNow()
-                break;
-            case enumPaymentType.XRP:
-                GetPriceFromApi()
-                break;
-            case enumPaymentType.Tron:
-                GetPriceFromApi()
-                break;
-            case enumPaymentType.ETH:
-                GetPriceFromApi()
-                break;
-            case enumPaymentType.ETC:
-                GetPriceFromApi()
-                break;
-            default:
-                RenderDepositNow()
-        }
+        GetPriceFromApi(PaymentId)
     }
 
-    function removepackage(id) {
-        $('.add_' + id).removeClass('hidden')
-        $('.tr_' + id).remove()
-        var item = Deposits.find((x) => x.Id == id);
+    function removepackage(PackageId) {
+        $('.add_' + PackageId).removeClass('hidden')
+        $('.tr_' + PackageId).remove()
+        var item = Deposits.find((x) => x.PackageId == PackageId);
         Deposits.splice($.inArray(item, Deposits), 1);
         if (Deposits.length === 0) {
             $('.tfoot').addClass('hidden')
         }
     }
-    var enumPaymentType = {
-        Perfect_Money: 1,
-        XRP: 2,
-        Tron: 3,
-        ETH: 4,
-        ETC: 5
-    }
 
     function ChangePayment(that) {
-        var typePayment = parseInt($(that).val())
-        if (typePayment > 0) {
+        var paymentId = $(that).val()
+        if (paymentId !== '-1') {
             $('#paynow').removeAttr("disabled")
         } else {
             $('#paynow').attr("disabled","disabled")
         }
-        
-        switch (typePayment) {
-            case enumPaymentType.Perfect_Money:
-                Deposits.forEach((x) => {
-                    x.PayCoin = x.Price
-                })
-                RenderDepositNow()
-                break;
-            case enumPaymentType.XRP:
-                GetPriceFromApi()
-                break;
-            case enumPaymentType.Tron:
-                GetPriceFromApi()
-                break;
-            case enumPaymentType.ETH:
-                GetPriceFromApi()
-                break;
-            case enumPaymentType.ETC:
-                GetPriceFromApi()
-                break;
-            default:
-                Deposits.forEach((x) => {
-                    x.PayCoin = x.Price
-                })
-                RenderDepositNow()
-        }
-        
+        GetPriceFromApi(paymentId)
     }
 
     function RenderDepositNow() {
         var html = "";
         Deposits.forEach((x) => {
-            let _PayCoin = parseInt(x.PayCoin) > 0 ? numeral(x.PayCoin).format('0,0') : x.PayCoin
-            html += "<tr class='tr_" + x.Id + "'>";
+            let _PayCoin = parseInt(x.PayCoin) > 0 ? numeral(x.PayCoin).format('0,00') : x.PayCoin
+            html += "<tr class='tr_" + x.PackageId + "'>";
             html += "<td>" + x.PackageName + "</td>";
-            html += "<td>" + _PayCoin + "</td>";
-            html += "<td> <a href='javascript:void(0)' class='remove_" + x.Id + "' onclick='removepackage(\"" + x.Id + "\")'> Remove </a> </td>";
+            html += "<td>" + x.sPrice + "</td>";
+            html += "<td> <a href='javascript:void(0)' class='remove_" + x.PackageId + "' onclick='removepackage(\"" + x.PackageId + "\")'> Remove </a> </td>";
             html += "</tr>";
         })
         $('[id=tbodydeposite]').html(html)
     }
 
-    function GetPriceFromApi() {
+    function PayNow() {
+        $.ajax({
+            beforeSend: function () {
+            },
+            url: '@Url.Action("PayNow", "DepositPackage")',
+            type: "post",
+            data: { model: Deposits },
+            success: function () {
+            },
+            complete: function () {
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        })
+    }
+
+    function GetPriceFromApi(paymentId) {
         $.ajax({
             beforeSend: function () {
             },
             url: '@Url.Action("GetPrice", "DepositPackage")',
-            type: "get",
+            type: "post",
+            data: { paymentId: paymentId },
             dataType: "json",
             success: function (data) {
                 if (data !== undefined || data !== null) {
-                    Deposits.forEach((x) => {
-                        x.PayCoin = data.lastPrice
-                    });
+                    if (data.Status !== 0) {
+                        Deposits.forEach((x) => {
+                            x.PayCoin = data.lastPrice || data.last || 0;
+                            x.PaymentMethodId = paymentId
+                            x.sPrice = data.lastPrice || data.last || 0;
+                        });
+                    } else {
+                        Deposits.forEach((x) => {
+                            x.PayCoin = x.Price;
+                            x.PaymentMethodId = paymentId;
+                            x.sPrice = x.sTempPrice;
+                        });
+                    }
                     RenderDepositNow()
                 }
+               
             },
             complete: function () {
             },

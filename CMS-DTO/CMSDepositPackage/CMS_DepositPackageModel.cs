@@ -29,5 +29,6 @@ namespace CMS_DTO
         public string UpdatedBy { get; set; }
         public decimal PriceUSD { get; set; }
         public decimal PriceDefault { get; set; }
+        public string sPrice { get; set; }
     }
 }

@@ -15,5 +15,6 @@ namespace CMS_Entity.Entity
         public string TagContent { get; set; }
         public int? ScaleNumber { get; set; }
         public string ReferenceExchange { get; set; }
+        public string URLApi { get; set; }
     }
 }

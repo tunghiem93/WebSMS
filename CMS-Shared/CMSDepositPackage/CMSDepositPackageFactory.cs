@@ -157,7 +157,7 @@ namespace CMS_Shared.CMSEmployees
                         CreatedBy = x.CreatedBy,
                         CreatedDate = x.CreatedDate,
                         PriceUSD =  usdRate != 0 ? (x.Discount != 0 ? ((x.PackageSMS * smsRate ) * x.Discount) / usdRate : (x.PackageSMS * smsRate)/ usdRate) : 0,
-                        PriceDefault = pmRate == 0 ? 0 : usdRate/ pmRate
+                        PriceDefault = pmRate == 0 ? 0 : usdRate/ pmRate,
                     }).ToList();
                     return data;
                 }
