@@ -61,6 +61,7 @@ function ShowDetail(content) {
 
 function CloseDetail() {
     LoadGrid();
+    $("._gridview").css("display", "unset");
 }
 
 

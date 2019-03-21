@@ -70,5 +70,20 @@ namespace CMS_Shared
             Marketing = 1,
             Internal = 2,
         }
+        public enum DepositStatus
+        {
+            WaitingPay = 0,
+            Completed = 1,
+            WaitingCustomer = 2,
+            ConfirmedPay = 3,
+            Cancel = 4
+        }
+        public enum SMSStatus
+        {
+            WaitingSend = 0,
+            Sent = 1,
+            Success = 2,
+            Fail = 3
+        }
     }    
 }
