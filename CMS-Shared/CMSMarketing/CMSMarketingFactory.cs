@@ -1,5 +1,6 @@
 ﻿using ClosedXML.Excel;
 using CMS_DTO.CMSBase;
+using CMS_DTO.CMSMarketing;
 using CMS_Entity;
 using CMS_Shared.CMSBaseFactory;
 using System;
@@ -89,6 +90,38 @@ namespace CMS_Shared.CMSMarketing
                 }
             }
             return true;
-        }        
+        }
+        public List<CMS_MarketingModels> GetList(int smsType)
+        {
+            try
+            {
+                using (var cxt = new CMS_Context())
+                {
+                    var data = cxt.CMS_Marketing.Where(x=>x.SMSType.Equals(smsType)).Select(x => new CMS_MarketingModels
+                    {
+                        Id = x.Id,
+                        CustomerId = x.CustomerId,
+                        CustomerName = x.CustomerName,
+                        OperatorName = x.OperatorName,
+                        RunTime = x.RunTime,
+                        SendFrom = x.SendFrom,
+                        SendTo = x.SendTo,
+                        SMSContent = x.SMSContent,
+                        SMSPrice = x.SMSPrice,
+                        SMSType = x.SMSType,
+                        IsActive = x.IsActive,
+                        Status = x.Status,
+                        TimeInput= x.TimeInput,
+                        UpdatedBy = x.UpdatedBy,
+                        UpdatedDate = x.UpdatedDate,
+                        CreatedBy = x.CreatedBy,
+                        CreatedDate = x.CreatedDate,
+                    }).ToList();
+                    return data;
+                }
+            }
+            catch (Exception ex) { }
+            return null;
+        }
     }
 }

@@ -18,6 +18,7 @@ namespace CMS_Entity
             Database.SetInitializer<CMS_Context>(new ContextHandler());
             ((IObjectContextAdapter)this).ObjectContext.ContextOptions.LazyLoadingEnabled = true;
         }
+        public virtual DbSet<CMS_Marketing> CMS_Marketing { get; set; }
         public virtual DbSet<CMS_API> CMS_API { get; set; }
         public virtual DbSet<CMS_PaymentMethod> CMS_PaymentMethod { get; set; }
         public virtual DbSet<CMS_DepositPackage> CMS_DepositPackage { get; set; }
