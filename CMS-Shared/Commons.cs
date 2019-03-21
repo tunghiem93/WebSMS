@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Linq;
 using System.Text;
@@ -80,6 +81,7 @@ namespace CMS_Shared
         }
         public enum SMSStatus
         {
+            [Description("Waiting Send")]
             WaitingSend = 0,
             Sent = 1,
             Success = 2,
