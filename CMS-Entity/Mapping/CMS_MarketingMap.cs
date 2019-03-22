@@ -23,6 +23,7 @@ namespace CMS_Entity.Mapping
             this.Property(x => x.OperatorName).HasColumnType("nvarchar").HasMaxLength(100);
             this.Property(x => x.Status).HasColumnType("int").IsOptional();
             this.Property(x => x.SMSType).HasColumnType("int").IsOptional();
+            this.Property(x => x.SMSRate).HasColumnType("decimal").HasPrecision(18, 2).IsOptional();
             this.Property(x => x.RunTime).HasColumnType("decimal").IsOptional();
             this.Property(x => x.TimeInput).HasColumnType("datetime").IsOptional();
             this.Property(x => x.UpdatedBy).HasMaxLength(60).HasColumnType("varchar").IsOptional();

@@ -44,21 +44,78 @@
                     <h3>Upload your file</h3>
                 </div><!-- Section Header Over -->
                 <div class="contact-form bottom-shadow">
-                    @using (@Html.BeginForm("Import", "Marketing", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal login-page", @enctype = "multipart/form-data" }))
+                    @using (@Html.BeginForm("Index", "Marketing", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal login-page", @enctype = "multipart/form-data" }))
                     {
                         <div class="form-group">
                             <label class="col-md-1"></label>
                             <div class="col-md-7">
                                 @Html.TextBoxFor(model => model.ExcelUpload, new { @type = "file", @accept = "*.xlsx", @class = "pull-right" })
-                                @Html.ValidationMessageFor(model => model.ExcelUpload, null, new { @class = "label" })                                
-                            </div>  
+                                @Html.ValidationMessageFor(model => model.ExcelUpload, null, new { @class = "label" })
+                            </div>
                             <div class="col-md-2" style="float: right">
                                 <div class="col-md-2"><input type="submit" value="Send" class="btn btn-default  pull-right"></div>
                             </div>
                         </div>
                     }
                 </div>
+
             </div><!-- col-md-6 /- -->
-        </div><!-- Contact Form details /- -->        
+            @{ if (Model != null)
+                {
+                    <div class="col-md-12 col-sm-12">
+                        <div class="contact-form bottom-shadow">
+                            @using (@Html.BeginForm("SendSMS", "Marketing", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal login-page"}))
+                            {
+                                decimal sumPrice = 0;
+                                int countSMS = 0;
+                                <div class="form-group">
+                                    <table class="table table-striped table-bordered table-hover dt-responsive" id="sample_3">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left"> Send To </th>
+                                                <th class="text-left"> Message Content </th>
+                                                <th class="text-left"> SMS Price </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model != null)
+                                            {
+                                                foreach (var item in Model.ListSMS)
+                                                {
+                                                    
+                                                    <tr class="odd gradeX">
+                                                        <td class="text-left">@item.SendTo</td>
+                                                        <td class="text-left">@item.SMSContent</td>
+                                                        <td class="text-left">
+                                                            @string.Format("{0:N0}", item.SMSPrice) Credits
+                                                            @Html.Hidden("[" + countSMS + "].IsActive", item.IsActive)
+                                                            @Html.Hidden("[" + countSMS + "].CountMessage", item.CountMessage)
+                                                            @Html.Hidden("[" + countSMS + "].CustomerId", item.CustomerId)
+                                                            @Html.Hidden("[" + countSMS + "].CustomerName", item.CustomerName)
+                                                            @Html.Hidden("[" + countSMS + "].SendTo", item.SendTo)
+                                                            @Html.Hidden("[" + countSMS + "].SMSContent", item.SMSContent)
+                                                            @Html.Hidden("[" + countSMS + "].SMSPrice", item.SMSPrice)
+                                                            @Html.Hidden("[" + countSMS + "].SMSRate", item.SMSRate)
+                                                            @Html.Hidden("[" + countSMS + "].SMSType", item.SMSType)
+                                                            @Html.Hidden("[" + countSMS + "].Status", item.Status)
+                                                        </td>
+                                                    </tr>
+                                                    sumPrice += item.SMSPrice;
+                                                    countSMS++;
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12 text-center">
+                                        <input type="submit" value="@string.Format("Run {0} SMS - {1:0} Credits", countSMS, sumPrice)" class="btn btn-default">
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }}
+        </div><!-- Contact Form details /- -->
     </div>
 </div>

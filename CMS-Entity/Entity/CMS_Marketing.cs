@@ -20,5 +20,6 @@ namespace CMS_Entity.Entity
         public decimal RunTime { get; set; }
         public DateTime TimeInput{ get; set; }
         public int Status { get; set; }
+        public decimal SMSRate { get; set; }
     }
 }

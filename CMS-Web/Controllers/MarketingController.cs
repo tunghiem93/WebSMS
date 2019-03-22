@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace CMS_Web.Controllers
 {
-    public class MarketingController : Controller
+    public class MarketingController : BasesController
     {
         public CMSMarketingFactory _fac = null;
         public MarketingController()
@@ -26,10 +26,14 @@ namespace CMS_Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Import(CMS_MarketingModels model)
+        public ActionResult Index(CMS_MarketingModels model)
         {
             try
-            {                
+            {
+                if (CurrentUser == null || string.IsNullOrEmpty(CurrentUser.ID))
+                {
+                    return RedirectToAction("Index", "Login");
+                }
                 string fileName = Path.GetFileName(model.ExcelUpload.FileName);
                 string filePath = string.Format("{0}/{1}", System.Web.HttpContext.Current.Server.MapPath("~/Uploads"), fileName);
 
@@ -42,27 +46,68 @@ namespace CMS_Web.Controllers
 
                 model.ExcelUpload.SaveAs(filePath);
                 //Import data
-                var result = _fac.Import(filePath, ref msg);              
-                
+                var result = _fac.Import(filePath, CurrentUser.ID, CurrentUser.Name, CurrentUser.Phone, ref msg);
+                model.ListSMS = result;
                 if (System.IO.File.Exists(filePath))
                     System.IO.File.Delete(filePath);
-                
+
                 if (msg.Equals(""))
                 {
-                    return RedirectToAction("Index");
+                    return View("Index", model);
                 }
                 else
                 {
                     ModelState.AddModelError("Import_Marketing: ", msg);
-                    return View(model);
+                    return View("Index", model);
                 }
             }
             catch (Exception ex)
             {
                 NSLog.Logger.Error(ex);
                 ModelState.AddModelError("Import_Marketing: ", ex.Message);
-                return View(model);
+                return View("Index", model);
             }
+        }
+        [HttpPost]
+        public ActionResult SendSMS(List<CMS_MarketingModels> model)
+        {
+            /*
+             * ok 0.Check user login
+            ok 1. Check total credit of customer
+             2. Check phone number get Operator
+            ok 3. Insert to DB tru credit
+             4. send sms to Centri server
+             */
+            if(CurrentUser == null || string.IsNullOrEmpty(CurrentUser.ID))
+            {
+                return RedirectToAction("Index","Login");
+            } 
+            if (model != null)
+            {
+               
+                decimal totalPrice = 0;
+                string msg = "";
+                totalPrice = model.Sum(x => x.SMSPrice);
+                if(!_fac.CheckTotalCredit(CurrentUser.ID, totalPrice))
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    foreach(CMS_MarketingModels item in model)
+                    {
+                        item.OperatorName = "";
+                        item.RunTime = 60;
+                        item.SendFrom = "";
+                        item.TimeInput = DateTime.Now;
+                        item.UpdatedBy = CurrentUser.ID;
+                        item.CreatedBy = CurrentUser.ID;
+                        _fac.InsertFromExcel(item, ref msg);
+                    }
+                }
+
+            }
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -107,5 +152,6 @@ namespace CMS_Web.Controllers
                 return new HttpStatusCodeResult(400, ex.Message);
             }
         }
+
     }
 }
