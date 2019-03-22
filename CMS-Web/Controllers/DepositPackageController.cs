@@ -1,6 +1,8 @@
 ﻿using CMS_DTO;
+using CMS_DTO.CMSCustomer;
 using CMS_DTO.CMSDepositPackage;
 using CMS_Shared;
+using CMS_Shared.CMSDepositTransaction;
 using CMS_Shared.CMSEmployees;
 using CMS_Shared.CMSSystemConfig;
 using CMS_Web.Web.App_Start;
@@ -22,11 +24,13 @@ namespace CMS_Web.Controllers
         private readonly CMSDepositPackageFactory fac;
         private readonly CMSPaymentMethodFactory facP;
         private readonly CMSSysConfigFactory facC;
+        private readonly CMSDepositTransactionFactory facT;
         public DepositPackageController()
         {
             fac = new CMSDepositPackageFactory();
             facP = new CMSPaymentMethodFactory();
             facC = new CMSSysConfigFactory();
+            facT = new CMSDepositTransactionFactory();
         }
         // GET: DepositPackage
         public ActionResult Index()
@@ -41,17 +45,38 @@ namespace CMS_Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult PayNow(List<CMS_DepositTransactionsModel> model)
+        public async Task<ActionResult> PayNow(List<CMS_DepositTransactionsModel> model)
         {
+            var Customer = Session["UserC"] as CustomerModels;
             var Payment = facP.GetDetail(model.FirstOrDefault().PaymentMethodId);
             var Config = facC.GetList().Where(x => x.ValueType == (int)Commons.ConfigType.USD).FirstOrDefault();
+            decimal? Coin = 0;
+            if (!string.IsNullOrEmpty(Payment.URLApi))
+            {
+                var Priceobj = new PriceObjects();
+                Priceobj = await GetLastPrice(Payment.URLApi);
+                if (Priceobj.last.HasValue)
+                    Coin = Priceobj.last;
+                else
+                    Coin = Priceobj.lastPrice;
+            }
             model.ForEach(x =>
             {
                 x.PaymentMethodName = Payment.PaymentName;
                 x.WalletMoney = Payment.WalletMoney;
                 x.ExchangeRate = Config != null ? Config.Value : 0;
+                x.PayCoin = Coin == 0 ? x.PayCoin : Coin.Value;
+                x.CustomerId = Customer.ID;
+                x.CustomerName = Customer.Name;
             });
-            return RedirectToAction("Index", "Home");
+            var msg = "";
+            var result = facT.CreateDepositTransaction(model,ref msg);
+            var obj = new
+            {
+                msg = msg,
+                status = result
+            };
+            return Json(obj, JsonRequestBehavior.AllowGet);
         }
 
         private string GetURLApi(string paymentId)
@@ -62,6 +87,28 @@ namespace CMS_Web.Controllers
             return null;
         }
 
+        private async Task<PriceObjects> GetLastPrice (string URLApi)
+        {
+            var Priceobj = new PriceObjects();
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                //GET Method  
+                HttpResponseMessage response = await client.GetAsync(URLApi);
+                if (response.IsSuccessStatusCode)
+                {
+                    var res = await response.Content.ReadAsStringAsync();
+                    Priceobj = JsonConvert.DeserializeObject<PriceObjects>(res);
+                    if (Priceobj.result != null)
+                    {
+                        Priceobj.last = Priceobj.result.Last;
+                    }
+                }
+            }
+            return Priceobj;
+        }
+
         [HttpPost]
         public async Task<ActionResult> GetPrice(string paymentId)
         {
@@ -69,18 +116,7 @@ namespace CMS_Web.Controllers
             if(!string.IsNullOrEmpty(URLApi))
             {
                 var Priceobj = new PriceObjects();
-                using (var client = new HttpClient())
-                {
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    //GET Method  
-                    HttpResponseMessage response = await client.GetAsync(URLApi);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var res = await response.Content.ReadAsStringAsync();
-                        Priceobj = JsonConvert.DeserializeObject<PriceObjects>(res);
-                    }
-                }
+                Priceobj = await GetLastPrice(URLApi);
                 return Json(Priceobj, JsonRequestBehavior.AllowGet);
             } else
             {

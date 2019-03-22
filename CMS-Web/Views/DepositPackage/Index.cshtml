@@ -160,13 +160,18 @@
     function PayNow() {
         $.ajax({
             beforeSend: function () {
+                $('#site-loader').show()
             },
             url: '@Url.Action("PayNow", "DepositPackage")',
             type: "post",
             data: { model: Deposits },
-            success: function () {
+            success: function (data) {
+                if (data.status) {
+                    location.href = "@Url.Action("Index","Home")";
+                }
             },
             complete: function () {
+                $('#site-loader').hide()
             },
             error: function (jqXHR, textStatus, errorThrown) {
             }
@@ -176,6 +181,7 @@
     function GetPriceFromApi(paymentId) {
         $.ajax({
             beforeSend: function () {
+                $('#site-loader').show()
             },
             url: '@Url.Action("GetPrice", "DepositPackage")',
             type: "post",
@@ -201,6 +207,7 @@
                
             },
             complete: function () {
+                $('#site-loader').hide()
             },
             error: function (jqXHR, textStatus, errorThrown) {
             }

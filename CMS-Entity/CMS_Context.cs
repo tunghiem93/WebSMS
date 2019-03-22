@@ -31,6 +31,7 @@ namespace CMS_Entity
         public virtual DbSet<CMS_Images> CMS_Images { get; set; }
         public virtual DbSet<CMS_Customers> CMS_Customers { get; set; }
         public virtual DbSet<CMS_Companies> CMS_Companies { get; set; }
+        public virtual DbSet<CMS_DepositTransactions> CMS_DepositTransactions { get; set; }
         public virtual DbSet<CMS_CustomerActiveCode> CMS_CustomerActiveCode { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
