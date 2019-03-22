@@ -95,5 +95,28 @@ namespace CMS_Shared.CMSDepositTransaction
             }
             return data;
         }
+
+        public bool ChangeStatusDepositTransaction(List<CMS_DepositTransactionsModel> model)
+        {
+            var result = true;
+            try
+            {
+                using(var cxt = new CMS_Context())
+                {
+                    foreach(var item in model)
+                    {
+                        var e = cxt.CMS_DepositTransactions.Find(item.Id);
+                        e.Status = item.Status;
+                        e.UpdatedDate = DateTime.Now;
+                    }
+                    cxt.SaveChanges();
+                }
+            }
+            catch(Exception ex)
+            {
+                NSLog.Logger.Error("ChangeStatusDepositTransaction", ex);
+            }
+            return result;
+        }
     }
 }

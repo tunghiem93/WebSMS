@@ -15,5 +15,13 @@ namespace CMS_DTO.CMSDepositPackage
         public decimal? prevClosePrice { get; set; }
         public decimal? lastPrice { get; set; }
         public decimal? last { get; set; }
+        public Bittrex result { get; set; }
+    }
+
+    public class Bittrex
+    {
+        public decimal? Last { get; set; }
+        public decimal? Bid { get; set; }
+        public decimal? Ask { get; set; }
     }
 }
