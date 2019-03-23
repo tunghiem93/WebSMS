@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Linq;
 using System.Text;
@@ -80,10 +81,37 @@ namespace CMS_Shared
         }
         public enum SMSStatus
         {
+            [Description("Waiting Send")]
             WaitingSend = 0,
             Sent = 1,
             Success = 2,
             Fail = 3
+        }
+        private static readonly Dictionary<string, string> dicConvert = new Dictionary<string, string>
+        {
+            {"á", "as"},{"à", "af"},{"ạ", "aj"},{"ả", "ar"},{"ã", "ax"},{"â", "aa"},{"ấ", "aas"},{"ầ", "aaf"},{"ậ", "aaj"},
+            {"ẩ", "aar"},{"ẫ", "aax"},{"ă", "aw"},{"ắ", "aws"},{"ằ", "awf"},{"ặ", "awj"},{"ẳ", "awr"},{"ẵ", "awx"},
+            {"é", "es"},{"è", "ef"},{"ẹ", "ej"},{"ẻ", "er"},{"ẽ", "ex"},{"ê", "ee"},{"ế", "ees"},{"ề", "eef"},{"ệ", "eej"},
+            {"ể", "eer"},{"ễ", "eex"},
+            {"ó", "os"},{"ò", "of"},{"ọ", "oj"},{"ỏ", "or"},{"õ", "ox"},{"ô", "oo"},{"ố", "oos"},{"ồ", "oof"},{"ộ", "ooj"},
+            {"ổ", "oor"},{"ỗ", "oox"},{"ơ", "ow"},{"ớ", "ows"},{"ờ", "owf"},{"ợ", "owj"},{"ở", "owr"},{"ỡ", "owx"},
+            {"ú", "us"},{"ù", "uf"},{"ụ", "uj"},{"ủ", "ur"},{"ũ", "ux"},{"ư", "uw"},{"ứ", "uws"},{"ừ", "uwf"},{"ự", "uwj"},
+            {"ử", "uwr"},{"ữ", "uwx"},
+            {"í", "is"},{"ì", "if"},{"ị", "ij"},{"ỉ", "ir"},{"ĩ", "ix"},
+            {"đ", "dd"},
+            {"ý", "ys"},{"ỳ", "yf"},{"ỵ", "yj"},{"ỷ", "yr"},{"ỹ", "yx"}
+        };
+        public static string ConvertUnicodeToWithoutAccent(string str)
+        {
+            string strConvert = str.ToLower();
+            foreach (KeyValuePair<string, string> item in dicConvert)
+            {
+                if (strConvert.Contains(item.Key))
+                {
+                    strConvert = strConvert.Replace(item.Key, item.Value);
+                }
+            }
+            return strConvert;
         }
     }    
 }

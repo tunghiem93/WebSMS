@@ -38,7 +38,7 @@
                             <td class="text-center">@item.OperatorName</td>
                             <td class="text-center">@item.SMSPrice</td>
                             <td class="text-center">
-                                @Enum.GetName(typeof(Commons.SMSStatus), item.Status)
+                                @Commons.SMSStatus.Fail.GetDescription(Enum.GetName(typeof(Commons.SMSStatus), item.Status))
                             </td>
                             <td class="text-center">@item.TimeInput</td>
                             <td class="text-center">@item.SendFrom</td>

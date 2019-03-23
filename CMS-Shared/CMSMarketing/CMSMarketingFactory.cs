@@ -2,6 +2,7 @@
 using CMS_DTO.CMSBase;
 using CMS_DTO.CMSMarketing;
 using CMS_Entity;
+using CMS_Entity.Entity;
 using CMS_Shared.CMSBaseFactory;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,8 @@ namespace CMS_Shared.CMSMarketing
             var result = new CMS_ReportModels();
             try
             {
-                string[] lstHeaders = new string[] {"Phone", "Message" };
-                    
+                string[] lstHeaders = new string[] { "Phone", "Message" };
+
                 int row = 1;
                 //add header to excel file
                 for (int i = 1; i <= lstHeaders.Length; i++)
@@ -50,7 +51,7 @@ namespace CMS_Shared.CMSMarketing
                 //============
                 result.IsOk = true;
             }
-          
+
             catch (Exception ex)
             {
                 result.IsOk = false;
@@ -61,35 +62,58 @@ namespace CMS_Shared.CMSMarketing
             return result;
         }
 
-        public bool Import(string filePath, ref string msg)
+        public List<CMS_MarketingModels> Import(string filePath,string empId, string empName, string empphone, ref string msg)
         {
             using (var cxt = new CMS_Context())
             {
-                using (var trans = cxt.Database.BeginTransaction())
+                List<CMS_MarketingModels> listMessage = new List<CMS_MarketingModels>();
+                try
                 {
-                    try
+                    DataTable dtMarketing = _baseFactory.GetDataFromExcel(@filePath, 1);
+                    DataTable dtTime = _baseFactory.GetDataFromExcel(@filePath, 2);
+                    decimal rate = GetSMSRate(cxt);
+                    for (int i = 0; i < dtMarketing.Rows.Count; i++)
                     {
-                        DataTable dtMarketing = _baseFactory.ReadExcelFile(@filePath, "Marketing");
-                        DataTable dtTime = _baseFactory.ReadExcelFile(@filePath, "Time");
-                        string tmpExcelPath = System.Web.HttpContext.Current.Server.MapPath("~/ImportExportTemplate") + "/MarketingImportTemplate.xlsx";
-                        DataTable dtTmpMarketing = _baseFactory.ReadExcelFile(@tmpExcelPath, "Marketing");
-                        DataTable dtTmpTime = _baseFactory.ReadExcelFile(@tmpExcelPath, "Time");
-                        NSLog.Logger.Info("Import marketing susscess");
-                        cxt.SaveChanges();
-                        trans.Commit();
-                    }
-                    catch (Exception ex)
-                    {
-                        NSLog.Logger.Error("Import marketing error: ", ex);
-                        trans.Rollback();
-                    }
-                    finally
-                    {
-                        cxt.Dispose();
+                        string phone = Convert.ToString(dtMarketing.Rows[i][0]);
+                        string smsContent = Convert.ToString(dtMarketing.Rows[i][1]);
+                        string subPhone = phone.Substring(0, 2);
+                        string subPhone1 = phone.Substring(0, 1);
+                        if (!subPhone.Equals("84") && !subPhone1.Equals("0"))
+                        {
+                            phone = "84" + phone;
+                        }
+                        
+                        if (!string.IsNullOrEmpty(phone))
+                        {
+                            string smsConvert = Commons.ConvertUnicodeToWithoutAccent(smsContent);
+                            int count2 = smsConvert.Length;
+                            int smsFee = count2 / 80; // < 80 = 1sms
+                            CMS_MarketingModels model = new CMS_MarketingModels() {
+                                CustomerId = empId,
+                                CustomerName = string.Format("{0} ({1})", empName, empphone),
+                                CountMessage = count2,
+                                SendTo = phone,
+                                SMSContent = smsContent,
+                                SMSType = (int)Commons.SMSType.Marketing,
+                                Status = (int)Commons.SMSStatus.Sent,
+                                SMSPrice = (smsFee + 1)*rate,
+                                SMSRate = rate
+                            };
+                            listMessage.Add(model);
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    NSLog.Logger.Error("Import marketing error: ", ex);
+                }
+                finally
+                {
+                    cxt.Dispose();
+                }
+                return listMessage;
             }
-            return true;
+
         }
         public List<CMS_MarketingModels> GetList(int smsType)
         {
@@ -97,7 +121,7 @@ namespace CMS_Shared.CMSMarketing
             {
                 using (var cxt = new CMS_Context())
                 {
-                    var data = cxt.CMS_Marketing.Where(x=>x.SMSType.Equals(smsType)).Select(x => new CMS_MarketingModels
+                    var data = cxt.CMS_Marketing.Where(x => x.SMSType.Equals(smsType)).Select(x => new CMS_MarketingModels
                     {
                         Id = x.Id,
                         CustomerId = x.CustomerId,
@@ -111,7 +135,7 @@ namespace CMS_Shared.CMSMarketing
                         SMSType = x.SMSType,
                         IsActive = x.IsActive,
                         Status = x.Status,
-                        TimeInput= x.TimeInput,
+                        TimeInput = x.TimeInput,
                         UpdatedBy = x.UpdatedBy,
                         UpdatedDate = x.UpdatedDate,
                         CreatedBy = x.CreatedBy,
@@ -122,6 +146,189 @@ namespace CMS_Shared.CMSMarketing
             }
             catch (Exception ex) { }
             return null;
+        }
+        public CMS_MarketingModels GetDetail(string Id)
+        {
+            try
+            {
+
+                using (var cxt = new CMS_Context())
+                {
+                    var data = cxt.CMS_Marketing.Where(x => x.Id.Equals(Id))
+                                                .Select(x => new CMS_MarketingModels
+                                                {
+                                                    Id = x.Id,
+                                                    CustomerId = x.CustomerId,
+                                                    CustomerName = x.CustomerName,
+                                                    OperatorName = x.OperatorName,
+                                                    RunTime = x.RunTime,
+                                                    SendFrom = x.SendFrom,
+                                                    SendTo = x.SendTo,
+                                                    SMSContent = x.SMSContent,
+                                                    SMSPrice = x.SMSPrice,
+                                                    SMSType = x.SMSType,
+                                                    IsActive = x.IsActive,
+                                                    Status = x.Status,
+                                                    TimeInput = x.TimeInput,
+                                                    UpdatedBy = x.UpdatedBy,
+                                                    UpdatedDate = x.UpdatedDate,
+                                                    CreatedBy = x.CreatedBy,
+                                                    CreatedDate = x.CreatedDate,
+                                                }).FirstOrDefault();
+                    return data;
+                }
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public bool CreateOrUpdate(CMS_MarketingModels model, ref string msg)
+        {
+            var result = true;
+            using (var cxt = new CMS_Context())
+            {
+                using (var trans = cxt.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        if (string.IsNullOrEmpty(model.Id))
+                        {
+                            var _Id = Guid.NewGuid().ToString();
+                            var e = new CMS_Marketing
+                            {
+                                Id = _Id,
+                                CustomerId = model.CustomerId,
+                                CustomerName = model.CustomerName,
+                                OperatorName = model.OperatorName,
+                                RunTime = model.RunTime.Value,
+                                SendFrom = model.SendFrom,
+                                SendTo = model.SendTo,
+                                SMSContent = model.SMSContent,
+                                SMSPrice = model.SMSPrice,
+                                SMSType = model.SMSType,
+                                Status = model.Status,
+                                SMSRate = model.SMSRate,
+                                TimeInput = model.TimeInput,
+                                IsActive = model.IsActive,
+                                UpdatedBy = model.UpdatedBy,
+                                UpdatedDate = DateTime.Now,
+                                CreatedBy = model.CreatedBy,
+                                CreatedDate = DateTime.Now,
+                            };
+                            cxt.CMS_Marketing.Add(e);
+                        }
+                        else
+                        {
+                            var e = cxt.CMS_Marketing.Find(model.Id);
+                            if (e != null)
+                            {
+                                e.CustomerId = model.CustomerId;
+                                e.CustomerName = model.CustomerName;
+                                e.OperatorName = model.OperatorName;
+                                e.RunTime = model.RunTime.Value;
+                                e.SendFrom = model.SendFrom;
+                                e.SendTo = model.SendTo;
+                                e.SMSContent = model.SMSContent;
+                                e.SMSPrice = model.SMSPrice;
+                                e.SMSType = model.SMSType;
+                                e.Status = model.Status;
+                                e.SMSRate = model.SMSRate;
+                                e.TimeInput = model.TimeInput;
+                                e.IsActive = model.IsActive;
+                                e.UpdatedDate = DateTime.Now;
+                                e.UpdatedBy = model.UpdatedBy;
+                            }
+                        }
+                        cxt.SaveChanges();
+                        trans.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        msg = "Vui lòng kiểm tra đường truyền";
+                        result = false;
+                        trans.Rollback();
+                    }
+                    finally
+                    {
+                        cxt.Dispose();
+                    }
+                }
+            }
+            return result;
+        }
+
+        public bool InsertFromExcel(CMS_MarketingModels model, ref string msg)
+        {
+            var result = true;
+            using (var cxt = new CMS_Context())
+            {
+                using (var trans = cxt.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        if (string.IsNullOrEmpty(model.Id))
+                        {
+                            var _Id = Guid.NewGuid().ToString();
+                            var e = new CMS_Marketing
+                            {
+                                Id = _Id,
+                                CustomerId = model.CustomerId,
+                                CustomerName = model.CustomerName,
+                                OperatorName = model.OperatorName,
+                                RunTime = model.RunTime.Value,
+                                SendFrom = model.SendFrom,
+                                SendTo = model.SendTo,
+                                SMSContent = model.SMSContent,
+                                SMSPrice = model.SMSPrice,
+                                SMSType = model.SMSType,
+                                Status = model.Status,
+                                TimeInput = model.TimeInput,
+                                IsActive = model.IsActive,
+                                SMSRate = model.SMSRate,
+                                UpdatedBy = model.UpdatedBy,
+                                UpdatedDate = DateTime.Now,
+                                CreatedBy = model.CreatedBy,
+                                CreatedDate = DateTime.Now,
+                            };
+                            cxt.CMS_Marketing.Add(e);
+                            var customer = cxt.CMS_Customers.Where(x => x.Id.Equals(model.CustomerId)).FirstOrDefault();
+                            customer.TotalCredit = customer.TotalCredit - model.SMSPrice;
+                        }
+                        cxt.SaveChanges();
+                        trans.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        msg = "Vui lòng kiểm tra đường truyền";
+                        result = false;
+                        trans.Rollback();
+                    }
+                    finally
+                    {
+                        cxt.Dispose();
+                    }
+                }
+            }
+            return result;
+        }
+
+        public bool CheckTotalCredit(string cusId, decimal credit)
+        {
+            try
+            {
+                using (var cxt = new CMS_Context())
+                {
+                    var data = cxt.CMS_Customers.Where(x => x.Id.Equals(cusId))
+                                                .Select(x => x.TotalCredit).FirstOrDefault();
+                    return data >= credit;
+                }
+            }
+            catch (Exception) { }
+            return false;
+        }
+        private decimal GetSMSRate(CMS_Context cxt)
+        {
+            decimal configSMS = cxt.CMS_SysConfigs.Where(x => x.ValueType.Equals((int)Commons.ConfigType.SMSMarketing)).Select(x => x.Value).FirstOrDefault();
+            return configSMS;
         }
     }
 }

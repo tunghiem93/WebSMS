@@ -28,6 +28,9 @@ namespace CMS_DTO.CMSMarketing
         public string CreatedBy { get; set; }
         public DateTime UpdatedDate { get; set; }
         public string UpdatedBy { get; set; }
+        public int CountMessage { get; set; }
+        public decimal SMSRate { get; set; }
+        public List<CMS_MarketingModels> ListSMS { get; set; }
         public CMS_MarketingModels()
         {
             this.IsActive = true;
