@@ -43,7 +43,8 @@ namespace CMS_Web.Controllers
             }
             var Status = new List<int>();
             Status.Add((int)Commons.DepositStatus.ConfirmedPay);
-            model = fac.GetListDepositTransaction(Customer.ID, Status);
+            var Ids = model.Select(x => x.Id).ToList();
+            model = fac.GetListDepositTransaction(Customer.ID, Status).Where(x => Ids.Contains(x.Id)).ToList();
             return View(model);
         }
     }

@@ -22,5 +22,6 @@ namespace CMS_Entity.Entity
         public string PaymentMethodName { get; set; }
         public decimal PayCoin { get; set; }
         public int Status { get; set; } //enum DepositStatus (in Commons)
+        public string DepositNo { get; set; }
     }
 }

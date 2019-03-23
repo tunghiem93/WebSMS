@@ -29,6 +29,7 @@ namespace CMS_Entity.Mapping
             this.Property(x => x.Status).HasColumnType("int").IsRequired();
             this.Property(x => x.UpdatedBy).HasColumnType("varchar").HasMaxLength(60).IsOptional();
             this.Property(x => x.CreatedBy).HasColumnType("varchar").HasMaxLength(60).IsOptional();
+            this.Property(x => x.DepositNo).HasColumnType("varchar").HasMaxLength(60).IsOptional();
         }
     }
 }

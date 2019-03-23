@@ -29,6 +29,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th>Deposit NO</th>
                                     <th>Package Name</th>
                                     <th>Status</th>
                                     <th>Transfer</th>
@@ -40,7 +41,7 @@
                                 @if (Model == null || Model.Count <= 0)
                                 {
                                     <tr>
-                                        <td colspan="5" style="text-align:center">No content</td>
+                                        <td colspan="6" style="text-align:center">No content</td>
                                     </tr>
                                 }
                                 else
@@ -50,6 +51,7 @@
                                     {
                                         <input type="hidden" name="model[@i].Id" value="@item.Id" />
                                         <tr>
+                                            <td>@item.DepositNo</td>
                                             <th>@item.PackageName</th>
                                             <th>@item.sStatus</th>
                                             <th>@item.PayCoin</th>
@@ -65,10 +67,10 @@
                             {
                                 <tfoot>
                                     <tr>
-                                        <td colspan="5">Sau khi chuyển xong vui lòng ấn nút "xác nhận đã thanh toán" bên dưới</td>
+                                        <td colspan="6">Sau khi chuyển xong vui lòng ấn nút "xác nhận đã thanh toán" bên dưới</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="5">
+                                        <td colspan="6">
                                             <button type="submit" class="btn btn-success">Xác nhận đã thanh toán</button>
                                         </td>
                                     </tr>

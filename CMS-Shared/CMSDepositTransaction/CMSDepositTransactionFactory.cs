@@ -40,7 +40,8 @@ namespace CMS_Shared.CMSDepositTransaction
                             SMSPrice = item.SMSPrice,
                             UpdatedDate = DateTime.Now,
                             WalletMoney = item.WalletMoney,
-                            Status = (int)Commons.DepositStatus.WaitingPay
+                            Status = (int)Commons.DepositStatus.WaitingPay,
+                            DepositNo = item.DepositNo
                         };
                         es.Add(e);
                     }
@@ -92,6 +93,7 @@ namespace CMS_Shared.CMSDepositTransaction
                             SMSPrice = x.SMSPrice,
                             Status = x.Status,
                             WalletMoney = x.WalletMoney,
+                            DepositNo = x.DepositNo,
                             sStatus = x.Status == (int)Commons.DepositStatus.WaitingPay ? "Waiting Pay"
                         : (x.Status == (int)Commons.DepositStatus.ConfirmedPay ? "Confirmed Pay" : (x.Status == (int)Commons.DepositStatus.WaitingCustomer ? "Waiting Customer" : (x.Status == (int)Commons.DepositStatus.Completed ? "Completed" : "Cancel")))
                         }).ToList();

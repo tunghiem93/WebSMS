@@ -131,6 +131,11 @@ namespace CMS_Shared.Utilities
             return "0000";
         }
 
+        public static string RandomDepositNo()
+        {
+            return "No." + RandomVerifiCode();
+        }
+
         public static string GeneralPassword()
         {
             try

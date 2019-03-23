@@ -29,6 +29,7 @@ namespace CMS_DTO
         public DateTime UpdatedDate { get; set; }
         public string UpdatedBy { get; set; }
         public string sStatus { get; set; }
+        public string DepositNo { get; set; }
         public CMS_DepositTransactionsModel()
         {
             this.IsActive = true;

@@ -5,6 +5,7 @@ using CMS_Shared;
 using CMS_Shared.CMSDepositTransaction;
 using CMS_Shared.CMSEmployees;
 using CMS_Shared.CMSSystemConfig;
+using CMS_Shared.Utilities;
 using CMS_Web.Web.App_Start;
 using Newtonsoft.Json;
 using System;
@@ -68,6 +69,7 @@ namespace CMS_Web.Controllers
                 x.PayCoin = Coin == 0 ? x.PayCoin : Coin.Value;
                 x.CustomerId = Customer.ID;
                 x.CustomerName = Customer.Name;
+                x.DepositNo = CommonHelper.RandomDepositNo();
             });
             var msg = "";
             var result = facT.CreateDepositTransaction(model,ref msg);
