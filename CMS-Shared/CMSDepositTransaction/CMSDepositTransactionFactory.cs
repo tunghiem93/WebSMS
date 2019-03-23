@@ -16,10 +16,10 @@ namespace CMS_Shared.CMSDepositTransaction
             var result = true;
             try
             {
-                using(var cxt = new CMS_Context())
+                using (var cxt = new CMS_Context())
                 {
                     var es = new List<CMS_DepositTransactions>();
-                    foreach(var item in model)
+                    foreach (var item in model)
                     {
                         var e = new CMS_DepositTransactions
                         {
@@ -36,11 +36,11 @@ namespace CMS_Shared.CMSDepositTransaction
                             PackageSMS = item.PackageSMS,
                             PayCoin = item.PayCoin,
                             PaymentMethodId = item.PaymentMethodId,
-                            PaymentMethodName  = item.PaymentMethodName,
+                            PaymentMethodName = item.PaymentMethodName,
                             SMSPrice = item.SMSPrice,
                             UpdatedDate = DateTime.Now,
                             WalletMoney = item.WalletMoney,
-                            Status = (int) Commons.DepositStatus.WaitingPay
+                            Status = (int)Commons.DepositStatus.WaitingPay
                         };
                         es.Add(e);
                     }
@@ -49,7 +49,7 @@ namespace CMS_Shared.CMSDepositTransaction
                     msg = "Create deposite order successful";
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result = false;
                 msg = "Create deposite order not successful";
@@ -58,52 +58,58 @@ namespace CMS_Shared.CMSDepositTransaction
             return result;
         }
 
-        public List<CMS_DepositTransactionsModel> GetListDepositTransaction(string customerId, List<int> Status = null)
+        public List<CMS_DepositTransactionsModel> GetListDepositTransaction(string customerId, IEnumerable<int> Status = null)
         {
             var data = new List<CMS_DepositTransactionsModel>();
+            var lstStatus = Status.Select(x => x).ToList();
             try
             {
-                using(var cxt = new CMS_Context())
+                int? Isnull = null;
+                if (Status != null)
+                {
+                    Isnull = 1;
+                }
+                using (var cxt = new CMS_Context())
                 {
                     data = cxt.CMS_DepositTransactions
-                        .Where(x => string.IsNullOrEmpty(customerId) ? 1 == 1 : x.CustomerId == customerId && Status != null ? Status.Contains(x.Status) : 1 == 1)
+                        .Where(x => string.IsNullOrEmpty(customerId) ? 1 == 1 : x.CustomerId == customerId && Isnull.HasValue ? Status.Contains(x.Status) : 1 == 1)
                         .Select(x => new CMS_DepositTransactionsModel()
-                    {
-                        CreatedBy = x.CreatedBy,
-                        CreatedDate = x.CreatedDate,
-                        CustomerId = x.CustomerId,
-                        CustomerName = x.CustomerName,
-                        ExchangeRate = x.ExchangeRate,
-                        Id = x.Id,
-                        IsActive = x.IsActive,
-                        PackageId = x.PackageId,
-                        PackageName = x.PackageName,
-                        PackagePrice = x.PackagePrice,
-                        PackageSMS = x.PackageSMS,
-                        PayCoin = x.PayCoin,
-                        PaymentMethodId = x.PaymentMethodId,
-                        PaymentMethodName = x.PaymentMethodName,
-                        SMSPrice = x.SMSPrice,
-                        Status = x.Status,
-                        WalletMoney = x.WalletMoney,
-                        sStatus = x.Status == (int)Commons.DepositStatus.WaitingPay ? "Waiting Pay" 
+                        {
+                            CreatedBy = x.CreatedBy,
+                            CreatedDate = x.CreatedDate,
+                            CustomerId = x.CustomerId,
+                            CustomerName = x.CustomerName,
+                            ExchangeRate = x.ExchangeRate,
+                            Id = x.Id,
+                            IsActive = x.IsActive,
+                            PackageId = x.PackageId,
+                            PackageName = x.PackageName,
+                            PackagePrice = x.PackagePrice,
+                            PackageSMS = x.PackageSMS,
+                            PayCoin = x.PayCoin,
+                            PaymentMethodId = x.PaymentMethodId,
+                            PaymentMethodName = x.PaymentMethodName,
+                            SMSPrice = x.SMSPrice,
+                            Status = x.Status,
+                            WalletMoney = x.WalletMoney,
+                            sStatus = x.Status == (int)Commons.DepositStatus.WaitingPay ? "Waiting Pay"
                         : (x.Status == (int)Commons.DepositStatus.ConfirmedPay ? "Confirmed Pay" : (x.Status == (int)Commons.DepositStatus.WaitingCustomer ? "Waiting Customer" : (x.Status == (int)Commons.DepositStatus.Completed ? "Completed" : "Cancel")))
-                    }).ToList();
+                        }).ToList();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 NSLog.Logger.Error("GetListDepositTransaction", ex);
             }
             return data;
         }
 
-        public bool ChangeStatusDepositTransaction(List<CMS_DepositTransactionsModel> model,int Status)
+        public bool ChangeStatusDepositTransaction(List<CMS_DepositTransactionsModel> model, int Status)
         {
             var result = true;
             try
             {
-                using(var cxt = new CMS_Context())
+                using (var cxt = new CMS_Context())
                 {
                     var Ids = model.Select(x => x.Id).ToList();
                     var e = cxt.CMS_DepositTransactions.Where(x => Ids.Contains(x.Id)).ToList();
@@ -115,7 +121,7 @@ namespace CMS_Shared.CMSDepositTransaction
                     cxt.SaveChanges();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 NSLog.Logger.Error("ChangeStatusDepositTransaction", ex);
             }
