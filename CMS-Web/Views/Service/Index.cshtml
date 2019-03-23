@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model CMS_DTO.CMSMarketing.CMS_TestServiceModels
 <div class="container">
     @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home" }, { "B", "TEST SERVICE" } })
     <div class="page-header bottom-shadow">
@@ -16,18 +17,21 @@
                     <h3>Test Service</h3>
                 </div>
                 <div class="contact-form">
-                    <form class="form-horizontal">
+                    @using (@Html.BeginForm("Index", "Service", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal login-page", @enctype = "multipart/form-data" }))
+                    {
                         <div class="form-group">
                             <label for="phone" class="col-md-4">Phone</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" id="phone" placeholder="enter your phone" required />
+                                @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", @placeholder = "Phone Number", @autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.Phone, null, new { @class = "label label-danger" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="content" class="col-md-4">Content</label>
                             <div class="col-md-8">
-                                <textarea class="form-control" id="content" placeholder="enter your Content" required></textarea>
+                                @Html.TextAreaFor(model => model.Content, new { @class = "form-control", @placeholder = "SMS Content", @autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.Content, null, new { @class = "label label-danger" })
                             </div>
                         </div>
                         <div class="drop-line bottom-shadow"></div>
@@ -35,7 +39,7 @@
                             <a title="Or Return to Shop" href="#">Or Return to Shop</a>
                             <input type="submit" value="Test Service" class="btn btn-default  pull-right">
                         </div>
-                    </form>
+                    }
                 </div>
             </div>
 

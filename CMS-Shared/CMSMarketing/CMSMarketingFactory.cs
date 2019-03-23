@@ -71,7 +71,7 @@ namespace CMS_Shared.CMSMarketing
                 {
                     DataTable dtMarketing = _baseFactory.GetDataFromExcel(@filePath, 1);
                     DataTable dtTime = _baseFactory.GetDataFromExcel(@filePath, 2);
-                    decimal rate = GetSMSRate(cxt);
+                    decimal rate = GetSMSRate(cxt, (int)Commons.ConfigType.SMSMarketing);
                     for (int i = 0; i < dtMarketing.Rows.Count; i++)
                     {
                         string phone = Convert.ToString(dtMarketing.Rows[i][0]);
@@ -325,10 +325,17 @@ namespace CMS_Shared.CMSMarketing
             catch (Exception) { }
             return false;
         }
-        private decimal GetSMSRate(CMS_Context cxt)
+        private decimal GetSMSRate(CMS_Context cxt, int smsType)
         {
-            decimal configSMS = cxt.CMS_SysConfigs.Where(x => x.ValueType.Equals((int)Commons.ConfigType.SMSMarketing)).Select(x => x.Value).FirstOrDefault();
+            decimal configSMS = cxt.CMS_SysConfigs.Where(x => x.ValueType.Equals(smsType)).Select(x => x.Value).FirstOrDefault();
             return configSMS;
+        }
+        public decimal GetSMSRate(int smsType)
+        {
+            using (var cxt = new CMS_Context())
+            {
+                return GetSMSRate(cxt, smsType);
+            }
         }
     }
 }
