@@ -34,6 +34,10 @@ namespace CMS_Web.Controllers
                 {
                     return RedirectToAction("Index", "Login");
                 }
+                if (model.ExcelUpload == null)
+                {
+                    return View();
+                }
                 string fileName = Path.GetFileName(model.ExcelUpload.FileName);
                 string filePath = string.Format("{0}/{1}", System.Web.HttpContext.Current.Server.MapPath("~/Uploads"), fileName);
 
