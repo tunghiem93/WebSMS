@@ -1,0 +1,85 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<CMS_DTO.CMS_DepositTransactionsModel>
+<!-- container -->
+<div class="container">
+    @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home" }, { "B", "DEPOSIT ORDER" } })
+    <div class="page-header bottom-shadow">
+        <h3>Deposit Order</h3>
+        <p> Theme Deposit Order</p>
+    </div><!-- Section Header /- -->
+</div><!-- container /- -->
+<div class="contact-form-details">
+    <div class="container">
+        @if (ViewBag.notification == true)
+        {
+            <div class="alert alert-info">
+                <strong>Info!</strong> Xác nhận thanh toán thành công. Thank you.
+            </div>
+        }
+
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">View Detail</div>
+            <div class="panel-body">
+                @using (@Html.BeginForm("Index", "DepositOrder", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal login-page", @enctype = "multipart/form-data" }))
+                {
+                    <div class="row">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Package Name</th>
+                                    <th>Status</th>
+                                    <th>Transfer</th>
+                                    <th>Payment</th>
+                                    <th>Credits Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model == null || Model.Count <= 0)
+                                {
+                                    <tr>
+                                        <td colspan="5" style="text-align:center">No content</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    var i = 0;
+                                    foreach (var item in Model)
+                                    {
+                                        <input type="hidden" name="model[@i].Id" value="@item.Id" />
+                                        <tr>
+                                            <th>@item.PackageName</th>
+                                            <th>@item.sStatus</th>
+                                            <th>@item.PayCoin</th>
+                                            <th>@item.PaymentMethodName</th>
+                                            <th>@item.WalletMoney</th>
+                                        </tr>
+                                        i = i + 1;
+                                    }
+                                }
+
+                            </tbody>
+                            @if (ViewBag.disabled == true)
+                            {
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="5">Sau khi chuyển xong vui lòng ấn nút "xác nhận đã thanh toán" bên dưới</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5">
+                                            <button type="submit" class="btn btn-success">Xác nhận đã thanh toán</button>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            }
+
+                        </table>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

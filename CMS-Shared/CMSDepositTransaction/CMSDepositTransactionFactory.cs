@@ -58,7 +58,7 @@ namespace CMS_Shared.CMSDepositTransaction
             return result;
         }
 
-        public List<CMS_DepositTransactionsModel> GetListDepositTransaction(string customerId)
+        public List<CMS_DepositTransactionsModel> GetListDepositTransaction(string customerId, List<int> Status = null)
         {
             var data = new List<CMS_DepositTransactionsModel>();
             try
@@ -66,7 +66,7 @@ namespace CMS_Shared.CMSDepositTransaction
                 using(var cxt = new CMS_Context())
                 {
                     data = cxt.CMS_DepositTransactions
-                        .Where(x => string.IsNullOrEmpty(customerId) ? 1 == 1 : x.CustomerId == customerId)
+                        .Where(x => string.IsNullOrEmpty(customerId) ? 1 == 1 : x.CustomerId == customerId && Status != null ? Status.Contains(x.Status) : 1 == 1)
                         .Select(x => new CMS_DepositTransactionsModel()
                     {
                         CreatedBy = x.CreatedBy,
@@ -85,7 +85,9 @@ namespace CMS_Shared.CMSDepositTransaction
                         PaymentMethodName = x.PaymentMethodName,
                         SMSPrice = x.SMSPrice,
                         Status = x.Status,
-                        WalletMoney = x.WalletMoney
+                        WalletMoney = x.WalletMoney,
+                        sStatus = x.Status == (int)Commons.DepositStatus.WaitingPay ? "Waiting Pay" 
+                        : (x.Status == (int)Commons.DepositStatus.ConfirmedPay ? "Confirmed Pay" : (x.Status == (int)Commons.DepositStatus.WaitingCustomer ? "Waiting Customer" : (x.Status == (int)Commons.DepositStatus.Completed ? "Completed" : "Cancel")))
                     }).ToList();
                 }
             }
@@ -96,19 +98,20 @@ namespace CMS_Shared.CMSDepositTransaction
             return data;
         }
 
-        public bool ChangeStatusDepositTransaction(List<CMS_DepositTransactionsModel> model)
+        public bool ChangeStatusDepositTransaction(List<CMS_DepositTransactionsModel> model,int Status)
         {
             var result = true;
             try
             {
                 using(var cxt = new CMS_Context())
                 {
-                    foreach(var item in model)
+                    var Ids = model.Select(x => x.Id).ToList();
+                    var e = cxt.CMS_DepositTransactions.Where(x => Ids.Contains(x.Id)).ToList();
+                    e.ForEach(x =>
                     {
-                        var e = cxt.CMS_DepositTransactions.Find(item.Id);
-                        e.Status = item.Status;
-                        e.UpdatedDate = DateTime.Now;
-                    }
+                        x.Status = Status;
+                        x.UpdatedDate = DateTime.Now;
+                    });
                     cxt.SaveChanges();
                 }
             }
