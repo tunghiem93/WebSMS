@@ -68,6 +68,7 @@ namespace CMS_Web.Web.App_Start
                             action = "Index",
                         })
                     );
+                filterContext.Controller.TempData["ErrorMessage"] = "Please login or regist your account to access the function!";
             }
             else
             {

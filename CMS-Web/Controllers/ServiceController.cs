@@ -1,6 +1,7 @@
 ﻿using CMS_DTO.CMSMarketing;
 using CMS_Shared;
 using CMS_Shared.CMSMarketing;
+using CMS_Web.Web.App_Start;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 
 namespace CMS_Web.Controllers
 {
+    [NuWebAuth]
     public class ServiceController : BasesController
     {
         public CMSMarketingFactory _fac = null;
@@ -26,10 +28,6 @@ namespace CMS_Web.Controllers
         {
             try
             {
-                if (CurrentUser == null || string.IsNullOrEmpty(CurrentUser.ID))
-                {
-                    return RedirectToAction("Index", "Login");
-                }
                 if (!ModelState.IsValid)
                 {
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
@@ -60,18 +58,19 @@ namespace CMS_Web.Controllers
 
                 if (msg.Equals(""))
                 {
-                    return View(model);
+                    ViewData["SuccessMessage"] = "Service is successfully!";
+                    return View(new CMS_TestServiceModels());
                 }
                 else
                 {
-                    ModelState.AddModelError("Run Test Service: ", msg);
+                    ViewData["ErrorMessage"] = msg;
                     return View(model);
                 }
             }
             catch (Exception ex)
             {
                 NSLog.Logger.Error(ex);
-                ModelState.AddModelError("Run Test Service: ", ex.Message);
+                ViewData["ErrorMessage"] = ex.Message;
                 return View(model);
             }
         }

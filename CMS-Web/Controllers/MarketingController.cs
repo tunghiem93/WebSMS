@@ -2,6 +2,7 @@
 using CMS_DTO.CMSBase;
 using CMS_DTO.CMSMarketing;
 using CMS_Shared.CMSMarketing;
+using CMS_Web.Web.App_Start;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,6 +13,7 @@ using System.Web.Mvc;
 
 namespace CMS_Web.Controllers
 {
+    [NuWebAuth]
     public class MarketingController : BasesController
     {
         public CMSMarketingFactory _fac = null;
@@ -22,6 +24,20 @@ namespace CMS_Web.Controllers
         // GET: Marketing
         public ActionResult Index()
         {
+            if (TempData["ErrorMessage"] != null)
+            {
+                ViewData["ErrorMessage"] = TempData["ErrorMessage"].ToString();
+            }
+            if (TempData["SuccessMessage"] != null)
+            {
+                ViewData["SuccessMessage"] = TempData["SuccessMessage"].ToString();
+            }
+            if(TempData["DataReturnError"] != null)
+            {
+                CMS_MarketingModels returnModel = new CMS_MarketingModels();
+                returnModel.ListSMS = (List<CMS_MarketingModels>)TempData["DataReturnError"];
+                return View(returnModel);
+            }
             return View();
         }
 
@@ -30,12 +46,9 @@ namespace CMS_Web.Controllers
         {
             try
             {
-                if (CurrentUser == null || string.IsNullOrEmpty(CurrentUser.ID))
-                {
-                    return RedirectToAction("Index", "Login");
-                }
                 if (model.ExcelUpload == null)
                 {
+                    ViewData["ErrorMessage"] = "Please choose file to import!";
                     return View();
                 }
                 string fileName = Path.GetFileName(model.ExcelUpload.FileName);
@@ -57,19 +70,19 @@ namespace CMS_Web.Controllers
 
                 if (msg.Equals(""))
                 {
-                    return View("Index", model);
+                    return View(model);
                 }
                 else
                 {
-                    ModelState.AddModelError("Import_Marketing: ", msg);
-                    return View("Index", model);
+                    ViewData["ErrorMessage"] = msg;
+                    return View(model);
                 }
             }
             catch (Exception ex)
             {
                 NSLog.Logger.Error(ex);
-                ModelState.AddModelError("Import_Marketing: ", ex.Message);
-                return View("Index", model);
+                ViewData["ErrorMessage"] = ex.Message;
+                return View(model);
             }
         }
         [HttpPost]
@@ -85,15 +98,17 @@ namespace CMS_Web.Controllers
             if(CurrentUser == null || string.IsNullOrEmpty(CurrentUser.ID))
             {
                 return RedirectToAction("Index","Login");
-            } 
+            }
+            string msg = "";
             if (model != null)
             {
                
                 decimal totalPrice = 0;
-                string msg = "";
                 totalPrice = model.Sum(x => x.SMSPrice);
                 if(!_fac.CheckTotalCredit(CurrentUser.ID, totalPrice))
                 {
+                    TempData["ErrorMessage"] = "Your credit is not enough to run this service!";
+                    TempData["DataReturnError"] = model;
                     return RedirectToAction("Index");
                 }
                 else
@@ -110,6 +125,15 @@ namespace CMS_Web.Controllers
                     }
                 }
 
+            }
+            if (string.IsNullOrEmpty(msg))
+            {
+                TempData["SuccessMessage"] = "Run SMS marketing successfully!";
+            }
+            else
+            {
+                TempData["DataReturnError"] = model;
+                TempData["ErrorMessage"] = msg;
             }
             return RedirectToAction("Index");
         }

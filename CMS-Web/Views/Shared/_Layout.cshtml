@@ -7,7 +7,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Luxury Shop Ecommerce HTML Template</title>
-
     <link rel="shortcut icon" href="images/favicon.png">
     <script src="@Url.Content("~/Libraries/plugins/fullcalendar/lib/jquery.min.js")"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
@@ -22,7 +21,6 @@
     <link href="@Url.Content("~/Content/components.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Content/style.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Content/media.css")" rel="stylesheet" />
-
     <link href='http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,400italic,300italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
@@ -45,14 +43,35 @@
     </div>
     <!-- Loader /- -->
     <a id="top"></a>
-
     @Html.Partial("_topMenu")
-
     <!-- BEGIN HEADER & CONTENT DIVIDER -->
     <div class="clearfix"> </div>
     <!-- END HEADER & CONTENT DIVIDER -->
     <!-- BEGIN CONTAINER -->
+
     <div class="page-container">
+        @if (ViewData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <span id="alert-message">
+                    @ViewData["ErrorMessage"].ToString()
+                </span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        @if (ViewData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <span id="alert-message">
+                    @ViewData["SuccessMessage"].ToString()
+                </span>
+                <button type="button" data-dismiss="alert" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
         @RenderBody()
     </div>
     <!-- END CONTAINER -->

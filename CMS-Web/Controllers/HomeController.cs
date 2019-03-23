@@ -10,6 +10,10 @@ namespace CMS_Web.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            if (TempData["ErrorMessage"] != null)
+            {
+                ViewData["ErrorMessage"] = TempData["ErrorMessage"].ToString();
+            }
             return View();
         }
     }

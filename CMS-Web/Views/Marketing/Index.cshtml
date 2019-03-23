@@ -2,6 +2,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model CMS_DTO.CMSMarketing.CMS_MarketingModels
+
 <!-- container -->
 <div class="container">
     @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home" }, { "B", "Marketing" } })
@@ -64,7 +65,7 @@
                 {
                     <div class="col-md-12 col-sm-12">
                         <div class="contact-form bottom-shadow">
-                            @using (@Html.BeginForm("SendSMS", "Marketing", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal login-page"}))
+                            @using (@Html.BeginForm("SendSMS", "Marketing", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal login-page" }))
                             {
                                 decimal sumPrice = 0;
                                 int countSMS = 0;
@@ -82,7 +83,7 @@
                                             {
                                                 foreach (var item in Model.ListSMS)
                                                 {
-                                                    
+
                                                     <tr class="odd gradeX">
                                                         <td class="text-left">@item.SendTo</td>
                                                         <td class="text-left">@item.SMSContent</td>
