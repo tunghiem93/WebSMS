@@ -73,9 +73,12 @@ namespace CMS_Shared
         }
         public enum DepositStatus
         {
+            [Description("Waiting Pay")]
             WaitingPay = 0,
             Completed = 1,
+            [Description("Waiting Customer")]
             WaitingCustomer = 2,
+            [Description("Confirmed Pay")]
             ConfirmedPay = 3,
             Cancel = 4
         }

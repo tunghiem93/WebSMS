@@ -129,5 +129,123 @@ namespace CMS_Shared.CMSDepositTransaction
             }
             return result;
         }
+
+        public List<CMS_DepositTransactionsModel> GetList()
+        {
+            var data = new List<CMS_DepositTransactionsModel>();
+            try
+            {
+                using (var cxt = new CMS_Context())
+                {
+                    data = cxt.CMS_DepositTransactions
+                        .Select(x => new CMS_DepositTransactionsModel()
+                        {
+                            CreatedBy = x.CreatedBy,
+                            CreatedDate = x.CreatedDate,
+                            CustomerId = x.CustomerId,
+                            CustomerName = x.CustomerName,
+                            ExchangeRate = x.ExchangeRate,
+                            Id = x.Id,
+                            IsActive = x.IsActive,
+                            PackageId = x.PackageId,
+                            PackageName = x.PackageName,
+                            PackagePrice = x.PackagePrice,
+                            PackageSMS = x.PackageSMS,
+                            PayCoin = x.PayCoin,
+                            PaymentMethodId = x.PaymentMethodId,
+                            PaymentMethodName = x.PaymentMethodName,
+                            SMSPrice = x.SMSPrice,
+                            Status = x.Status,
+                            WalletMoney = x.WalletMoney,
+                            DepositNo = x.DepositNo
+                        }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                NSLog.Logger.Error("GetListDepositTransaction", ex);
+            }
+            return data;
+        }
+        public CMS_DepositTransactionsModel GetDetail(string depId)
+        {
+            var data = new CMS_DepositTransactionsModel();
+            try
+            {
+                using (var cxt = new CMS_Context())
+                {
+                    data = cxt.CMS_DepositTransactions
+                        .Where(x=>x.Id.Equals(depId))
+                        .Select(x => new CMS_DepositTransactionsModel()
+                        {
+                            CreatedBy = x.CreatedBy,
+                            CreatedDate = x.CreatedDate,
+                            CustomerId = x.CustomerId,
+                            CustomerName = x.CustomerName,
+                            ExchangeRate = x.ExchangeRate,
+                            Id = x.Id,
+                            IsActive = x.IsActive,
+                            PackageId = x.PackageId,
+                            PackageName = x.PackageName,
+                            PackagePrice = x.PackagePrice,
+                            PackageSMS = x.PackageSMS,
+                            PayCoin = x.PayCoin,
+                            PaymentMethodId = x.PaymentMethodId,
+                            PaymentMethodName = x.PaymentMethodName,
+                            SMSPrice = x.SMSPrice,
+                            Status = x.Status,
+                            WalletMoney = x.WalletMoney,
+                            DepositNo = x.DepositNo
+                        }).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                NSLog.Logger.Error("GetDetailDepositTransaction", ex);
+            }
+            return data;
+        }
+        public bool Delete(string Id, ref string msg)
+        {
+            var result = true;
+            try
+            {
+                using (var cxt = new CMS_Context())
+                {
+                    var e = cxt.CMS_DepositTransactions.Find(Id);
+                    cxt.CMS_DepositTransactions.Remove(e);
+                    cxt.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = "Không thể xóa Transactions";
+                result = false;
+            }
+            return result;
+        }
+        public bool ChangeStatus(CMS_DepositTransactionsModel model, string userId)
+        {
+            var result = true;
+            try
+            {
+                using (var cxt = new CMS_Context())
+                {
+                    var e = cxt.CMS_DepositTransactions.Where(x => x.Id.Equals(model.Id)).ToList();
+                    e.ForEach(x =>
+                    {
+                        x.Status = model.Status;
+                        x.UpdatedDate = DateTime.Now;
+                        x.UpdatedBy = userId;
+                    });
+                    cxt.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                NSLog.Logger.Error("ChangeStatusDepositTransaction", ex);
+            }
+            return result;
+        }
     }
 }

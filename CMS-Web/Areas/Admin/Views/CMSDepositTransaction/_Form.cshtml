@@ -1,0 +1,94 @@
+﻿
+@model CMS_DTO.CMS_DepositTransactionsModel
+@using CMS_Shared
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    var _ID = Model.Id;
+}
+@Html.HiddenFor(model =>model.Id)
+<div class="row form-horizontal form-label-left" style="margin-bottom:15px;">
+    @*Image*@
+    <fieldset>
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">Deposit No</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.DepositNo, new { @class = "form-control", @placeholder = "Deposit No", @readonly = "readonly", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.DepositNo, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Customer Name</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.CustomerName, new { @class = "form-control", @placeholder = "Customer Name", @readonly = "readonly", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.CustomerName, null, new { @class = "label label-danger" })
+                @Html.HiddenFor(model => model.CustomerId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Wallet Money</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.WalletMoney, new { @class = "form-control", @placeholder = "Wallet Money", @readonly = "readonly", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.WalletMoney, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Package Name</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.PackageName, new { @class = "form-control", @readonly = "readonly", @placeholder = "Package Name", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.PackageName, null, new { @class = "label label-danger" })
+                @Html.HiddenFor(model => model.PackageId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Package SMS</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.PackageSMS, new { @class = "form-control", @placeholder = "Package SMS", @readonly = "readonly", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.PackageSMS, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">SMS Price</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.SMSPrice, new { @class = "form-control", @placeholder = "SMSPrice", @readonly = "readonly", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.SMSPrice, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Payment Method</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.PaymentMethodName, new { @class = "form-control", @placeholder = "Payment Method", @readonly = "readonly", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.PaymentMethodName, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Pay Coin</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.PayCoin, new { @class = "form-control", @placeholder = "Pay Coin", @readonly = "readonly", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.PayCoin, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Status</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.DropDownListFor(model => model.Status, Commons.DepositStatus.WaitingPay.ToSelectList(), new { @class = "form-control select2_multiple", @placeholder = "Status", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.Status, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+        <div>
+            @Html.HiddenFor(model => model.IsActive)
+        </div>
+    </fieldset>
+</div>
+<script src="@Url.Content("~/Scripts/InputCustom.js")"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#Status").select2({
+            placeholder: "Status",
+            //allowClear: true
+        });
+    });   
+</script>

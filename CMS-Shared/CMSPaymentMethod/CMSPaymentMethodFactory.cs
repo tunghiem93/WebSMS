@@ -153,7 +153,7 @@ namespace CMS_Shared.CMSEmployees
                     return data;
                 }
             }
-            catch (Exception) { }
+            catch (Exception ex) { }
             return null;
         }
     }
