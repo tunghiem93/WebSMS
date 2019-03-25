@@ -1,5 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var time = ViewBag.time;
 }
 @model List<CMS_DTO.CMS_DepositTransactionsModel>
 <!-- container -->
@@ -14,9 +15,9 @@
     <div class="container">
         @if (ViewBag.notification == true)
         {
-            <div class="alert alert-info">
-                <strong>Info!</strong> Xác nhận thanh toán thành công. Thank you.
-            </div>
+        <div class="alert alert-info">
+            <strong>Info!</strong> Confirm payment successfully. Thank you.
+        </div>
         }
 
 
@@ -50,6 +51,8 @@
                                     foreach (var item in Model)
                                     {
                                         <input type="hidden" name="model[@i].Id" value="@item.Id" />
+                                        <input type="hidden" id="isclose" name="model[@i].IsClose" value="false" />
+                                        <input type="hidden" name="model[@i].PayCoin" value="@item.PayCoin" />
                                         <tr>
                                             <td>@item.DepositNo</td>
                                             <th>@item.PackageName</th>
@@ -65,16 +68,26 @@
                             </tbody>
                             @if (ViewBag.disabled == true)
                             {
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="6" style="text-align:right">After the transfer, please press the "confirm payment" button below</td>
-                                    </tr>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="6" style="text-align:right">After the transfer, please press the "confirm payment" button below</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" style="text-align:right;border-bottom-style:hidden">
+                                        <button type="submit" class="btn btn-success" id="paymentComfirm">Payment Confirmation</button>
+                                    </td>
+                                </tr>
+                                @if (time > 0)
+                                {
                                     <tr>
                                         <td colspan="6" style="text-align:right;border-bottom-style:hidden">
-                                            <button type="submit" class="btn btn-success">Payment Confirmation</button>
+                                            <span style="color:red"><i class="fa fa-info-circle"></i> Order will change status close after</span>
+                                            <button type="button" id="txtTime" class="btn btn-warning"></button>
                                         </td>
                                     </tr>
-                                </tfoot>
+                                }
+
+                            </tfoot>
                             }
 
                         </table>
@@ -85,3 +98,36 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        CountDown()
+    })
+    function CountDown() {
+        var CountDown  = 120 // '@time'
+        if (CountDown > 0) {
+            var myVar = setInterval(function () {
+                CountDown = CountDown - 1;
+                var minutes = Math.floor(CountDown / 60)
+                var seconds = Math.floor(CountDown % 60)
+                if (parseInt(minutes) < 10)
+                    minutes = "0" + minutes
+                if (parseInt(seconds) < 10)
+                    seconds = "0" + seconds
+                if (CountDown <= 0) {
+                    $('#isclose').val(true)
+                    clearInterval(myVar)
+                    AutoChangeStatus()
+                }
+                $('#txtTime').text(minutes + ":" + seconds)
+            }, 1000)
+        } else {
+            clearInterval(myVar)
+        }
+        
+    }
+
+    function AutoChangeStatus() {
+        $('#paymentComfirm').click();
+    }
+</script>

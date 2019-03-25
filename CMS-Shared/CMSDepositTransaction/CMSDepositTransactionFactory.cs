@@ -120,6 +120,7 @@ namespace CMS_Shared.CMSDepositTransaction
                         x.Status = Status;
                         x.UpdatedDate = DateTime.Now;
                     });
+                    
                     cxt.SaveChanges();
                 }
             }
