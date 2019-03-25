@@ -83,8 +83,8 @@ namespace CMS_Shared.Utilities
             try
             {
 
-                string email = ConfigurationManager.AppSettings["Email"];
-                string passWord = ConfigurationManager.AppSettings["Password"];
+                string email = Commons.Email;// ConfigurationManager.AppSettings["Email"];
+                string passWord = Commons.Password; //ConfigurationManager.AppSettings["Password"];
                 string smtpServer = "smtp.gmail.com";
                 if (email != "" && passWord != "")
                 {
