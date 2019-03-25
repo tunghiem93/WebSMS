@@ -62,8 +62,9 @@ namespace CMS_Shared
 
         public enum APIType
         {
-            APISMS = 0,
-            APISim = 1,
+            APIPerfectMonney = 0,
+            APISMS = 1,
+            APISim = 2,
         }
 
         public enum SMSType
