@@ -62,18 +62,12 @@ namespace CMS_Shared.CMSDepositTransaction
         public List<CMS_DepositTransactionsModel> GetListDepositTransaction(string customerId, IEnumerable<int> Status = null)
         {
             var data = new List<CMS_DepositTransactionsModel>();
-            var lstStatus = Status.Select(x => x).ToList();
             try
             {
-                int? Isnull = null;
-                if (Status != null)
-                {
-                    Isnull = 1;
-                }
                 using (var cxt = new CMS_Context())
                 {
                     data = cxt.CMS_DepositTransactions
-                        .Where(x => string.IsNullOrEmpty(customerId) ? 1 == 1 : x.CustomerId == customerId && Isnull.HasValue ? Status.Contains(x.Status) : 1 == 1)
+                        .Where(x =>x.CustomerId == customerId && Status.Contains(x.Status))
                         .Select(x => new CMS_DepositTransactionsModel()
                         {
                             CreatedBy = x.CreatedBy,
