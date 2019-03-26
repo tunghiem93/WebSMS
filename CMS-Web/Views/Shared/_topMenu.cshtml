@@ -18,6 +18,7 @@
                 <ul class="top-menu">
                     @if (user != null)
                     {
+                        <li><a title="Total Credist">@string.Format("{0:0.00}", user.TotalCredit) Credits</a></li>
                         <li><a title="info" href="@Url.Action("Index","Profile")">@user.LastName</a></li>
                         <li><a title="Login" href="@Url.Action("Logout","Login")">Logout</a></li>
                     }
