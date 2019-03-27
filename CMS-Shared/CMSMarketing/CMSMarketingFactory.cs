@@ -17,7 +17,7 @@ namespace CMS_Shared.CMSMarketing
     {
         BaseFactory _baseFactory = new BaseFactory();
 
-        public CMS_ReportModels Export(ref IXLWorksheet wsMarketing, ref IXLWorksheet wsTime)
+        public CMS_ReportModels Export(ref IXLWorksheet wsMarketing/*, ref IXLWorksheet wsTime*/)
         {
             var result = new CMS_ReportModels();
             try
@@ -40,14 +40,14 @@ namespace CMS_Shared.CMSMarketing
                 row = 2;
                 BaseFactory.FormatExcelExport(wsMarketing, row, cols);
                 //Sheet 2
-                wsTime.Cell(1, 1).Value = "Runing time";
-                wsTime.Cell(2, 1).Value = "60s";
-                //format
-                wsTime.Range(1, 1, 2, 1).Style.Border.SetTopBorder(XLBorderStyleValues.Thin);
-                wsTime.Range(1, 1, 2, 1).Style.Border.SetLeftBorder(XLBorderStyleValues.Thin);
-                wsTime.Range(1, 1, 2, 1).Style.Border.SetRightBorder(XLBorderStyleValues.Thin);
-                wsTime.Range(1, 1, 2, 1).Style.Border.SetBottomBorder(XLBorderStyleValues.Thin);
-                BaseFactory.FormatExcelExport(wsTime, row, 1);
+                //wsTime.Cell(1, 1).Value = "Runing time";
+                //wsTime.Cell(2, 1).Value = "60s";
+                ////format
+                //wsTime.Range(1, 1, 2, 1).Style.Border.SetTopBorder(XLBorderStyleValues.Thin);
+                //wsTime.Range(1, 1, 2, 1).Style.Border.SetLeftBorder(XLBorderStyleValues.Thin);
+                //wsTime.Range(1, 1, 2, 1).Style.Border.SetRightBorder(XLBorderStyleValues.Thin);
+                //wsTime.Range(1, 1, 2, 1).Style.Border.SetBottomBorder(XLBorderStyleValues.Thin);
+                //BaseFactory.FormatExcelExport(wsTime, row, 1);
                 //============
                 result.IsOk = true;
             }
@@ -70,7 +70,7 @@ namespace CMS_Shared.CMSMarketing
                 try
                 {
                     DataTable dtMarketing = _baseFactory.GetDataFromExcel(@filePath, 1);
-                    DataTable dtTime = _baseFactory.GetDataFromExcel(@filePath, 2);
+                    //DataTable dtTime = _baseFactory.GetDataFromExcel(@filePath, 2);
                     decimal rate = GetSMSRate(cxt, (int)Commons.ConfigType.SMSMarketing);
                     for (int i = 0; i < dtMarketing.Rows.Count; i++)
                     {
@@ -115,6 +115,7 @@ namespace CMS_Shared.CMSMarketing
             }
 
         }
+
         public List<CMS_MarketingModels> GetList(int smsType)
         {
             try

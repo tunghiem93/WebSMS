@@ -145,9 +145,9 @@ namespace CMS_Web.Controllers
             {
                 XLWorkbook wb = new XLWorkbook();
                 var wsMarketing = wb.Worksheets.Add("Marketing");
-                var wsTime = wb.Worksheets.Add("Time");
+                //var wsTime = wb.Worksheets.Add("Time");
 
-                var data = _fac.Export(ref wsMarketing, ref wsTime);
+                var data = _fac.Export(ref wsMarketing/*, ref wsTime*/);
 
                 if (!data.IsOk)
                 {
