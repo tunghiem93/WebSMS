@@ -148,7 +148,7 @@
     function RenderDepositNow() {
         var html = "";
         Deposits.forEach((x) => {
-            let _PayCoin = parseInt(x.PayCoin) > 0 ? numeral(x.PayCoin).format('0,00') : x.PayCoin
+            let _PayCoin = parseInt(x.PayCoin) > 0 ? numeral(x.PayCoin).format('0,00000000') : x.PayCoin
             html += "<tr class='tr_" + x.PackageId + "'>";
             html += "<td>" + x.PackageName + "</td>";
             html += "<td>" + x.sPrice + "</td>";
@@ -195,12 +195,14 @@
                             x.PayCoin = data.lastPrice || data.last || 0;
                             x.PaymentMethodId = paymentId
                             x.sPrice = data.lastPrice || data.last || 0;
+                            x.ScaleNumber = data.ScaleNumber;
                         });
                     } else {
                         Deposits.forEach((x) => {
                             x.PayCoin = x.Price;
                             x.PaymentMethodId = paymentId;
                             x.sPrice = x.sTempPrice;
+                            x.ScaleNumber = 0;
                         });
                     }
                     RenderDepositNow()
