@@ -1,10 +1,9 @@
-﻿@model CMS_DTO.CMS_DepositTransactionsModel
-@using CMS_Shared
+﻿@model CMS_DTO.CMSSims.CMS_SimsModels
 <div role="main" style="display:inline-block;height:100%;width:100%">
     @*<div class="se-pre-con" style="display: none;"></div>*@
     <div class="page-title">
         <!-- BEGIN PAGE BAR -->
-        @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home Page" }, { "B", "Deposit Transaction - Edit" } })
+        @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home Page" }, { "B", "Sim - Delete" } })
         <!-- END PAGE BAR -->
     </div>
     <div class="page-main">
@@ -18,22 +17,25 @@
                                 &nbsp;Cancel
                             </a>
                         </li>
-                        @if (!Model.Status.Equals((int)Commons.DepositStatus.Completed))
-                        {
-                            <li>
-                                <a href="javascript:void(0);" class="btn btn-success" id="btn-edit-save" onclick="SubmitForm('#form-edit')">
-                                    <i class="fa fa-save"></i>
-                                    &nbsp;Save
-                                </a>
-                            </li>
-                        }
-
+                        <li>
+                            <a href="javascript:void(0);" class="btn btn-success" id="btn-edit-save" onclick="SubmitForm('#form-delete')">
+                                <i class="fa fa-save"></i>
+                                &nbsp;Save
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <div class="box-body" style="display: block;">
-                    @using (@Html.BeginForm("Edit", "CMSDepositTransaction", FormMethod.Post, new { @id = "form-edit", @class = "form-horizontal", @enctype = "multipart/form-data" }))
+                    @using (@Html.BeginForm("Delete", "CMSSims", FormMethod.Post, new { @id = "form-delete", @class = "form-horizontal", @enctype = "multipart/form-data" }))
                     {
-                        @Html.Partial("_Form", Model)
+                        <div class="form-group">
+                            <label class="col-md-2 control-label"></label>
+                            <div class="col-md-6" style="font-size: 20px; width: 100%;">
+                                Do you want delete <strong>[ @Model.SimName ]</strong>?
+                                <br />
+                                @Html.HiddenFor(model => model.Id)
+                            </div>
+                        </div>
                     }
                 </div>
 
@@ -42,8 +44,9 @@
 
     </div>
 </div>
+
 <script>
-    $("#form-edit").submit(function (e) {
+    $("#form-delete").submit(function (e) {
         $.ajax({
             beforeSend: function () {
                 $('.se-pre-con').show();

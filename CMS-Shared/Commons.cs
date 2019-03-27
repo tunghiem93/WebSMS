@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CMS_Shared
 {
@@ -91,6 +88,14 @@ namespace CMS_Shared
             Sent = 1,
             Success = 2,
             Fail = 3
+        }
+        public enum SimStatus
+        {
+            [Description("Waiting Connect")]
+            WaitingConnect = 0,
+            Connected = 1,
+            [Description("Connect Fail")]
+            ConnectFail = 3
         }
         private static readonly Dictionary<string, string> dicConvert = new Dictionary<string, string>
         {

@@ -1,10 +1,9 @@
-﻿@model CMS_DTO.CMS_DepositTransactionsModel
-@using CMS_Shared
+﻿@model CMS_DTO.CMSSims.CMS_SimsModels
 <div role="main" style="display:inline-block;height:100%;width:100%">
     @*<div class="se-pre-con" style="display: none;"></div>*@
     <div class="page-title">
         <!-- BEGIN PAGE BAR -->
-        @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home Page" }, { "B", "Deposit Transaction - Edit" } })
+        @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home Page" }, { "B", "Sim - Add New" } })
         <!-- END PAGE BAR -->
     </div>
     <div class="page-main">
@@ -18,20 +17,16 @@
                                 &nbsp;Cancel
                             </a>
                         </li>
-                        @if (!Model.Status.Equals((int)Commons.DepositStatus.Completed))
-                        {
-                            <li>
-                                <a href="javascript:void(0);" class="btn btn-success" id="btn-edit-save" onclick="SubmitForm('#form-edit')">
-                                    <i class="fa fa-save"></i>
-                                    &nbsp;Save
-                                </a>
-                            </li>
-                        }
-
+                        <li>
+                            <a href="javascript:void(0);" class="btn btn-success" id="btn-edit-save" onclick="SubmitForm('#form-create')">
+                                <i class="fa fa-save"></i>
+                                &nbsp;Save
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <div class="box-body" style="display: block;">
-                    @using (@Html.BeginForm("Edit", "CMSDepositTransaction", FormMethod.Post, new { @id = "form-edit", @class = "form-horizontal", @enctype = "multipart/form-data" }))
+                    @using (@Html.BeginForm("Create", "CMSSims", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal", @enctype = "multipart/form-data" }))
                     {
                         @Html.Partial("_Form", Model)
                     }
@@ -43,11 +38,8 @@
     </div>
 </div>
 <script>
-    $("#form-edit").submit(function (e) {
+    $("#form-create").submit(function (e) {
         $.ajax({
-            beforeSend: function () {
-                $('.se-pre-con').show();
-            },
             url: $(this).attr('action'),
             type: "post",
             data: new FormData(this),
@@ -56,9 +48,6 @@
             success: function () {
                 CloseDetail();
                 LoadGrid();
-            },
-            complete: function () {
-                $('.se-pre-con').hide();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 $(".detail-view").html(jqXHR.responseText);

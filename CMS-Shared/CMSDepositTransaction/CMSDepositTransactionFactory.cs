@@ -226,14 +226,37 @@ namespace CMS_Shared.CMSDepositTransaction
             {
                 using (var cxt = new CMS_Context())
                 {
-                    var e = cxt.CMS_DepositTransactions.Where(x => x.Id.Equals(model.Id)).ToList();
-                    e.ForEach(x =>
+                    using (var trans = cxt.Database.BeginTransaction())
                     {
-                        x.Status = model.Status;
-                        x.UpdatedDate = DateTime.Now;
-                        x.UpdatedBy = userId;
-                    });
-                    cxt.SaveChanges();
+                        try
+                        {
+                            var e = cxt.CMS_DepositTransactions.Where(x => x.Id.Equals(model.Id)).ToList();
+                            e.ForEach(x =>
+                            {
+                                x.Status = model.Status;
+                                x.UpdatedDate = DateTime.Now;
+                                x.UpdatedBy = userId;
+                            });
+                            var c = cxt.CMS_Customers.Where(x => x.Id.Equals(model.CustomerId)).FirstOrDefault();
+                            if (c != null)
+                            {
+                                c.TotalCredit += model.PackageSMS;// change after confirm
+                                c.UpdatedBy = userId;
+                                c.UpdatedDate = DateTime.Now;
+                            }
+                            cxt.SaveChanges();
+                            trans.Commit();
+                        } catch (Exception ex)
+                        {
+                            NSLog.Logger.Error("ChangeStatusDepositTransaction", ex);
+                            trans.Rollback();
+                        }
+                        finally
+                        {
+                            cxt.Dispose();
+                        }
+                    }
+                        
                 }
             }
             catch (Exception ex)

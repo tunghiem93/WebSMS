@@ -1,13 +1,10 @@
 ﻿using CMS_Entity.Entity;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CMS_Entity
 {
@@ -18,6 +15,7 @@ namespace CMS_Entity
             Database.SetInitializer<CMS_Context>(new ContextHandler());
             ((IObjectContextAdapter)this).ObjectContext.ContextOptions.LazyLoadingEnabled = true;
         }
+        public virtual DbSet<CMS_Sims> CMS_Sims { get; set; }
         public virtual DbSet<CMS_Marketing> CMS_Marketing { get; set; }
         public virtual DbSet<CMS_API> CMS_API { get; set; }
         public virtual DbSet<CMS_PaymentMethod> CMS_PaymentMethod { get; set; }

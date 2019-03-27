@@ -1,0 +1,58 @@
+﻿
+@model CMS_DTO.CMSSims.CMS_SimsModels
+@using CMS_Shared
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+    var _ID = Model.Id;
+}
+@Html.HiddenFor(model =>model.Id)
+<div class="row form-horizontal form-label-left" style="margin-bottom:15px;">
+    @*Image*@
+    <fieldset>
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">Sim Name</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.SimName, new { @class = "form-control", @placeholder = "Sim Name", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.SimName, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Sim Number</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.SimNumber, new { @class = "form-control", @placeholder = "Sim Number", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.SimNumber, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Operator Name</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.OperatorName, new { @class = "form-control", @placeholder = "Operator Name", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.OperatorName, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Status</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.DropDownListFor(model => model.Status, Commons.SimStatus.Connected.ToSelectList(), new { @class = "form-control select2_multiple", @placeholder = "Status", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.Status, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.HiddenFor(model => model.IsActive)
+        </div>
+    </fieldset>
+</div>
+<script src="@Url.Content("~/Scripts/InputCustom.js")"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#Status").select2({
+            placeholder: "Reference Exchange",
+            //allowClear: true
+        });
+    });    
+    
+</script>

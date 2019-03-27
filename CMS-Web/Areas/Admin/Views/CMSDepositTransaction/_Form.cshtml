@@ -74,8 +74,17 @@
         <div class="form-group">
             <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Status</label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-                @Html.DropDownListFor(model => model.Status, Commons.DepositStatus.WaitingPay.ToSelectList(), new { @class = "form-control select2_multiple", @placeholder = "Status", @autocomplete = "off" })
-                @Html.ValidationMessageFor(model => model.Status, null, new { @class = "label label-danger" })
+                @if (Model.Status.Equals((int)Commons.DepositStatus.Completed))
+                {
+                    @Html.DropDownListFor(model => model.Status, Commons.DepositStatus.WaitingPay.ToSelectList(), new { @class = "form-control select2_multiple", @placeholder = "Status", @disabled= "@disabled", @autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.Status, null, new { @class = "label label-danger" })
+                    @Html.HiddenFor(model => model.Status)
+                }
+                else
+                {
+                    @Html.DropDownListFor(model => model.Status, Commons.DepositStatus.WaitingPay.ToSelectList(), new { @class = "form-control select2_multiple", @placeholder = "Status", @autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.Status, null, new { @class = "label label-danger" })
+                }
             </div>
         </div>
         <div>
