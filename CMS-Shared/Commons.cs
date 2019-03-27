@@ -29,8 +29,11 @@ namespace CMS_Shared
         public static string CompanyTitle = ConfigurationManager.AppSettings["CompanyTitle"];
         public static string HostImage = ConfigurationManager.AppSettings["HostImage"];
         public static string _PublicImages = string.IsNullOrEmpty(ConfigurationManager.AppSettings["PublicImages"]) ? "" : ConfigurationManager.AppSettings["PublicImages"];
-        public static string Email = "";
-        public static string Password = "";
+        public static string Email = ConfigurationManager.AppSettings["SendEmail"];
+        public static string Password = ConfigurationManager.AppSettings["SendEmailPass"];
+        public static string centriURL = ConfigurationManager.AppSettings["CentriUrl"];
+        public static string centriApiKey = ConfigurationManager.AppSettings["CentriApiKey"];
+        public static string centriSMSChannel = ConfigurationManager.AppSettings["CentriSMSChannel"];
         public enum CustomerStatus
         {
             Watting = 0,
