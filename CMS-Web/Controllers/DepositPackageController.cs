@@ -27,12 +27,14 @@ namespace CMS_Web.Controllers
         private readonly CMSPaymentMethodFactory facP;
         private readonly CMSSysConfigFactory facC;
         private readonly CMSDepositTransactionFactory facT;
+        private readonly CMSSysConfigFactory facS;
         public DepositPackageController()
         {
             fac = new CMSDepositPackageFactory();
             facP = new CMSPaymentMethodFactory();
             facC = new CMSSysConfigFactory();
             facT = new CMSDepositTransactionFactory();
+            facS = new CMSSysConfigFactory();
         }
         // GET: DepositPackage
         public ActionResult Index()
@@ -42,15 +44,15 @@ namespace CMS_Web.Controllers
             {
                 x.sPrice = string.Format("{0:N0}", x.PriceDefault);
             });
-            ViewBag.Payment = facP.GetList();
+            ViewBag.Payment = facP.GetList().OrderBy(o=>o.PaymentType).ToList();
             return View(model);
         }
-
+                
         [HttpPost]
         public async Task<ActionResult> PayNow(List<CMS_DepositTransactionsModel> model)
         {
             var Customer = Session["UserC"] as CustomerModels;
-            var Payment = facP.GetDetail(model.FirstOrDefault().PaymentMethodId);
+            var Payment = facP.GetDetail(model.FirstOrDefault().PaymentMethodId);            
             var Config = facC.GetList().Where(x => x.ValueType == (int)Commons.ConfigType.USD).FirstOrDefault();
             decimal? Coin = 0;
             if (!string.IsNullOrEmpty(Payment.URLApi))
@@ -73,7 +75,7 @@ namespace CMS_Web.Controllers
                 x.DepositNo = CommonHelper.RandomDepositNo();
             });
             var msg = "";
-            var result = facT.CreateDepositTransaction(model,ref msg);
+            var result = facT.CreateDepositTransaction(model, ref msg);
             var obj = new
             {
                 msg = msg,
@@ -115,6 +117,19 @@ namespace CMS_Web.Controllers
         [HttpPost]
         public async Task<ActionResult> GetPrice(string paymentId)
         {
+            var data = facP.GetDetail(paymentId);
+            if (data != null)
+            {
+                if (data.ReferenceExchange == (int)Commons.ExchangeType.None)
+                {
+                    var lstDataSys = facS.GetList();
+                    var Priceobj = new PriceObjects();
+                    var rateUSD = lstDataSys.Where(o => o.ValueType.Equals((int)Commons.ConfigType.USD)).Select(o => o.Value).FirstOrDefault();
+                    var ratePMUSD = lstDataSys.Where(o => o.ValueType.Equals((int)Commons.ConfigType.PMUSD)).Select(o => o.Value).FirstOrDefault();
+                    Priceobj.lastPrice = rateUSD / ratePMUSD;
+                    return Json(Priceobj, JsonRequestBehavior.AllowGet);
+                }
+            }            
             var URLApi = GetURLApi(paymentId);
             if(URLApi != null && !string.IsNullOrEmpty(URLApi.URLApi))
             {
