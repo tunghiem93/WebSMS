@@ -1,0 +1,67 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model CMS_DTO.CMSDepositPackage.PerfectMoneyModel
+<!-- container -->
+<div class="container">
+    @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home" }, { "B", "Perfect money payment" } })
+    <div class="page-header bottom-shadow">
+        <h3>Perfect money</h3>
+    </div><!-- Section Header /- -->
+</div><!-- container /- -->
+<div class="contact-form-details">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="section-header">
+                    <h3>Perfect money</h3>
+                </div>
+                <div class="contact-form">
+                    @using (@Html.BeginForm("PerfectMoney", "DepositPackage", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal login-page", @enctype = "multipart/form-data" }))
+                    {
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label for="phone" class="col-md-4">Payment account</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(model => model.PAYEE_ACCOUNT, new { @class = "form-control", @placeholder = "Payee account", @autocomplete = "off" })
+                                    @Html.ValidationMessageFor(model => model.PAYEE_ACCOUNT, null, new { @class = "label label-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phone" class="col-md-4">Payment account</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(model => model.PAYEE_NAME, new { @class = "form-control", @placeholder = "Payee name", @autocomplete = "off" })
+                                    @Html.ValidationMessageFor(model => model.PAYEE_NAME, null, new { @class = "label label-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label for="phone" class="col-md-4">Payment amount</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(model => model.PAYMENT_AMOUNT, new { @class = "form-control", @placeholder = "Payment amount", @autocomplete = "off" })
+                                    @Html.ValidationMessageFor(model => model.PAYMENT_AMOUNT, null, new { @class = "label label-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phone" class="col-md-4">Payment units</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(model => model.PAYMENT_UNITS, new { @class = "form-control", @placeholder = "Payee units", @autocomplete = "off" })
+                                    @Html.ValidationMessageFor(model => model.PAYMENT_UNITS, null, new { @class = "label label-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="drop-line bottom-shadow"></div>
+                        <div class="form-group">
+                            <a title="Or Return to Shop" href="#">Or Return to home</a>
+                            <input type="submit" value="Test Service" class="btn btn-default  pull-right">
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

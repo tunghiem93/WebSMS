@@ -2,6 +2,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var Payments = ViewBag.Payment as List<CMS_DTO.CMSPaymentMethod.CMS_PaymentMethodModels>;
 }
+
+@using CMS_Shared;
 @model List<CMS_DTO.CMS_DepositPackageModel>
 <!-- container -->
 <div class="container">
@@ -35,19 +37,20 @@
                                 <tr>
                                     <td colspan="7" style="text-align:center">No content</td>
                                 </tr>
-                            } else
+                            }
+                            else
                             {
-                                foreach(var item in Model)
+                                foreach (var item in Model)
                                 {
-                                <tr>
-                                    <th>@item.PackageName</th>
-                                    <th>@string.Format("{0}", item.PackageSMS.ToString("#,0"))</th>
-                                    <th>@string.Format("{0}", item.PackagePrice.ToString("#,0"))</th>
-                                    <th>@item.Discount</th>
-                                    <th>@item.PriceUSD</th>
-                                    <th>@string.Format("{0}", item.SMSPrice.ToString("#,0"))</th>
-                                    <th><a href="javascript:void(0)" class="add_@item.Id" onclick="AddDepositPackage(this,'@item.Id','@item.PackageName','@item.PriceDefault','@item.PackageSMS','@item.SMSPrice','@item.PackagePrice','@item.sPrice')">Add</a></th>
-                                </tr>
+                                    <tr>
+                                        <th>@item.PackageName</th>
+                                        <th>@string.Format("{0}", item.PackageSMS.ToString("#,0"))</th>
+                                        <th>@string.Format("{0}", item.PackagePrice.ToString("#,0"))</th>
+                                        <th>@item.Discount</th>
+                                        <th>@item.PriceUSD</th>
+                                        <th>@string.Format("{0}", item.SMSPrice.ToString("#,0"))</th>
+                                        <th><a href="javascript:void(0)" class="add_@item.Id" onclick="AddDepositPackage(this,'@item.Id','@item.PackageName','@item.PriceDefault','@item.PackageSMS','@item.SMSPrice','@item.PackagePrice','@item.sPrice')">Add</a></th>
+                                    </tr>
                                 }
                             }
 
@@ -69,17 +72,16 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody id="tbodydeposite">
-                        </tbody>
+                        <tbody id="tbodydeposite"></tbody>
                         <tfoot class="hidden tfoot">
                             <tr>
                                 <td colspan="2" style="text-align:right">Choose your payment</td>
                                 <td>
-                                    <select class="form-control" style="width:50%" id="txtPayment"  onchange="ChangePayment(this)">
+                                    <select class="form-control" style="width:50%" id="txtPayment" onchange="ChangePayment(this)">
                                         <option value="-1">Choose payment</option>
-                                        @if(Payments !=null && Payments.Count > 0)
+                                        @if (Payments != null && Payments.Count > 0)
                                         {
-                                            foreach(var itemP in Payments)
+                                            foreach (var itemP in Payments)
                                             {
                                                 <option value="@itemP.Id">@itemP.PaymentName</option>
                                             }
@@ -97,10 +99,10 @@
                     </table>
                 </div>
             </div>
-        </div>
+        </div>        
     </div>
 </div>
-
+<div class="detail-view"></div>
 <script type="text/javascript">
     var Deposits = []
     function AddDepositPackage(that, PackageId, PackageName, PriceDefault, PackageSMS, SMSPrice, PackagePrice, sPrice) {
@@ -159,24 +161,31 @@
     }
 
     function PayNow() {
-        $.ajax({
-            beforeSend: function () {
-                $('#site-loader').show()
-            },
-            url: '@Url.Action("PayNow", "DepositPackage")',
-            type: "post",
-            data: { model: Deposits },
-            success: function (data) {
-                if (data.status) {
-                    location.href = "@Url.Action("Index","DepositOrder")";
+        debugger;
+        var paymentIdObj = '@Payments.Find((x) => x.ReferenceExchange == (int)Commons.ExchangeType.None).Id';
+        if (paymentIdObj == $('#txtPayment').val()) {
+            location.href = "@Url.Action("Index", "PerfectMoney", new { price = UrlParameter.Optional })" + "/" + Deposits.PayCoin
+        }
+        else {
+            $.ajax({
+                beforeSend: function () {
+                    $('#site-loader').show()
+                },
+                url: '@Url.Action("PayNow", "DepositPackage")',
+                type: "post",
+                data: { model: Deposits },
+                success: function (data) {
+                    if (data.status) {
+                        location.href = "@Url.Action("Index","DepositOrder")";
+                    }
+                },
+                complete: function () {
+                    $('#site-loader').hide()
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
                 }
-            },
-            complete: function () {
-                $('#site-loader').hide()
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-            }
-        })
+            })
+        }
     }
 
     function GetPriceFromApi(paymentId) {
@@ -205,7 +214,7 @@
                     }
                     RenderDepositNow()
                 }
-               
+
             },
             complete: function () {
                 $('#site-loader').hide()
