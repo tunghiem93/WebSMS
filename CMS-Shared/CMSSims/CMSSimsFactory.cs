@@ -140,5 +140,71 @@ namespace CMS_Shared.CMSSims
             catch (Exception ex) { }
             return null;
         }
+
+        public bool UpdateStatusSim(string simName, int status, string operatorName)
+        {
+            var result = true;
+            using (var cxt = new CMS_Context())
+            {
+                using (var trans = cxt.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        bool isCreateNew = true;
+                        var e = cxt.CMS_Sims.Where(x => x.SimName.Equals(simName)).FirstOrDefault();
+                        if (e != null)
+                        {
+                            if (!string.IsNullOrEmpty(e.Id))
+                            {
+                                isCreateNew = false;
+                            }
+                        }
+                        if (isCreateNew)
+                        {
+                            var _Id = Guid.NewGuid().ToString();
+                            var modelCreate = new CMS_Sims
+                            {
+                                Id = _Id,
+                                OperatorName = operatorName,
+                                SimName = simName,
+                                SimNumber = "",
+                                Status = status,
+                                IsActive = true,
+                                UpdatedBy = "centri",
+                                UpdatedDate = DateTime.Now,
+                                CreatedBy = "centri",
+                                CreatedDate = DateTime.Now
+                            };
+                            cxt.CMS_Sims.Add(modelCreate);
+                        }
+                        else
+                        {
+                            if (e != null)
+                            {
+                                e.OperatorName = operatorName;
+                                e.SimName = simName;
+                                e.Status = status;
+                                e.UpdatedDate = DateTime.Now;
+                                e.UpdatedBy = "centri";
+                            }
+                        }
+                        cxt.SaveChanges();
+                        trans.Commit();
+                        NSLog.Logger.Info(string.Format("Update Status Sim ({0}-{1}): Success", simName, status));
+                    }
+                    catch (Exception ex)
+                    {
+                        NSLog.Logger.Error("Update Status Sim: ", ex);
+                        result = false;
+                        trans.Rollback();
+                    }
+                    finally
+                    {
+                        cxt.Dispose();
+                    }
+                }
+            }
+            return result;
+        }
     }
 }

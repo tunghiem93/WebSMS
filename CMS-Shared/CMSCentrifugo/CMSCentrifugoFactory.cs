@@ -28,7 +28,7 @@ namespace CMS_Shared.CMSCategories
             }
             catch (Exception ex)
             {
-                NSLog.Logger.Error(ex);
+                NSLog.Logger.Error("SendSMSToCentri: ",ex);
                 return false;
             }
 

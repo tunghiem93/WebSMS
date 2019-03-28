@@ -40,10 +40,10 @@
                                     <td class="text-center">@item.OperatorName</td>
                                     <td class="text-center">
                                         @{
-                                            string lblstr = "label-success";
+                                            string lblstr = "label-warning";
                                             if (item.Status.Equals((int)Commons.SimStatus.Connected))
                                             {
-                                                lblstr = "label-danger";
+                                                lblstr = "label-success";
                                             }
                                             <span class="label label-sm @lblstr"> @Enum.GetName(typeof(Commons.SimStatus), Convert.ToInt32(item.Status)) </span>
                                         }

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using JWT;
+using JWT.Algorithms;
+using JWT.Serializers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -125,6 +128,15 @@ namespace CMS_Shared
                 }
             }
             return strConvert;
+        }
+        public static string GenerateToken(Dictionary<string, object> payload)
+        {
+            IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
+            IJsonSerializer serializer = new JsonNetSerializer();
+            IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
+            IJwtEncoder encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
+
+            return encoder.Encode(payload, centriApiKey);
         }
     }    
 }
