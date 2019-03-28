@@ -10,12 +10,13 @@ namespace CMS_DTO.CMSDepositPackage
     public class PerfectMoneyModel
     {
         public string Id { get; set; }
+        public string CustomerId { get; set; }
         [Required]
         public string PAYEE_ACCOUNT { get; set; }
         [Required]
         public string PAYEE_NAME { get; set; }
         [Required]
-        public decimal PAYMENT_AMOUNT { get; set; }
+        public decimal? PAYMENT_AMOUNT { get; set; }
         [Required]
         public int PAYMENT_UNITS { get; set; }
         public string PAYMENT_ID { get; set; }
