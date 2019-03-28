@@ -13,7 +13,6 @@ namespace CMS_Web.Controllers
         // GET: PerfectMoney
         public ActionResult Index(decimal? price)
         {
-
             PerfectMoneyModel model = new PerfectMoneyModel();
             try
             {
@@ -27,6 +26,16 @@ namespace CMS_Web.Controllers
 
             }
             return View(model);
+        }
+
+        public ActionResult GetResult()
+        {
+            try
+            {
+                var req = Request.QueryString.AllKeys;
+            }
+            catch(Exception ex) { }
+            return View();
         }
     }
 }

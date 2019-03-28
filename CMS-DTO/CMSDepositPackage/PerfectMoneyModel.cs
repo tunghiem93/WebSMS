@@ -33,5 +33,7 @@ namespace CMS_DTO.CMSDepositPackage
         public string DEFAULT_PAYMENT_METHOD { get; set; }
         public string FORCED_PAYMENT_METHOD { get; set; }
         public string INTERFACE_LANGUAGE { get; set; }
+        public string AccountID { get; set; }
+        public string PassPhrase { get; set; }
     }
 }
