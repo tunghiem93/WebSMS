@@ -47,8 +47,8 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="phone" class="col-md-4">Payment units</label>
-                                <div class="col-md-8">
-                                    @Html.TextBoxFor(model => model.PAYMENT_UNITS, new { @class = "form-control", @placeholder = "Payee units", @autocomplete = "off" })
+                                <div class="col-md-8">                                    
+                                    @Html.TextBoxFor(model => model.PAYMENT_UNITS, new { @class = "form-control", @value = "USD", @placeholder = "Payee units", @autocomplete = "off" })
                                     @Html.ValidationMessageFor(model => model.PAYMENT_UNITS, null, new { @class = "label label-danger" })
                                 </div>
                             </div>
@@ -57,7 +57,7 @@
                         <div class="drop-line bottom-shadow"></div>
                         <div class="form-group">
                             <a title="Or Return to Shop" href="#">Or Return to home</a>
-                            <input type="submit" value="Test Service" class="btn btn-default  pull-right">
+                            <input type="submit" value="Pay now" class="btn btn-default  pull-right">
                         </div>
                     }
                 </div>

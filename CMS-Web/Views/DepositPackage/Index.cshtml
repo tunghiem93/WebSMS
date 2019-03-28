@@ -163,8 +163,12 @@
     function PayNow() {
         debugger;
         var paymentIdObj = '@Payments.Find((x) => x.ReferenceExchange == (int)Commons.ExchangeType.None).Id';
+        var payCoin = 0;
+        Deposits.forEach(x => {
+            payCoin += x.PayCoin;
+        });
         if (paymentIdObj == $('#txtPayment').val()) {
-            location.href = "@Url.Action("Index", "PerfectMoney", new { price = UrlParameter.Optional })" + "/" + Deposits.PayCoin
+            location.href = "@Url.Action("Index", "PerfectMoney")?price=" + payCoin;
         }
         else {
             $.ajax({
