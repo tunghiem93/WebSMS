@@ -23,7 +23,7 @@ namespace CMS_Shared.CMSCategories
                 client.DefaultRequestHeaders.Add("Authorization", string.Format("apikey {0}", apiKey));
                 client.DefaultRequestHeaders.TryAddWithoutValidation("Content-type", "application/json");
                 var response = client.PostAsJsonAsync(url, cenMod).Result;
-                NSLog.Logger.Info("SendSMSToCentri: " + response.Content.ReadAsStringAsync().ToString());
+                NSLog.Logger.Info("SendSMSToCentri: " + response.StatusCode + "-" + response.Content.ReadAsStringAsync().ToString());
                 return response.StatusCode == System.Net.HttpStatusCode.OK;
             }
             catch (Exception ex)

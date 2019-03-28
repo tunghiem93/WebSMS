@@ -29,7 +29,7 @@
             transports: ["websocket", "xhr-streaming"]
         });
         var data = {
-            "sub": "42"
+            "sub": "GSM_NAME"
         };
         var tokens = CreateToken(secret, header, data);
         centrifuge.setToken(tokens);
@@ -52,7 +52,7 @@
                 // See below description of message format
                 console.log("publish")
                 console.log(message);
-                UpdateStatusSim(message.data)
+                //UpdateStatusSim(message.data)
             },
             "join": function (message) {
                 // See below description of join message format
@@ -81,7 +81,8 @@
             }
         }
 
-        var subscription2 = centrifuge.subscribe("$admin", callbacks);
+        //var subscription2 = centrifuge.subscribe("$admin", callbacks);
+        var subscription2 = centrifuge.subscribe("$gsmclient", callbacks);
 
         function CreateToken(secret, header, data) {
 

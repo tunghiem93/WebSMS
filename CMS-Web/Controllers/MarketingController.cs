@@ -1,6 +1,9 @@
 ﻿using ClosedXML.Excel;
 using CMS_DTO.CMSBase;
+using CMS_DTO.CMSCentrifugo;
 using CMS_DTO.CMSMarketing;
+using CMS_Shared;
+using CMS_Shared.CMSCategories;
 using CMS_Shared.CMSMarketing;
 using CMS_Web.Web.App_Start;
 using System;
@@ -86,7 +89,7 @@ namespace CMS_Web.Controllers
             }
         }
         [HttpPost]
-        public ActionResult SendSMS(List<CMS_MarketingModels> model)
+        public ActionResult SendSMS(List<CMS_MarketingModels> model, int RunTime)
         {
             /*
              * ok 0.Check user login
@@ -113,15 +116,34 @@ namespace CMS_Web.Controllers
                 }
                 else
                 {
-                    foreach(CMS_MarketingModels item in model)
+                    List<MessageSMSModels> listData = new List<MessageSMSModels>();
+                    foreach (CMS_MarketingModels item in model)
                     {
-                        item.OperatorName = "";
-                        item.RunTime = 60;
+                        string operatorName = Commons.GetOperatorName(item.SendTo);
+                        item.OperatorName = operatorName;
+                        item.RunTime = RunTime;
                         item.SendFrom = "";
                         item.TimeInput = DateTime.Now;
                         item.UpdatedBy = CurrentUser.ID;
                         item.CreatedBy = CurrentUser.ID;
                         _fac.InsertFromExcel(item, ref msg);
+                        MessageSMSModels modelCentri = new MessageSMSModels()
+                        {
+                            id = item.Id,
+                            operatorName = operatorName,
+                            phone = item.SendTo,
+                            text = item.SMSContent
+                        };
+                        listData.Add(modelCentri);
+                    }
+                    bool isRunSuccess = true;
+                    if(listData.Count > 0)
+                    {
+                        isRunSuccess = CMSCentrifugoFactory.SendSMSToCentri("publish", Commons.centriURL, Commons.centriApiKey, Commons.centriSMSChannel, listData);
+                    }
+                    if (!isRunSuccess)
+                    {
+                        msg = "Run SMS marketing fail!";
                     }
                 }
 

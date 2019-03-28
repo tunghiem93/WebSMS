@@ -1,5 +1,7 @@
-﻿using CMS_DTO.CMSMarketing;
+﻿using CMS_DTO.CMSCentrifugo;
+using CMS_DTO.CMSMarketing;
 using CMS_Shared;
+using CMS_Shared.CMSCategories;
 using CMS_Shared.CMSMarketing;
 using CMS_Web.Web.App_Start;
 using System;
@@ -36,8 +38,9 @@ namespace CMS_Web.Controllers
                 decimal rate = _fac.GetSMSRate((int)Commons.ConfigType.SMSOTP);
                 string strSMSConvert = Commons.ConvertUnicodeToWithoutAccent(model.Content);
                 int smsFee = strSMSConvert.Length / 80;
+                string operatorName = Commons.GetOperatorName(model.Phone);
                 CMS_MarketingModels importModel = new CMS_MarketingModels() {
-                    OperatorName = "",
+                    OperatorName = operatorName,
                     SendFrom = "",
                     CreatedBy = CurrentUser.ID,
                     CustomerId = CurrentUser.ID,
@@ -52,9 +55,33 @@ namespace CMS_Web.Controllers
                     SMSRate = rate,
                     SMSPrice = (smsFee + 1) * rate
                 };
+
                 string msg = "";
 
+
                 var result = _fac.InsertFromExcel(importModel, ref msg);
+                if (string.IsNullOrEmpty(msg))
+                {
+                    List<MessageSMSModels> listData = new List<MessageSMSModels>();
+                    MessageSMSModels modelCentri = new MessageSMSModels()
+                    {
+                        id = importModel.Id,
+                        operatorName = operatorName,
+                        phone = importModel.SendTo,
+                        text = importModel.SMSContent
+                    };
+                    listData.Add(modelCentri);
+                    bool isRunSuccess = true;
+                    if (listData.Count > 0)
+                    {
+                        isRunSuccess = CMSCentrifugoFactory.SendSMSToCentri("publish", Commons.centriURL, Commons.centriApiKey, Commons.centriSMSChannel, listData);
+                    }
+                    if (!isRunSuccess)
+                    {
+                        msg = "Service is fail!";
+                    }
+                }
+                
 
                 if (msg.Equals(""))
                 {

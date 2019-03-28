@@ -269,6 +269,7 @@ namespace CMS_Shared.CMSMarketing
                         if (string.IsNullOrEmpty(model.Id))
                         {
                             var _Id = Guid.NewGuid().ToString();
+                            model.Id = _Id;
                             var e = new CMS_Marketing
                             {
                                 Id = _Id,

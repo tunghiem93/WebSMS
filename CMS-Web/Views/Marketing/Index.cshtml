@@ -112,7 +112,7 @@
                                                             <label>Queue for message(s): </label>
                                                             @if (Model != null)
                                                             {
-                                                                @Html.TextBox(string.Format("ListSMS[{0}].RunTime", 0), Model.ListSMS[0].RunTime, new { @class = "" })
+                                                                @Html.TextBox("RunTime", 60, new { @class = "" })
                                                             }
                                                         </div>
                                                     </div>
