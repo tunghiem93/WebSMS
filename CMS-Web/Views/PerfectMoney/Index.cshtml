@@ -25,11 +25,7 @@
                             <div class="col-md-6">
                                 <label for="phone" class="col-md-4">Payment account</label>
                                 <div class="col-md-8">
-                                    @*<input type="hidden" name="AccountID" value="2405052" />
-        <input type="hidden" name="PassPhrase" value="tuan.vo92" />
-        <input type="hidden" name="Payer_Account" value="U19673156" />
-        <input type="hidden" name="Amount" value="0.01" />*@
-                                    <input type="hidden" value="http://localhost:54321/PerfectMoney/GetResult" name="PAYMENT_URL" />
+                                    <input type="hidden" value="http://localhost:54321/PerfectMoney" name="PAYMENT_URL" />
                                     <input type="hidden" value="http://localhost:54321/PerfectMoney" name="NOPAYMENT_URL" />
                                     @Html.TextBoxFor(model => model.PAYEE_ACCOUNT, new { @class = "form-control", @placeholder = "Payee account", @autocomplete = "off" })
                                     @Html.ValidationMessageFor(model => model.PAYEE_ACCOUNT, null, new { @class = "label label-danger" })
