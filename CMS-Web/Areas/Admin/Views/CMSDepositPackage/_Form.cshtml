@@ -28,7 +28,7 @@
         <div class="form-group">
             <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Package Price</label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-                @Html.TextBoxFor(model => model.PackagePrice, new { @class = "form-control", @placeholder = "Package Price", @disabled="disabled", @autocomplete = "off" })
+                @Html.TextBoxFor(model => model.PackagePrice, new { @class = "form-control", @placeholder = "Package Price", @disabled = "disabled", @autocomplete = "off" })
                 @Html.ValidationMessageFor(model => model.PackagePrice, null, new { @class = "label label-danger" })
             </div>
         </div>
@@ -40,7 +40,12 @@
                 @Html.ValidationMessageFor(model => model.Discount, null, new { @class = "label label-danger" })
             </div>
         </div>
-
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Package Price For Discount </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBox("PackagePriceDiscount","", new { @class = "form-control", @placeholder = "Package Price For Discount", @autocomplete = "off", @disabled = "disabled" })
+            </div>
+        </div>
         <div class="form-group">
             <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">SMS Price</label>
             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -63,17 +68,31 @@
 <script type="text/javascript">
     var id = $("#Id").val();
     if (id != "") {
-        $("#PackagePrice").val(calPackagePrice())
+        $("#PackagePrice").val(calPackagePrice());
+        $("#PackagePriceDiscount").val(calPackagePriceDiscount());
     }
     $("#PackageSMS").on("change", function () {
         var packageSMS = parseFloat($(this).val());
         if ($.isNumeric(packageSMS)) {
-            $("#PackagePrice").val(calPackagePrice())
+            $("#PackagePrice").val(calPackagePrice());
+            $("#PackagePriceDiscount").val(calPackagePriceDiscount());
+        }
+    })
+    $("#Discount").on("change", function () {
+        var packageSMS = parseFloat($(this).val());
+        if ($.isNumeric(packageSMS)) {
+            $("#PackagePriceDiscount").val(calPackagePriceDiscount());
         }
     })
     function calPackagePrice() {
         var smsRate = parseFloat($("#RateSMS").val());
         var packageSMS = parseFloat($("#PackageSMS").val());
         return smsRate * packageSMS;
+    }
+    function calPackagePriceDiscount() {
+        var smsRate = parseFloat($("#RateSMS").val());
+        var packageSMS = parseFloat($("#PackageSMS").val());
+        var discount = parseFloat($("#Discount").val());
+        return (smsRate * packageSMS) - (smsRate * packageSMS * discount);
     }
 </script>

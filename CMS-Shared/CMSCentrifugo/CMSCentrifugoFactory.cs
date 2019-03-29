@@ -2,6 +2,7 @@
 using CMS_DTO.CMSCentrifugo;
 using CMS_Entity;
 using CMS_Entity.Entity;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,15 +26,24 @@ namespace CMS_Shared.CMSCategories
                 var response = client.PostAsJsonAsync(url, cenMod).Result;
                 var result = response.Content.ReadAsStringAsync();
                 NSLog.Logger.Info("SendSMSToCentri: " + response.StatusCode + "-" + result.Result);
-                return response.StatusCode == System.Net.HttpStatusCode.OK;
+                NSLog.Logger.Info("DataSendSMSToCentri: " + JsonConvert.SerializeObject(cenMod));
+                if (result.Result.Contains("error"))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+
             }
             catch (Exception ex)
             {
-                NSLog.Logger.Error("SendSMSToCentri: ",ex);
+                NSLog.Logger.Error("SendSMSToCentri: ", ex);
                 return false;
             }
 
-            
+
         }
     }
 }

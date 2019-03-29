@@ -94,7 +94,9 @@ namespace CMS_Web.Controllers
                     }
                     if (!isRunSuccess)
                     {
+                        _fac.UpdateSMSStatus(importModel.Id, (int)Commons.SMSStatus.Fail, ref msg);
                         msg = "Service is fail!";
+                        
                     }
                 }
                 

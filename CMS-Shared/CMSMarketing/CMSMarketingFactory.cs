@@ -391,7 +391,7 @@ namespace CMS_Shared.CMSMarketing
             string headerPhone1 = phone.Trim().Substring(0, 3);
             if (!headerPhone.Equals("0"))
             {
-                headerPhone1 = "0" + headerPhone1.Substring(1, 2);
+                headerPhone1 = "0" + phone.Trim().Substring(2, 2);
             }
             name = listOp.Where(x => x.IsActive && x.HeaderPhone.Equals(headerPhone1)).Select(x => x.OperaterName).FirstOrDefault();
             return name;

@@ -161,6 +161,10 @@ namespace CMS_Web.Controllers
                     }
                     if (!isRunSuccess)
                     {
+                        foreach (MessageSMSModels item in listData)
+                        {
+                            _fac.UpdateSMSStatus(item.id, (int)Commons.SMSStatus.Fail, ref msg);
+                        }
                         msg = "Run SMS marketing fail!";
                     }
                 }
