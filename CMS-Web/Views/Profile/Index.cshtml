@@ -2,7 +2,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var user = Session["UserC"] as CMS_DTO.CMSCustomer.CustomerModels;
 }
-}
+@model CMS_DTO.CMSProfile.CMS_ProfileModels
+@using CMS_Shared
 <!-- container -->
 <div class="container">
     @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home" }, { "B", "PROFILE" } })
@@ -19,7 +20,7 @@
 <div class="contact-form-details">
     <div class="container">
         <div class="panel panel-primary">
-            <div class="panel-heading">Profile</div>
+            <div class="panel-heading" style="background-color:#2B3441">Profile</div>
             <div class="panel-body">
                 <div class="row">
                 </div>
@@ -27,7 +28,7 @@
         </div>
 
         <div class="panel panel-primary">
-            <div class="panel-heading">Lịch sử nạp</div>
+            <div class="panel-heading" style="background-color:#2B3441 !important">Lịch sử nạp</div>
             <div class="panel-body">
                 <div class="row">
                     <table class="table table-bordered">
@@ -73,7 +74,7 @@
         </div>
 
         <div class="panel panel-primary">
-            <div class="panel-heading">Lịch sử nạp - Marketing</div>
+            <div class="panel-heading" style="background-color:#2B3441 !important">Lịch sử nạp - Marketing</div>
             <div class="panel-body">
                 <div class="row">
                     <table class="table table-bordered">
@@ -83,35 +84,76 @@
                                     No.
                                 </th>
                                 <th>
-                                    Customer
+                                    Customer Name
                                 </th>
                                 <th>
-                                    Nội dung
+                                    Message Content
                                 </th>
                                 <th>
-                                    Gửi đến
+                                    Send To
                                 </th>
                                 <th>
-                                    Mạng
+                                    Operator Name
                                 </th>
                                 <th>
-                                    Phí (sms)
+                                    SMS Price
                                 </th>
                                 <th>
-                                    Trạng thái
+                                    Status
                                 </th>
                                 <th>
-                                    Time input
+                                    Time Input
                                 </th>
                                 <th>
-                                    Sim gửi
+                                    Send From
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td colspan="9" style="text-align:center">No content</td>
-                            </tr>
+                            @if (Model != null && Model.Marketings != null && Model.Marketings.Any())
+                            {
+                                var no = 1;
+                                foreach (var item in Model.Marketings)
+                                {
+                                    <tr>
+                                        <td>
+                                            @no
+                                        </td>
+                                        <td>
+                                            @item.CustomerName
+                                        </td>
+                                        <td>
+                                            @item.SMSContent
+                                        </td>
+                                        <td>
+                                            @item.SendTo
+                                        </td>
+                                        <td>
+                                            @item.OperatorName
+                                        </td>
+                                        <td>
+                                            @item.SMSPrice
+                                        </td>
+                                        <td>
+                                           @* @Commons.SMSStatus.Fail.GetDescription(Enum.GetName(typeof(Commons.SMSStatus), item.Status))*@
+                                        </td>
+                                        <td>
+                                            @item.TimeInput
+                                        </td>
+                                        <td>
+                                            @item.SendFrom
+                                        </td>
+                                    </tr>
+                                    no = no + 1;
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="9" style="text-align:center">No content</td>
+                                </tr>
+                            }
+
                         </tbody>
                     </table>
                 </div>
@@ -119,45 +161,67 @@
         </div>
 
         <div class="panel panel-primary">
-            <div class="panel-heading">Lịch sử nạp - OPT</div>
+            <div class="panel-heading" style="background-color:#2B3441">Lịch sử nạp - OPT</div>
             <div class="panel-body">
                 <div class="row">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>
-                                    No.
-                                </th>
-                                <th>
-                                    Customer
-                                </th>
-                                <th>
-                                    Nội dung
-                                </th>
-                                <th>
-                                    Gửi đến
-                                </th>
-                                <th>
-                                    Mạng
-                                </th>
-                                <th>
-                                    Phí (sms)
-                                </th>
-                                <th>
-                                    Trạng thái
-                                </th>
-                                <th>
-                                    Time input
-                                </th>
-                                <th>
-                                    Sim gửi
-                                </th>
+                                <th class="text-center">No.</th>
+                                <th class="text-center"> Customer Name </th>
+                                <th class="text-center"> Message Content </th>
+                                <th class="text-center"> Send To </th>
+                                <th class="text-center"> Operator Name </th>
+                                <th class="text-center"> SMS Price </th>
+                                <th class="text-center"> Status </th>
+                                <th class="text-center"> Time Input </th>
+                                <th class="text-center"> Send From </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td colspan="9" style="text-align:center">No content</td>
-                            </tr>
+                            @if (Model != null && Model.OTPs != null && Model.OTPs.Any())
+                            {
+                                var no = 1;
+                                foreach (var item in Model.OTPs)
+                                {
+                                    <tr>
+                                        <td>
+                                            @no
+                                        </td>
+                                        <td>
+                                            @item.CustomerName
+                                        </td>
+                                        <td>
+                                            @item.SMSContent
+                                        </td>
+                                        <td>
+                                            @item.SendTo
+                                        </td>
+                                        <td>
+                                            @item.OperatorName
+                                        </td>
+                                        <td>
+                                            @item.SMSPrice
+                                        </td>
+                                        <td>
+                                            @* @Commons.SMSStatus.Fail.GetDescription(Enum.GetName(typeof(Commons.SMSStatus), item.Status))*@
+                                        </td>
+                                        <td>
+                                            @item.TimeInput
+                                        </td>
+                                        <td>
+                                            @item.SendFrom
+                                        </td>
+                                    </tr>
+                                    no = no + 1;
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="9" style="text-align:center">No content</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
