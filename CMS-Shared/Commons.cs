@@ -39,9 +39,6 @@ namespace CMS_Shared
         public static string centriApiKey = ConfigurationManager.AppSettings["CentriApiKey"];
         public static string centriSecretKey = ConfigurationManager.AppSettings["CentriSecretKey"];
         public static string centriSMSChannel = ConfigurationManager.AppSettings["CentriSMSChannel"];
-        public static string viettelKey = ConfigurationManager.AppSettings["ViettelKey"];
-        public static string vinaKey = ConfigurationManager.AppSettings["VinaKey"];
-        public static string mobileKey = ConfigurationManager.AppSettings["MobileKey"];
         public enum CustomerStatus
         {
             Watting = 0,
@@ -143,26 +140,6 @@ namespace CMS_Shared
 
             return encoder.Encode(payload, centriSecretKey);
         }
-        public static string GetOperatorName(string phone)
-        {
-            string name = "Viettel";
-            var mobile = mobileKey.Split(',').ToList();
-            var vina = vinaKey.Split(',').ToList();
-            string headerPhone = phone.Substring(0, 1);
-            string headerPhone1 = phone.Substring(0, 3);
-            if (!headerPhone.Equals("0"))
-            {
-                headerPhone1 = "0" + headerPhone1.Substring(1, 2);
-            }
-            if (mobile.Contains(headerPhone1))
-            {
-                name = "Mobile";
-            }
-            if (vina.Contains(headerPhone1))
-            {
-                name = "Vina";
-            }
-            return name;
-        }
+        
     }
 }

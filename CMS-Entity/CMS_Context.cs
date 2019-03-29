@@ -15,6 +15,8 @@ namespace CMS_Entity
             Database.SetInitializer<CMS_Context>(new ContextHandler());
             ((IObjectContextAdapter)this).ObjectContext.ContextOptions.LazyLoadingEnabled = true;
         }
+        public virtual DbSet<CMS_SimOperator> CMS_SimOperator { get; set; }
+        public virtual DbSet<CMS_GSM> CMS_GSM { get; set; }
         public virtual DbSet<CMS_Sims> CMS_Sims { get; set; }
         public virtual DbSet<CMS_Marketing> CMS_Marketing { get; set; }
         public virtual DbSet<CMS_API> CMS_API { get; set; }

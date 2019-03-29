@@ -1,10 +1,14 @@
 ﻿using ClosedXML.Excel;
 using CMS_DTO.CMSBase;
 using CMS_DTO.CMSCentrifugo;
+using CMS_DTO.CMSGSM;
 using CMS_DTO.CMSMarketing;
+using CMS_DTO.CMSSimOperator;
 using CMS_Shared;
 using CMS_Shared.CMSCategories;
+using CMS_Shared.CMSGSM;
 using CMS_Shared.CMSMarketing;
+using CMS_Shared.CMSSimOperator;
 using CMS_Web.Web.App_Start;
 using System;
 using System.Collections.Generic;
@@ -20,9 +24,14 @@ namespace CMS_Web.Controllers
     public class MarketingController : BasesController
     {
         public CMSMarketingFactory _fac = null;
+        public CMSSimOperatorFactory _simOperator = null;
+        public CMSGSMFactory _gsmFac = null;
+        
         public MarketingController()
         {
             _fac = new CMSMarketingFactory();
+            _gsmFac = new CMSGSMFactory();
+            _simOperator = new CMSSimOperatorFactory();
         }
         // GET: Marketing
         public ActionResult Index()
@@ -94,9 +103,9 @@ namespace CMS_Web.Controllers
             /*
              * ok 0.Check user login
             ok 1. Check total credit of customer
-             2. Check phone number get Operator
+             ok 2. Check phone number get Operator
             ok 3. Insert to DB tru credit
-             4. send sms to Centri server
+             ok 4. send sms to Centri server
              */
             if(CurrentUser == null || string.IsNullOrEmpty(CurrentUser.ID))
             {
@@ -117,12 +126,15 @@ namespace CMS_Web.Controllers
                 else
                 {
                     List<MessageSMSModels> listData = new List<MessageSMSModels>();
+                    List<CMS_SimOperatorModels> listOp = _simOperator.GetList();
+                    string GSMName = _gsmFac.GetList().Where(x=>x.IsActive).Select(x=>x.GSMName).FirstOrDefault();
+                    string channelName = Commons.centriSMSChannel + (GSMName == null? "" : "#"+GSMName);
                     foreach (CMS_MarketingModels item in model)
                     {
-                        string operatorName = Commons.GetOperatorName(item.SendTo);
+                        string operatorName = _fac.GetOperatorName(item.SendTo, listOp);
                         item.OperatorName = operatorName;
                         item.RunTime = RunTime;
-                        item.SendFrom = "";
+                        item.SendFrom = GSMName;
                         item.TimeInput = DateTime.Now;
                         item.UpdatedBy = CurrentUser.ID;
                         item.CreatedBy = CurrentUser.ID;
@@ -139,7 +151,13 @@ namespace CMS_Web.Controllers
                     bool isRunSuccess = true;
                     if(listData.Count > 0)
                     {
-                        isRunSuccess = CMSCentrifugoFactory.SendSMSToCentri("publish", Commons.centriURL, Commons.centriApiKey, Commons.centriSMSChannel, listData);
+                        MainSMSModels mod = new MainSMSModels()
+                        {
+                            messages = listData,
+                            callbackURL = Url.Action("UpdateSMSStatus", "Centrifuge",null, HttpContext.Request.Url.Scheme),
+                            delay = RunTime
+                        };
+                        isRunSuccess = CMSCentrifugoFactory.SendSMSToCentri("publish", Commons.centriURL, Commons.centriApiKey, channelName, mod);
                     }
                     if (!isRunSuccess)
                     {
@@ -202,6 +220,6 @@ namespace CMS_Web.Controllers
                 return new HttpStatusCodeResult(400, ex.Message);
             }
         }
-
+        
     }
 }

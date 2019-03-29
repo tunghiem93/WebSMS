@@ -1,6 +1,7 @@
 ﻿using ClosedXML.Excel;
 using CMS_DTO.CMSBase;
 using CMS_DTO.CMSMarketing;
+using CMS_DTO.CMSSimOperator;
 using CMS_Entity;
 using CMS_Entity.Entity;
 using CMS_Shared.CMSBaseFactory;
@@ -312,7 +313,51 @@ namespace CMS_Shared.CMSMarketing
             }
             return result;
         }
+        public bool UpdateSMSStatus(string id, int status, ref string msg)
+        {
+            var result = true;
+            using (var cxt = new CMS_Context())
+            {
+                using (var trans = cxt.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        if (!string.IsNullOrEmpty(id))
+                        {
 
+                            var e = cxt.CMS_Marketing.Find(id);
+                            if (e != null)
+                            {
+                                e.Status = status;
+                                e.UpdatedDate = DateTime.Now;
+                                e.UpdatedBy = "GSM";
+                                if (status.Equals((int)Commons.SMSStatus.Fail))
+                                {
+                                    var customer = cxt.CMS_Customers.Where(x => x.Id.Equals(e.CustomerId)).FirstOrDefault();
+                                    customer.TotalCredit = customer.TotalCredit + e.SMSPrice;
+                                }
+                            }
+                            
+                        }
+                        cxt.SaveChanges();
+                        trans.Commit();
+                        NSLog.Logger.Info("Update Status SMS success: " + id + "==" + status);
+                    }
+                    catch (Exception ex)
+                    {
+                        msg = "Vui lòng kiểm tra đường truyền";
+                        result = false;
+                        NSLog.Logger.Error("Update Status SMS  "+ id + " :", ex);
+                        trans.Rollback();
+                    }
+                    finally
+                    {
+                        cxt.Dispose();
+                    }
+                }
+            }
+            return result;
+        }
         public bool CheckTotalCredit(string cusId, decimal credit)
         {
             try
@@ -338,6 +383,18 @@ namespace CMS_Shared.CMSMarketing
             {
                 return GetSMSRate(cxt, smsType);
             }
+        }
+        public string GetOperatorName(string phone, List<CMS_SimOperatorModels> listOp)
+        {
+            string name = "";
+            string headerPhone = phone.Trim().Substring(0, 1);
+            string headerPhone1 = phone.Trim().Substring(0, 3);
+            if (!headerPhone.Equals("0"))
+            {
+                headerPhone1 = "0" + headerPhone1.Substring(1, 2);
+            }
+            name = listOp.Where(x => x.IsActive && x.HeaderPhone.Equals(headerPhone1)).Select(x => x.OperaterName).FirstOrDefault();
+            return name;
         }
     }
 }

@@ -11,5 +11,6 @@ namespace CMS_DTO.CMSSims
        public string name { get; set; }
        public string error { get; set; }
        public string operatorName { get; set; }
+       public string status { get; set; }
     }
 }

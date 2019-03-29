@@ -1,0 +1,131 @@
+﻿@{
+    Layout = null;
+}
+@model List<CMS_DTO.CMSGSM.CMS_GMSModels>
+@using CMS_Shared
+
+<div class="table-responsive">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box red">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs"></i>GSM
+                </div>
+                <div class="actions">
+                    <a href="javascript:;" class="btn btn-default btn-sm" onclick='ShowView("@Url.Action("Create","CMSGSM")")'>
+                        <i class="fa fa-plus"></i> Add New
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered table-hover dt-responsive" id="sample_3">
+                    <thead>
+                        <tr>
+                            <th class="text-center"> GSM Name </th>
+                            <th class="text-center"> Status </th>
+                            <th class="text-center"> Action </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr class="odd gradeX">
+                                    <td class="text-center">@item.GSMName</td>
+                                    <td class="text-center">
+                                        @{
+
+                                            if (item.IsActive)
+                                            {
+                                                <span class="label label-sm label-success"> Running </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="label label-sm label-danger"> Stopped </span>
+                                            }
+
+
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        @*<a href="javascript:void(0)"
+                                            onclick='ShowView("@Url.Action("View", "CMSDepositPackage", new { Id = item.Id })")'
+                                            class="btn btn-primary btn-xs view details"><i class="fa fa-eye"></i>&nbsp;View</a>&nbsp;&nbsp;*@
+                                        <a href="javascript:void(0)"
+                                           onclick='ShowView("@Url.Action("Edit", "CMSGSM", new { Id = item.Id })")'
+                                           class="btn btn-info btn-xs edit details"><i class="fa fa-edit"></i>&nbsp;Edit</a>&nbsp;&nbsp;
+                                        <a href="javascript:void(0)"
+                                           onclick='ShowView("@Url.Action("Delete","CMSGSM",new { Id=item.Id})")'
+                                           class="btn btn-danger btn-xs delete details"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+
+<script type="text/javascript">
+    var _tableDepositPackage = null;
+    var _settingsOptionTableDepositPackage = {
+        "language": {
+            "aria": {
+                "sortAscending": ": activate to sort column ascending",
+                "sortDescending": ": activate to sort column descending"
+            },
+            "emptyTable": "No data available in table",
+            "info": "Showing _START_ to _END_ of _TOTAL_ records",
+            "infoEmpty": "No records found",
+            "infoFiltered": "(filtered1 from _MAX_ total records)",
+            "lengthMenu": "Show _MENU_",
+            "search": "Search:",
+            "zeroRecords": "No matching records found",
+            "paginate": {
+                "previous": "Prev",
+                "next": "Next",
+                "last": "Last",
+                "first": "First"
+            }
+        },
+        "oLanguage": {
+
+            "sSearch": "Search:",
+            "sLengthMenu": "Show _MENU_",
+            "sProcessing": "Processing...",
+            "sZeroRecords": "No matching records found",
+            "sInfo": "Showing _START_ to _END_ of _TOTAL_ records",
+            "sInfoEmpty": "No records found",
+            "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+            "sInfoPostFix": "",
+        },
+        "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+        "lengthMenu": [
+            [6, 15, 20, -1],
+            [6, 15, 20, "All"] // change per page values here
+        ],
+        "pageLength": 6,
+        "columnDefs": [
+            { "orderable": false, "targets": [0, 2] },
+            { "width": "20%", "targets": [0] },
+            { "width": "20%", "targets": [1] },
+            { "width": "20%", "targets": [2] },
+        ],
+        "order": [
+            [0, "asc"]
+        ]
+    };
+
+    $(document).ready(function () {
+        _tableDepositPackage = $('#sample_3').DataTable($.extend(true, {}, _settingsOptionTableDepositPackage));
+    })
+
+    function ShowView(url) {
+        ShowViewOrEdit(url);
+    }
+</script>

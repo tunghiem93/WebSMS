@@ -15,10 +15,10 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/hmac-sha256.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/enc-base64-min.js"></script>
     <script type="text/javascript">
-        //var secret = "5a3d776a-69a5-49a7-975c-e20980c127ce";
-        //var url = "ws://167.99.73.103:6969/connection/websocket";
-        var secret = "92b402ab-2e5d-4db4-8d0f-b7d6dc4d35f7";
-        var url = "ws://localhost:8000/connection/websocket";
+        var secret = "5a3d776a-69a5-49a7-975c-e20980c127ce";
+        var url = "ws://167.99.73.103:6969/connection/websocket";
+        //var secret = "92b402ab-2e5d-4db4-8d0f-b7d6dc4d35f7";
+        //var url = "ws://localhost:8000/connection/websocket";
         var header = {
             "alg": "HS256",
             "typ": "JWT"
@@ -52,7 +52,7 @@
                 // See below description of message format
                 console.log("publish")
                 console.log(message);
-                //UpdateStatusSim(message.data)
+                UpdateStatusSim(message.data)
             },
             "join": function (message) {
                 // See below description of join message format
@@ -81,8 +81,8 @@
             }
         }
 
-        //var subscription2 = centrifuge.subscribe("$admin", callbacks);
-        var subscription2 = centrifuge.subscribe("$gsmclient", callbacks);
+        var subscription2 = centrifuge.subscribe("$admin", callbacks);
+        //var subscription2 = centrifuge.subscribe("$gsmclient", callbacks);
 
         function CreateToken(secret, header, data) {
 

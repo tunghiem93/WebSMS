@@ -1,0 +1,30 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewBag.Title = "GSM - List";
+}
+<div role="main">
+    <div class="se-pre-con" style="display: none;"></div>
+    <div class="_gridview">
+        <div class="page-title">
+            <!-- BEGIN PAGE BAR -->
+            @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home Page" }, { "B", "GSM - List" } })
+            <!-- END PAGE BAR -->
+        </div>
+        <div class="page-main">
+            @using (Html.BeginForm("LoadGrid", "CMSGSM", FormMethod.Post, new { @class = "form-horizontal search-form" }))
+            {
+            }
+        </div>      
+    </div>
+    <div class="detail-view" style="height:100%;">
+        <!-- detail partial view -->
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadGrid();
+    })
+</script>
