@@ -121,7 +121,8 @@
                 PackagePrice: PackagePrice,
                 PaymentMethodId: null,
                 sPrice: sPrice,
-                sTempPrice: sPrice
+                sTempPrice: sPrice,
+                tempPrice: sPrice
             });
         }
         GetPriceFromApi(PaymentId)
@@ -150,10 +151,10 @@
     function RenderDepositNow() {
         var html = "";
         Deposits.forEach((x) => {
-            let _PayCoin = parseInt(x.PayCoin) > 0 ? numeral(x.PayCoin).format('0,00') : x.PayCoin
+            let _PayCoin = parseInt(x.PayCoin) > 0 ? numeral(x.PayCoin).format('0,00000000') : x.PayCoin
             html += "<tr class='tr_" + x.PackageId + "'>";
             html += "<td>" + x.PackageName + "</td>";
-            html += "<td>" + x.sPrice + "</td>";
+            html += "<td>" + x.tempPrice + "</td>";
             html += "<td> <a href='javascript:void(0)' class='remove_" + x.PackageId + "' onclick='removepackage(\"" + x.PackageId + "\")'> Remove </a> </td>";
             html += "</tr>";
         })
@@ -208,12 +209,16 @@
                             x.PayCoin = data.lastPrice || data.last || 0;
                             x.PaymentMethodId = paymentId
                             x.sPrice = data.lastPrice || data.last || 0;
+                            x.ScaleNumber = data.ScaleNumber;
+                            x.tempPrice = data.tempPrice;
                         });
                     } else {
                         Deposits.forEach((x) => {
                             x.PayCoin = x.Price;
                             x.PaymentMethodId = paymentId;
                             x.sPrice = x.sTempPrice;
+                            x.ScaleNumber = 0;
+                            x.tempPrice = x.sTempPrice
                         });
                     }
                     RenderDepositNow()

@@ -1,6 +1,7 @@
 ﻿using CMS_DTO;
 using CMS_DTO.CMSCustomer;
 using CMS_DTO.CMSDepositPackage;
+using CMS_DTO.CMSPaymentMethod;
 using CMS_Shared;
 using CMS_Shared.CMSDepositTransaction;
 using CMS_Shared.CMSEmployees;
@@ -83,11 +84,11 @@ namespace CMS_Web.Controllers
             return Json(obj, JsonRequestBehavior.AllowGet);
         }
 
-        private string GetURLApi(string paymentId)
+        private CMS_PaymentMethodModels GetURLApi(string paymentId)
         {
             var data = facP.GetDetail(paymentId);
             if(data != null)
-                return data.URLApi;
+                return data;
             return null;
         }
 
@@ -126,14 +127,23 @@ namespace CMS_Web.Controllers
                     var rateUSD = lstDataSys.Where(o => o.ValueType.Equals((int)Commons.ConfigType.USD)).Select(o => o.Value).FirstOrDefault();
                     var ratePMUSD = lstDataSys.Where(o => o.ValueType.Equals((int)Commons.ConfigType.PMUSD)).Select(o => o.Value).FirstOrDefault();
                     Priceobj.lastPrice = rateUSD / ratePMUSD;
+                    Priceobj.tempPrice = string.Format("{0:N0}", Priceobj.lastPrice);
                     return Json(Priceobj, JsonRequestBehavior.AllowGet);
                 }
             }            
             var URLApi = GetURLApi(paymentId);
-            if(!string.IsNullOrEmpty(URLApi))
+            if(URLApi != null && !string.IsNullOrEmpty(URLApi.URLApi))
             {
                 var Priceobj = new PriceObjects();
-                Priceobj = await GetLastPrice(URLApi);
+                Priceobj = await GetLastPrice(URLApi.URLApi);
+                Priceobj.ScaleNumber = URLApi.ScaleNumber.HasValue ? URLApi.ScaleNumber.Value : 0;
+                if(Priceobj.ScaleNumber > 0)
+                {
+                    if(Priceobj.last.HasValue)
+                        Priceobj.tempPrice = string.Format("{0:N"+Priceobj.ScaleNumber+"}", Priceobj.last.Value);
+                    else
+                        Priceobj.tempPrice = string.Format("{0:N" + Priceobj.ScaleNumber + "}", Priceobj.lastPrice.Value);
+                }
                 return Json(Priceobj, JsonRequestBehavior.AllowGet);
             } else
             {
