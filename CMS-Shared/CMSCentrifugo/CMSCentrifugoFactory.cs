@@ -33,7 +33,11 @@ namespace CMS_Shared.CMSCategories
                 }
                 else
                 {
-                    return true;
+                    if(response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        return true;
+                    }
+                    return false;
                 }
 
             }

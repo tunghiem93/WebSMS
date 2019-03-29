@@ -127,7 +127,10 @@ namespace CMS_Web.Controllers
                 {
                     List<MessageSMSModels> listData = new List<MessageSMSModels>();
                     List<CMS_SimOperatorModels> listOp = _simOperator.GetList();
-                    string GSMName = _gsmFac.GetList().Where(x=>x.IsActive).Select(x=>x.GSMName).FirstOrDefault();
+                    List<string> listGSMName = _gsmFac.GetList().Where(x=>x.IsActive).Select(x=>x.GSMName).ToList();
+                    var random = new Random();
+                    int index = random.Next(listGSMName.Count);
+                    string GSMName = listGSMName[index];
                     string channelName = Commons.centriSMSChannel + (GSMName == null? "" : "#"+GSMName);
                     foreach (CMS_MarketingModels item in model)
                     {
