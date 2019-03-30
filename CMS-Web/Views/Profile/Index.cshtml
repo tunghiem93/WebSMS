@@ -4,6 +4,17 @@
 }
 @model CMS_DTO.CMSProfile.CMS_ProfileModels
 @using CMS_Shared
+<style>
+    div.dataTables_wrapper div.dataTables_length select {
+        padding-top:0 !important;
+    }
+    table.dataTable thead th, table.dataTable thead td{
+        border-bottom:none !important;
+    }
+    table.dataTable.no-footer {
+        border-bottom: 1px solid #e7ecf1 !important;
+    }
+</style>
 <!-- container -->
 <div class="container">
     @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home" }, { "B", "PROFILE" } })
@@ -31,7 +42,7 @@
             <div class="panel-heading" style="background-color:#2B3441 !important">Lịch sử nạp</div>
             <div class="panel-body">
                 <div class="row">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="history">
                         <thead>
                             <tr>
                                 <th>No.</th>
@@ -64,9 +75,78 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td colspan="11" style="text-align:center">No content</td>
-                            </tr>
+                            @if (Model != null && Model.Transactions != null && Model.Transactions.Any())
+                            {
+                                var noTransaction = 1;
+                                foreach (var item in Model.Transactions)
+                                {
+                                    <tr>
+                                        <th>@noTransaction</th>
+                                        <th>@item.CreatedDate</th>
+                                        <th>@item.CustomerName</th>
+                                        <th>
+                                            @item.WalletMoney
+                                        </th>
+                                        <th>
+                                            @item.PackageName
+                                        </th>
+                                        <th>
+                                            @{
+                                                var temp3 = item.PackageSMS.ToString();
+                                            }
+                                            @if (item.PackageSMS > 1)
+                                            {
+                                                temp3 = string.Format("{0}", item.PackageSMS.ToString("#,0"));
+                                            }
+                                            @temp3
+                                        </th>
+                                        <th>
+                                            @{
+                                                var temp2 = item.SMSPrice.ToString();
+                                            }
+                                            @if (item.SMSPrice > 1)
+                                            {
+                                                temp2 = string.Format("{0}", item.SMSPrice.ToString("#,0"));
+                                            }
+                                            @temp2
+                                        </th>
+                                        <th>
+                                            @{
+                                                var temp1 = item.PackagePrice.ToString();
+                                            }
+                                            @if (item.PackagePrice > 1)
+                                            {
+                                                temp1 = string.Format("{0}", item.PackagePrice.ToString("#,0"));
+                                            }
+                                            @temp1
+                                        </th>
+                                        <th>
+                                            @{
+                                                var temp = item.PayCoin.ToString();
+                                            }
+                                            @if (item.PayCoin > 1)
+                                            {
+                                                temp = string.Format("{0}", item.PayCoin.ToString("#,0"));
+                                            }
+                                            @temp
+                                        </th>
+                                        <th>
+                                            @item.PaymentMethodName
+                                        </th>
+                                        <th>
+                                            @item.sStatus
+                                        </th>
+                                    </tr>
+                                    noTransaction = noTransaction + 1;
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="11" style="text-align:center">No content</td>
+                                </tr>
+                            }
+
                         </tbody>
                     </table>
                 </div>
@@ -77,7 +157,7 @@
             <div class="panel-heading" style="background-color:#2B3441 !important">Lịch sử nạp - Marketing</div>
             <div class="panel-body">
                 <div class="row">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="marketing">
                         <thead>
                             <tr>
                                 <th>
@@ -135,7 +215,7 @@
                                             @item.SMSPrice
                                         </td>
                                         <td>
-                                           @* @Commons.SMSStatus.Fail.GetDescription(Enum.GetName(typeof(Commons.SMSStatus), item.Status))*@
+                                            @* @Commons.SMSStatus.Fail.GetDescription(Enum.GetName(typeof(Commons.SMSStatus), item.Status))*@
                                         </td>
                                         <td>
                                             @item.TimeInput
@@ -164,7 +244,7 @@
             <div class="panel-heading" style="background-color:#2B3441">Lịch sử nạp - OPT</div>
             <div class="panel-body">
                 <div class="row">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered dt-responsive" id="tableotp">
                         <thead>
                             <tr>
                                 <th class="text-center">No.</th>
@@ -229,3 +309,60 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    var _tabletableotp = null;
+    var _settingsOptiontableotp = {
+        "language": {
+            "aria": {
+                "sortAscending": ": activate to sort column ascending",
+                "sortDescending": ": activate to sort column descending"
+            },
+            "emptyTable": "No data available in table",
+            "info": "Showing _START_ to _END_ of _TOTAL_ records",
+            "infoEmpty": "No records found",
+            "infoFiltered": "(filtered1 from _MAX_ total records)",
+            "lengthMenu": "Show _MENU_",
+            "search": "Search:",
+            "zeroRecords": "No matching records found",
+            "paginate": {
+                "previous": "Prev",
+                "next": "Next",
+                "last": "Last",
+                "first": "First"
+            }
+        },
+        "oLanguage": {
+            "sSearch": "Search:",
+            "sLengthMenu": "Show _MENU_",
+            "sProcessing": "Processing...",
+            "sZeroRecords": "No matching records found",
+            "sInfo": "Showing _START_ to _END_ of _TOTAL_ records",
+            "sInfoEmpty": "No records found",
+            "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+            "sInfoPostFix": "",
+        },
+        "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+        "lengthMenu": [
+            [15, 20, -1],
+            [15, 20, "All"] // change per page values here
+        ],
+        "pageLength": 15,
+        //"columnDefs": [
+        //    { "orderable": false, "targets": [0,7] },
+        //    { "width": "8%", "targets": [0] },
+        //    { "width": "5%", "targets": [1, 2, 3,4,5,6] },
+        //    { "width": "20%", "targets": [7] },
+        //],
+        "order": [
+            [0, "asc"]
+        ]
+    };
+
+    $(document).ready(function () {
+        _tabletableotp = $('#tableotp').DataTable($.extend(true, {}, _settingsOptiontableotp));
+        _tabletableotp = $('#history').DataTable($.extend(true, {}, _settingsOptiontableotp));
+        _tabletableotp = $('#marketing').DataTable($.extend(true, {}, _settingsOptiontableotp));
+        
+    })
+</script>

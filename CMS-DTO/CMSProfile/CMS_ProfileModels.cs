@@ -11,11 +11,13 @@ namespace CMS_DTO.CMSProfile
     {
         public List<CMS_MarketingModels> OTPs { get; set; }
         public List<CMS_MarketingModels> Marketings { get; set; }
+        public List<CMS_DepositTransactionsModel> Transactions { get; set; }
 
         public CMS_ProfileModels()
         {
             OTPs = new List<CMS_MarketingModels>();
             Marketings = new List<CMS_MarketingModels>();
+            Transactions = new List<CMS_DepositTransactionsModel>();
         }
     }
 }
