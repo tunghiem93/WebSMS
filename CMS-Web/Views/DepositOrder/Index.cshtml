@@ -34,15 +34,15 @@
                                     <th>Package Name</th>
                                     <th>Status</th>
                                     <th>Transfer</th>
-                                    <th>Payment</th>
-                                    <th>Credits Number</th>
+                                    @*<th>Payment</th>
+                                    <th>Credits Number</th>*@
                                 </tr>
                             </thead>
                             <tbody>
                                 @if (Model == null || Model.Count <= 0)
                                 {
                                     <tr>
-                                        <td colspan="6" style="text-align:center">No content</td>
+                                        <td colspan="4" style="text-align:center">No content</td>
                                     </tr>
                                 }
                                 else
@@ -58,12 +58,29 @@
                                             <th>@item.PackageName</th>
                                             <th>@item.sStatus</th>
                                             <th>@item.PayCoin</th>
-                                            <th>@item.PaymentMethodName</th>
-                                            <th>@item.WalletMoney</th>
+                                            @*<th>@item.PaymentMethodName</th>
+                    <th>@item.WalletMoney</th>*@
                                         </tr>
                                         i = i + 1;
                                     }
-                                }
+                                    var payment = Model != null ? Model.FirstOrDefault().PaymentMethodName : "";
+                                    var walletMoney = Model != null ? Model.FirstOrDefault().WalletMoney : "";
+                                    var total = Model != null ? Model.Sum(x => x.PayCoin) : 0;
+                                    <tr>
+                                        <td colspan="3">PaymentMethodName</td>
+                                        <td>
+                                            @payment
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">WalletMoney</td>
+                                        <td>@walletMoney</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">Total Order</td>
+                                        <td>@total</td>
+                                    </tr>
+                                                }
 
                             </tbody>
                             @if (ViewBag.disabled == true)
