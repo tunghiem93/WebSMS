@@ -63,7 +63,8 @@ namespace CMS_Web.Controllers
                 model.PAYEE_ACCOUNT = payPerfect.WalletMoney;
                 model.PAYEE_NAME = customer.Name;
                 model.PAYMENT_AMOUNT = price == 0 ? price.Value : price.Value;
-                model.PAYMENT_UNITS = "usd";
+                model.PAYMENT_AMOUNT = Math.Round(model.PAYMENT_AMOUNT.Value, 2);
+                model.PAYMENT_UNITS = "USD";
                 var req = Request.Params.AllKeys;
                 var msg = "";
                 if (req != null && req.Count() > 0)

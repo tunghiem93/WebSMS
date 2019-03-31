@@ -286,7 +286,7 @@ namespace CMS_Shared.CMSCustomers
                         TotalCredit = x.TotalCredit,
                         UpdatedBy = x.UpdatedBy,
                         UpdatedDate = x.UpdatedDate
-                    }).ToList();
+                    }).OrderByDescending(o=>o.CreatedDate).ToList();
                     return data;
                 }
             }
