@@ -54,7 +54,7 @@
                                 @Html.ValidationMessageFor(model => model.ExcelUpload, null, new { @class = "label" })
                             </div>
                             <div class="col-md-2" style="float: right">
-                                <div class="col-md-2"><input type="submit" value="Send" class="btn btn-default  pull-right"></div>
+                                <div class="col-md-2"><input type="submit" value="Preview" class="btn btn-default  pull-right"></div>
                             </div>
                         </div>
                     }
@@ -118,7 +118,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <input type="submit" value="@string.Format("Run {0} SMS - {1:0} Credits", countSMS, sumPrice)" class="btn btn-default pull-right"style="margin-top: 17px !important;">
+                                                    <input type="submit" value="@string.Format("Send {0} SMS - {1:0} Credits", countSMS, sumPrice)" class="btn btn-default pull-right"style="margin-top: 17px !important;">
                                                 </td>
                                             </tr>
                                         </tbody>

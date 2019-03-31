@@ -3,6 +3,7 @@ using CMS_DTO.CMSCustomer;
 using CMS_DTO.CMSDepositPackage;
 using CMS_Shared;
 using CMS_Shared.CMSDepositTransaction;
+using CMS_Shared.CMSEmployees;
 using CMS_Shared.CMSSystemConfig;
 using CMS_Shared.Utilities;
 using System;
@@ -17,29 +18,52 @@ namespace CMS_Web.Controllers
     {
         private readonly CMSDepositTransactionFactory facT;
         private readonly CMSSysConfigFactory facC;
+        private readonly CMSPaymentMethodFactory facP;
 
         public PerfectMoneyController()
         {
             facT = new CMSDepositTransactionFactory();
             facC = new CMSSysConfigFactory();
+            facP = new CMSPaymentMethodFactory();
         }
 
         // GET: PerfectMoney
         public ActionResult Index(decimal? price)
         {
             PerfectMoneyModel model = new PerfectMoneyModel();
+            if (TempData["ErrorMessage"] != null)
+            {
+                ViewData["ErrorMessage"] = TempData["ErrorMessage"].ToString();
+            }
+            if (TempData["SuccessMessage"] != null)
+            {
+                ViewData["SuccessMessage"] = TempData["SuccessMessage"].ToString();
+            }
+            if (TempData["DataReturnError"] != null)
+            {
+                model = (PerfectMoneyModel)TempData["DataReturnError"];
+                return View(model);
+            }
             try
             {
                 List<CMS_DepositTransactionsModel> models = new List<CMS_DepositTransactionsModel>();
                 var Config = facC.GetList().Where(x => x.ValueType == (int)Commons.ConfigType.USD).FirstOrDefault();
                 var customer = Session["UserC"] as CustomerModels;
-                models[0].PaymentMethodName = "Perfect money";
-                models[0].WalletMoney = Commons.APIType.APIPerfectMonney.ToString();
-                models[0].ExchangeRate = Config != null ? Config.Value : 0;
-                models[0].PayCoin = price == 0 ? price.Value : price.Value;
-                models[0].CustomerId = customer.ID;
-                models[0].CustomerName = customer.Name;
-                models[0].DepositNo = CommonHelper.RandomDepositNo();
+                CMS_DepositTransactionsModel _data = new CMS_DepositTransactionsModel();
+                _data.PaymentMethodName = "Perfect money";
+                _data.WalletMoney = Commons.APIType.APIPerfectMonney.ToString();
+                _data.ExchangeRate = Config != null ? Config.Value : 0;
+                _data.PayCoin = price == 0 ? price.Value : price.Value;
+                _data.CustomerId = customer.ID;
+                _data.CustomerName = customer.Name;
+                _data.DepositNo = CommonHelper.RandomDepositNo();
+                models.Add(_data);
+                //Set account information of admin to perfect payment
+                var payPerfect = facP.GetList().Where(o => o.ReferenceExchange.Equals((int)Commons.ExchangeType.None)).FirstOrDefault();
+                model.PAYEE_ACCOUNT = payPerfect.WalletMoney;
+                model.PAYEE_NAME = customer.Name;
+                model.PAYMENT_AMOUNT = price == 0 ? price.Value : price.Value;
+                model.PAYMENT_UNITS = "usd";
                 var req = Request.Params.AllKeys;
                 var msg = "";
                 if (req != null && req.Count() > 0)

@@ -18,7 +18,7 @@ namespace CMS_DTO.CMSDepositPackage
         [Required]
         public decimal? PAYMENT_AMOUNT { get; set; }
         [Required]
-        public int PAYMENT_UNITS { get; set; }
+        public string PAYMENT_UNITS { get; set; }
         public string PAYMENT_ID { get; set; }
         public bool STATUS_URL { get; set; }
         public string PAYMENT_URL { get; set; }

@@ -23,18 +23,18 @@
                     <form action="https://perfectmoney.is/api/step1.asp" method="post" class="form-horizontal" enctype="multipart/form-data">
                         <div class="form-group">
                             <div class="col-md-6">
-                                <label for="phone" class="col-md-4">Payment account</label>
+                                <label for="phone" class="col-md-4">PM wallet</label>
                                 <div class="col-md-8">
                                     <input type="hidden" value="http://localhost:54321/PerfectMoney" name="PAYMENT_URL" />
                                     <input type="hidden" value="http://localhost:54321/PerfectMoney" name="NOPAYMENT_URL" />
-                                    @Html.TextBoxFor(model => model.PAYEE_ACCOUNT, new { @class = "form-control", @placeholder = "Payee account", @autocomplete = "off" })
+                                    @Html.TextBoxFor(model => model.PAYEE_ACCOUNT, new { @class = "form-control", @placeholder = "Payee account", @autocomplete = "off", @readonly = true })
                                     @Html.ValidationMessageFor(model => model.PAYEE_ACCOUNT, null, new { @class = "label label-danger" })
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label for="phone" class="col-md-4">Payment account</label>
+                                <label for="phone" class="col-md-4">PM name</label>
                                 <div class="col-md-8">
-                                    @Html.TextBoxFor(model => model.PAYEE_NAME, new { @class = "form-control", @placeholder = "Payee name", @autocomplete = "off" })
+                                    @Html.TextBoxFor(model => model.PAYEE_NAME, new { @class = "form-control", @placeholder = "Payee name", @autocomplete = "off", @readonly = true })
                                     @Html.ValidationMessageFor(model => model.PAYEE_NAME, null, new { @class = "label label-danger" })
                                 </div>
                             </div>
@@ -42,16 +42,16 @@
 
                         <div class="form-group">
                             <div class="col-md-6">
-                                <label for="phone" class="col-md-4">Payment amount</label>
+                                <label for="phone" class="col-md-4">PM amount</label>
                                 <div class="col-md-8">
-                                    @Html.TextBoxFor(model => model.PAYMENT_AMOUNT, new { @class = "form-control", @placeholder = "Payment amount", @autocomplete = "off" })
+                                    @Html.TextBoxFor(model => model.PAYMENT_AMOUNT, new { @class = "form-control", @placeholder = "Payment amount", @autocomplete = "off", @readonly = true })
                                     @Html.ValidationMessageFor(model => model.PAYMENT_AMOUNT, null, new { @class = "label label-danger" })
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label for="phone" class="col-md-4">Payment units</label>
+                                <label for="phone" class="col-md-4">PM units</label>
                                 <div class="col-md-8">
-                                    @Html.TextBoxFor(model => model.PAYMENT_UNITS, new { @class = "form-control", @value = "USD", @placeholder = "Payee units", @autocomplete = "off" })
+                                    @Html.TextBoxFor(model => model.PAYMENT_UNITS, new { @class = "form-control", @value = "USD", @placeholder = "USD", @autocomplete = "off", @readonly = true })
                                     @Html.ValidationMessageFor(model => model.PAYMENT_UNITS, null, new { @class = "label label-danger" })
                                 </div>
                             </div>
