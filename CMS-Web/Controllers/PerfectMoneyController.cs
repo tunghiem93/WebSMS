@@ -2,6 +2,7 @@
 using CMS_DTO.CMSCustomer;
 using CMS_DTO.CMSDepositPackage;
 using CMS_Shared;
+using CMS_Shared.CMSCompanies;
 using CMS_Shared.CMSDepositTransaction;
 using CMS_Shared.CMSEmployees;
 using CMS_Shared.CMSSystemConfig;
@@ -19,12 +20,14 @@ namespace CMS_Web.Controllers
         private readonly CMSDepositTransactionFactory facT;
         private readonly CMSSysConfigFactory facC;
         private readonly CMSPaymentMethodFactory facP;
+        private readonly CMSCompaniesFactory fac_Co;
 
         public PerfectMoneyController()
         {
             facT = new CMSDepositTransactionFactory();
             facC = new CMSSysConfigFactory();
             facP = new CMSPaymentMethodFactory();
+            fac_Co = new CMSCompaniesFactory();
         }
 
         // GET: PerfectMoney
@@ -60,8 +63,9 @@ namespace CMS_Web.Controllers
                 models.Add(_data);
                 //Set account information of admin to perfect payment
                 var payPerfect = facP.GetList().Where(o => o.ReferenceExchange.Equals((int)Commons.ExchangeType.None)).FirstOrDefault();
+                var adminInfo = fac_Co.GetList().Select(o => o.Name).FirstOrDefault(); ; 
                 model.PAYEE_ACCOUNT = payPerfect.WalletMoney;
-                model.PAYEE_NAME = customer.Name;
+                model.PAYEE_NAME = adminInfo;
                 model.PAYMENT_AMOUNT = price == 0 ? price.Value : price.Value;
                 model.PAYMENT_AMOUNT = Math.Round(model.PAYMENT_AMOUNT.Value, 2);
                 model.PAYMENT_UNITS = "USD";
