@@ -22,6 +22,7 @@
                     <thead>
                         <tr>
                             <th class="text-center"> Deposit No </th>
+                            <th class="text-center"> Create Date</th>
                             <th class="text-center"> Customer Name </th>
                             <th class="text-center"> Wallet Money </th>
                             <th class="text-center"> Package Name </th>
@@ -29,6 +30,7 @@
                             <th class="text-center"> Package Price </th>
                             <th class="text-center"> Payment Method </th>
                             <th class="text-center"> Pay Coin </th>
+
                             <th class="text-center"> Status </th>
                             <th class="text-center"> Action </th>
                         </tr>
@@ -40,6 +42,7 @@
                             {
                         <tr class="odd gradeX">
                             <td class="text-center">@item.DepositNo</td>
+                            <td class="text-center"> @item.CreatedDate</td>
                             <td class="text-center">@item.CustomerName</td>
                             <td class="text-center">@item.WalletMoney</td>
                             <td class="text-center">@item.PackageName</td>
@@ -47,8 +50,9 @@
                             <td class="text-center">@string.Format("{0:N0}", item.PackagePrice)</td>
                             <td class="text-center">@item.PaymentMethodName</td>
                             <td class="text-center">@item.PayCoin</td>
+
                             <td class="text-center">
-                                @Commons.DepositStatus.WaitingPay.GetDescription(Enum.GetName(typeof(Commons.DepositStatus), item.Status))
+                                @*   @Commons.DepositStatus.WaitingPay.GetDescription(Enum.GetName(typeof(Commons.DepositStatus), item.Status))*@
                             </td>
                             <td class="text-center">
                                 @*<a href="javascript:void(0)"
@@ -112,13 +116,13 @@
         ],
         "pageLength": 6,
         "columnDefs": [
-            { "orderable": false, "targets": [0,4] },
+            { "orderable": false, "targets": [10] },
             { "width": "8%", "targets": [0] },
-            { "width": "5%", "targets": [1, 2, 3] },
-            { "width": "20%", "targets": [4] },
+            { "width": "5%", "targets": [1, 2, 3,4,5,6,7,8,9] },
+            //{ "width": "20%", "targets": [4] },
         ],
         "order": [
-            [0, "asc"]
+            [0, "DESC"]
         ]
     };
 
