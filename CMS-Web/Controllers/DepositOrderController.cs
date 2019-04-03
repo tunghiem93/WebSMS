@@ -28,7 +28,7 @@ namespace CMS_Web.Controllers
             var Customer = Session["UserC"] as CustomerModels;
             var Status = new List<int>();
             Status.Add((int)Commons.DepositStatus.WaitingPay);
-            Status.Add((int)Commons.DepositStatus.Cancel);
+            //Status.Add((int)Commons.DepositStatus.Cancel);
             var model = fac.GetListDepositTransaction(Customer.ID, Status);
             ViewBag.disabled = model != null && model.Count > 0;
             var config = facS.GetList().Where(x => x.ValueType == (int)Commons.ConfigType.WaitingTime).FirstOrDefault();
@@ -55,7 +55,7 @@ namespace CMS_Web.Controllers
             }
             var Status = new List<int>();
             Status.Add((int)Commons.DepositStatus.ConfirmedPay);
-            Status.Add((int)Commons.DepositStatus.Cancel);
+            //Status.Add((int)Commons.DepositStatus.Cancel);
             var Ids = model.Select(x => x.Id).ToList();
             model = fac.GetListDepositTransaction(Customer.ID, Status).Where(x => Ids.Contains(x.Id)).ToList();
             ViewBag.disabled = model != null && model.Any(x => x.Status == (int)Commons.DepositStatus.Cancel);

@@ -49,7 +49,7 @@
                                         <th>@item.Discount</th>
                                         <th>@item.PriceUSD</th>
                                         <th>@string.Format("{0}", item.SMSPrice.ToString("#,0"))</th>
-                                        <th><a href="javascript:void(0)" class="add_@item.Id" onclick="AddDepositPackage(this,'@item.Id','@item.PackageName','@item.PriceDefault','@item.PackageSMS','@item.SMSPrice','@item.PackagePrice','@item.sPrice')">Add</a></th>
+                                        <th><a href="javascript:void(0)" class="btn-add-package add_@item.Id" onclick="AddDepositPackage(this,'@item.Id','@item.PackageName','@item.PriceDefault','@item.PackageSMS','@item.SMSPrice','@item.PackagePrice','@item.sPrice')">Add</a></th>
                                     </tr>
                                 }
                             }
@@ -106,7 +106,8 @@
 <script type="text/javascript">
     var Deposits = []
     function AddDepositPackage(that, PackageId, PackageName, PriceDefault, PackageSMS, SMSPrice, PackagePrice, sPrice) {
-        $(that).addClass("hidden")
+        //$(that).addClass("hidden")
+        $('.btn-add-package').addClass("hidden")
         $('.tfoot').removeClass('hidden')
         let PaymentId = $('#txtPayment').val()
         var isExits = Deposits.some((x) => x.PackageId === PackageId);
@@ -129,7 +130,8 @@
     }
 
     function removepackage(PackageId) {
-        $('.add_' + PackageId).removeClass('hidden')
+        //$('.add_' + PackageId).removeClass('hidden')
+        $('.btn-add-package').removeClass("hidden")
         $('.tr_' + PackageId).remove()
         var item = Deposits.find((x) => x.PackageId == PackageId);
         Deposits.splice($.inArray(item, Deposits), 1);
