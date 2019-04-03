@@ -55,9 +55,9 @@
                                         <a href="javascript:void(0)"
                                            onclick='ShowView("@Url.Action("Edit", "CMSSims", new { Id = item.Id })")'
                                            class="btn btn-info btn-xs edit details"><i class="fa fa-edit"></i>&nbsp;Edit</a>&nbsp;&nbsp;
-                                        <a href="javascript:void(0)"
+                                        @*<a href="javascript:void(0)"
                                            onclick='ShowView("@Url.Action("Delete","CMSSims",new { Id=item.Id})")'
-                                           class="btn btn-danger btn-xs delete details"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>
+                                           class="btn btn-danger btn-xs delete details"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>*@
                                     </td>
                                 </tr>
                             }
@@ -111,9 +111,9 @@
         "pageLength": 6,
         "columnDefs": [
             { "orderable": false, "targets": [0, 4] },
-            { "width": "8%", "targets": [0] },
-            { "width": "5%", "targets": [1, 2, 3] },
-            { "width": "20%", "targets": [4] },
+            { "width": "10%", "targets": [0] },
+            { "width": "8%", "targets": [1, 2, 3] },
+            { "width": "10%", "targets": [4] },
         ],
         "order": [
             [0, "asc"]
