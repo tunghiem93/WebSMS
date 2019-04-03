@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CMS_Entity;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -131,10 +132,10 @@ namespace CMS_Shared.Utilities
             return "0000";
         }
 
-        public static string RandomDepositNo()
-        {
-            return "No." + RandomVerifiCode();
-        }
+        //public static string RandomDepositNo()
+        //{
+        //    return "No." + RandomVerifiCode();
+        //}
 
         public static string GeneralPassword()
         {
@@ -152,6 +153,47 @@ namespace CMS_Shared.Utilities
             }
             catch (Exception) { }
             return null;
+        }
+
+        public static string RandomDepositNo()
+        {
+            string no = string.Empty;
+            try
+            {
+                using (var _db = new CMS_Context())
+                {
+                    int startNo = 1;
+                    string prefix = "No.";
+
+                    int nextNum = startNo;
+                    int currentNum = 0;
+                    string currentDepositNo = _db.CMS_DepositTransactions.Where(o => !string.IsNullOrEmpty(o.DepositNo)).OrderByDescending(o => o.DepositNo).Select(o => o.DepositNo).FirstOrDefault();
+                    if (!string.IsNullOrEmpty(currentDepositNo))
+                    {
+                        currentDepositNo = currentDepositNo.Replace(prefix, "");
+                        currentNum = int.Parse(currentDepositNo);
+                        if (currentNum >= startNo)
+                            nextNum = currentNum + 1;
+                    }
+
+                    if (nextNum.ToString().Length > 2)
+                        no = prefix + nextNum.ToString();
+                    else
+                        no = prefix + CreateStringLengthDigit(nextNum, 4);
+                }
+            }
+            catch { }
+            return no;
+        }
+
+        private static string CreateStringLengthDigit(int number, int length)
+        {
+            string result = number.ToString();
+            while (result.Length < length)
+            {
+                result = "0" + result;
+            }
+            return result;
         }
     }
 }
