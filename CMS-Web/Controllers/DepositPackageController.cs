@@ -42,7 +42,7 @@ namespace CMS_Web.Controllers
             var model = fac.GetList();
             model.ForEach(x =>
             {
-                x.sPrice = string.Format("{0:N0}", x.PriceDefault);
+                x.sPrice = x.PriceDefault.ToString();
             });
             ViewBag.Payment = facP.GetList().OrderBy(o=>o.PaymentType).ToList();
             return View(model);
@@ -59,10 +59,15 @@ namespace CMS_Web.Controllers
             {
                 var Priceobj = new PriceObjects();
                 Priceobj = await GetLastPrice(Payment.URLApi);
+                
                 if (Priceobj.last.HasValue)
-                    Coin = Priceobj.last;
+                {
+                    Coin = model[0].Price / Priceobj.last.Value;
+                }
                 else
-                    Coin = Priceobj.lastPrice;
+                {
+                    Coin = model[0].Price / Priceobj.lastPrice.Value;
+                }
             }
             model.ForEach(x =>
             {
@@ -115,7 +120,7 @@ namespace CMS_Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetPrice(string paymentId)
+        public async Task<ActionResult> GetPrice(string paymentId, decimal priceUSD)
         {
             var data = facP.GetDetail(paymentId);
             if (data != null)
@@ -140,9 +145,18 @@ namespace CMS_Web.Controllers
                 if(Priceobj.ScaleNumber > 0)
                 {
                     if(Priceobj.last.HasValue)
-                        Priceobj.tempPrice = string.Format("{0:N"+Priceobj.ScaleNumber+"}", Priceobj.last.Value);
+                    {
+                        var temp = priceUSD/Priceobj.last.Value;
+                        Priceobj.last = temp;
+                        Priceobj.tempPrice = string.Format("{0:N" + Priceobj.ScaleNumber + "}", Priceobj.last.Value);
+                    }
                     else
+                    {
+                        var temp = priceUSD / Priceobj.lastPrice.Value;
+                        Priceobj.lastPrice = temp;
                         Priceobj.tempPrice = string.Format("{0:N" + Priceobj.ScaleNumber + "}", Priceobj.lastPrice.Value);
+                    }
+                       
                 }
                 return Json(Priceobj, JsonRequestBehavior.AllowGet);
             } else

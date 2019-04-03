@@ -31,6 +31,7 @@ namespace CMS_DTO
         public string sStatus { get; set; }
         public string DepositNo { get; set; }
         public bool IsClose { get; set; }
+        public decimal Price { get; set; }
         public CMS_DepositTransactionsModel()
         {
             this.IsActive = true;
