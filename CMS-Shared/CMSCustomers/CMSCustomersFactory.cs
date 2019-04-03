@@ -199,11 +199,15 @@ namespace CMS_Shared.CMSCustomers
                         var e = cxt.CMS_Customers.Find(Id);
                         if (e != null)
                         {
-                            e.UpdatedBy = userID;
-                            e.UpdatedDate = DateTime.Now;
-                            e.IsActive = false;
-                            e.Status = (int)Commons.CustomerStatus.Locked;
+                            cxt.CMS_Customers.Remove(e);
                         }
+                        //if (e != null)
+                        //{
+                        //    e.UpdatedBy = userID;
+                        //    e.UpdatedDate = DateTime.Now;
+                        //    e.IsActive = false;
+                        //    e.Status = (int)Commons.CustomerStatus.Locked;
+                        //}
                         cxt.SaveChanges();
                         trans.Commit();
                     }
