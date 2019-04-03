@@ -25,7 +25,7 @@
                                 <th>Package Name</th>
                                 <th>SMS Package (credits)</th>
                                 <th>Package price (VND)</th>
-                                <th>Discount (%)</th>
+                                <th>Discount</th>
                                 <th>USD</th>
                                 <th>VND/SMS</th>
                                 <th></th>
@@ -46,7 +46,7 @@
                                         <th>@item.PackageName</th>
                                         <th>@string.Format("{0}", item.PackageSMS.ToString("#,0"))</th>
                                         <th>@string.Format("{0}", item.PackagePrice.ToString("#,0"))</th>
-                                        <th>@item.Discount</th>
+                                        <th>@item.Discount @Html.Raw("%")</th>
                                         <th>@item.PriceUSD</th>
                                         <th>@string.Format("{0}", item.SMSPrice.ToString("#,0"))</th>
                                         <th><a href="javascript:void(0)" class="btn-add-package add_@item.Id" onclick="AddDepositPackage(this,'@item.Id','@item.PackageName','@item.PriceDefault','@item.PackageSMS','@item.SMSPrice','@item.PackagePrice','@item.sPrice')">Add</a></th>
