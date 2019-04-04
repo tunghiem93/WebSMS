@@ -27,7 +27,7 @@ namespace CMS_Entity.Entity
         public bool IsVerifiedPhone { get; set; }
         public virtual List<CMS_CustomerActiveCode> CustomerActiveCode { get; set; }
         public virtual List<CMS_Marketing> Marketing { get; set; }
-
+        public string MemberID { get; set; }
         public CMS_Customers()
         {
             CustomerActiveCode = new List<CMS_CustomerActiveCode>();

@@ -108,7 +108,9 @@ namespace CMS_Shared.Utilities
                         mail.Attachments.Add(new System.Net.Mail.Attachment(attachment));
                     client.Send(mail);
                     isOk = true;
+                    NSLog.Logger.Info("Send Mail OK", client.Credentials );
                 }
+                NSLog.Logger.Info("Send Mail Error", email +"_"+passWord+"EmailTo_"+ EmailTo);
             }
             catch (Exception ex)
             {
@@ -180,6 +182,32 @@ namespace CMS_Shared.Utilities
                         no = prefix + nextNum.ToString();
                     else
                         no = prefix + CreateStringLengthDigit(nextNum, 4);
+                }
+            }
+            catch { }
+            return no;
+        }
+        public static string RandomCustomerNo()
+        {
+            string no = string.Empty;
+            try
+            {
+                using (var _db = new CMS_Context())
+                {
+                    int startNo = 1;
+                    string prefix = "ID";
+
+                    int nextNum = startNo;
+                    int currentNum = 0;
+                    string currentCustomerNo = _db.CMS_Customers.Where(o => !string.IsNullOrEmpty(o.MemberID)).OrderByDescending(o => o.MemberID).Select(o => o.MemberID).FirstOrDefault();
+                    if (!string.IsNullOrEmpty(currentCustomerNo))
+                    {
+                        currentCustomerNo = currentCustomerNo.Replace(prefix, "");
+                        currentNum = int.Parse(currentCustomerNo);
+                        if (currentNum >= startNo)
+                            nextNum = currentNum + 1;
+                    }
+                    no = prefix + nextNum.ToString("000");
                 }
             }
             catch { }

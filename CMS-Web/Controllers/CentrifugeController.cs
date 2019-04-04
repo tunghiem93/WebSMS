@@ -48,7 +48,7 @@ namespace CMS_Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult UpdateStatusSim(List<SimCentrifugoModels> model)
+        public JsonResult UpdateStatusSim(List<SimCentrifugoModels> model, string gsmName)
         {
             CMSSimsFactory _CMSSimsFactory = new CMSSimsFactory();
             int status = 0;
@@ -99,7 +99,7 @@ namespace CMS_Web.Controllers
                                 }
                             }
                         }
-
+                        item.name = string.Format("{0}-{1}", gsmName, item.name);
                         updateResult = _CMSSimsFactory.UpdateStatusSim(item.name, status, item.operatorName);
                     }
                 }

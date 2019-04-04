@@ -25,7 +25,7 @@ namespace CMS_Web.Areas.Admin.Controllers
         }
         public ActionResult LoadGrid()
         {
-            var model = _factory.GetList();
+            var model = _factory.GetList().OrderByDescending(x=>x.CreatedDate).ToList();
             return PartialView("_ListData", model);
         }
 

@@ -59,6 +59,7 @@ namespace CMS_DTO.CMSCustomer
         public string APIPass { get; set; }
         public bool IsVerifiedEmail { get; set; }
         public bool IsVerifiedPhone { get; set; }
+        public string MemberID { get; set; }
         public CustomerModels()
         {
             IsActive = true;

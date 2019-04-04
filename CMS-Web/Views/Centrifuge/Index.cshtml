@@ -50,33 +50,33 @@
         var callbacks = {
             "publish": function (message) {
                 // See below description of message format
-                console.log("publish")
+                console.log("publish");
                 console.log(message);
-                UpdateStatusSim(message.data.data)
+                UpdateStatusSim(message.data.data, message.data.from);
             },
             "join": function (message) {
                 // See below description of join message format
-                console.log("join")
+                console.log("join");
                 console.log(message);
             },
             "leave": function (message) {
                 // See below description of leave message format
-                console.log("leave")
+                console.log("leave");
                 console.log(message);
             },
             "subscribe": function (context) {
                 // See below description of subscribe callback context format
-                console.log("subscribe")
+                console.log("subscribe");
                 console.log(context);
             },
             "error": function (errContext) {
                 // See below description of subscribe error callback context format
-                console.log("error")
+                console.log("error");
                 console.log(errContext);
             },
             "unsubscribe": function (context) {
                 // See below description of unsubscribe event callback context format
-                console.log("unsubscribe")
+                console.log("unsubscribe");
                 console.log(context);
             }
         }
@@ -105,19 +105,19 @@
             encodedSource = encodedSource.replace(/\//g, '_');
             return encodedSource;
         }
-        function UpdateStatusSim(data) {
+        function UpdateStatusSim(data,gsmName) {
             if (data != null) {
                 $.ajax({
                 url: '@Url.Action("UpdateStatusSim", "Centrifuge")',
                 type: "post",
-                data: { model: data },
+                    data: { model: data, gsmName: gsmName},
                     success: function (result) {
-                        console.log("Update Status Success!")
-                        console.log(result)
+                        console.log("Update Status Success!");
+                        console.log(result);
                 },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        console.log("Update Status Error!")
-                        console.log(errorThrown)
+                        console.log("Update Status Error!");
+                        console.log(errorThrown);
                 }
             })
             }

@@ -29,6 +29,7 @@ namespace CMS_Entity.Mapping
             this.Property(x => x.IsVerifiedEmail).IsOptional();
             this.Property(x => x.IsVerifiedPhone).IsOptional();
             this.Property(x => x.SMSBalances).IsOptional();
+            this.Property(x => x.MemberID).HasColumnType("varchar").HasMaxLength(100).IsOptional();
         }
     }
 }

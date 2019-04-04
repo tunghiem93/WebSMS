@@ -20,14 +20,14 @@ namespace CMS_Shared.CMSCustomers
                 {
                     try
                     {
-                        var CheckEmail = cxt.CMS_Customers.Any(x => x.Email == model.Email);
+                        var CheckEmail = cxt.CMS_Customers.Any(x => x.Email == model.Email && x.IsActive);
                         if (CheckEmail)
                         {
                             msg = "E-mail is exits system";
                             key = "Email";
                             return false;
                         }
-                        var CheckPhone = cxt.CMS_Customers.Any(x => x.Phone == model.Phone);
+                        var CheckPhone = cxt.CMS_Customers.Any(x => x.Phone == model.Phone && x.IsActive);
                         if (CheckPhone)
                         {
                             msg = "Phone is exits system";
@@ -52,7 +52,8 @@ namespace CMS_Shared.CMSCustomers
                                 Phone = model.Phone,
                                 UpdatedBy = model.UpdatedBy,
                                 UpdatedDate = DateTime.Now,
-                                Status = model.Status
+                                Status = model.Status,
+                                MemberID = CommonHelper.RandomCustomerNo()
                             };
                             e.CustomerActiveCode.Add(new CMS_CustomerActiveCode
                             {
@@ -108,13 +109,13 @@ namespace CMS_Shared.CMSCustomers
                 {
                     try
                     {
-                        var CheckEmail = cxt.CMS_Customers.Any(x => x.Email == model.Email && x.Id != model.ID);
+                        var CheckEmail = cxt.CMS_Customers.Any(x => x.Email == model.Email && x.Id != model.ID && x.IsActive);
                         if (CheckEmail)
                         {
                             msg = "E-mail is exits system";
                             return false;
                         }
-                        var CheckPhone = cxt.CMS_Customers.Any(x => x.Phone == model.Phone && x.Id != model.ID);
+                        var CheckPhone = cxt.CMS_Customers.Any(x => x.Phone == model.Phone && x.Id != model.ID && x.IsActive);
                         if (CheckPhone)
                         {
                             msg = "Phone is exits system";
@@ -145,7 +146,8 @@ namespace CMS_Shared.CMSCustomers
                                 UpdatedDate = DateTime.Now,
                                 CreatedBy = model.CreatedBy,
                                 CreatedDate = DateTime.Now,
-                                
+                                MemberID = CommonHelper.RandomCustomerNo()
+
                             };
                             cxt.CMS_Customers.Add(e);
                         }
@@ -199,15 +201,13 @@ namespace CMS_Shared.CMSCustomers
                         var e = cxt.CMS_Customers.Find(Id);
                         if (e != null)
                         {
-                            cxt.CMS_Customers.Remove(e);
+                            e.UpdatedBy = userID;
+                            e.UpdatedDate = DateTime.Now;
+                            e.IsActive = false;
+                            e.Email = "(DELETED)";
+                            e.Phone = "(PDELETED)";
+                            e.Status = (int)Commons.CustomerStatus.Locked;
                         }
-                        //if (e != null)
-                        //{
-                        //    e.UpdatedBy = userID;
-                        //    e.UpdatedDate = DateTime.Now;
-                        //    e.IsActive = false;
-                        //    e.Status = (int)Commons.CustomerStatus.Locked;
-                        //}
                         cxt.SaveChanges();
                         trans.Commit();
                     }
@@ -254,7 +254,8 @@ namespace CMS_Shared.CMSCustomers
                                                     SMSBalances = x.SMSBalances,
                                                     TotalCredit = x.TotalCredit,
                                                     UpdatedBy = x.UpdatedBy,
-                                                    UpdatedDate = x.UpdatedDate
+                                                    UpdatedDate = x.UpdatedDate,
+                                                    MemberID =x.MemberID
                                                 }).FirstOrDefault();
                     return data;
                 }
@@ -289,7 +290,8 @@ namespace CMS_Shared.CMSCustomers
                         SMSBalances = x.SMSBalances,
                         TotalCredit = x.TotalCredit,
                         UpdatedBy = x.UpdatedBy,
-                        UpdatedDate = x.UpdatedDate
+                        UpdatedDate = x.UpdatedDate,
+                        MemberID=x.MemberID
                     }).OrderByDescending(o=>o.CreatedDate).ToList();
                     return data;
                 }

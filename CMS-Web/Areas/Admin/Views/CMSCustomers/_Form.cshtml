@@ -12,7 +12,17 @@
         <div class="form-group">
             <label class="col-md-6 col-sm-6 col-xs-12 text-danger text-center">@Html.ValidationMessage("ErrorMessage")</label>
         </div>
-        
+        @if (Model.ID != null)
+        {
+            <div class="form-group">
+                <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">ID</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.MemberID, new { @class = "form-control", @disabled = "disabled", @placeholder = "ID", @autocomplete = "off" })
+                    @Html.HiddenFor(model => model.MemberID)
+                </div>
+            </div>
+        }
+
         <div class="form-group">
             <label class="control-label col-md-2 col-sm-2 col-xs-12 fontLighter">First Name</label>
             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -80,12 +90,12 @@
             </div>
         </div>
         @*<div class="form-group">
-            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Is Authenticated</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                @Html.TextBoxFor(model => model.IsAuthenticated, new { @class = "form-control", @placeholder = "Is Authenticated", @autocomplete = "off" })
-                @Html.ValidationMessageFor(model => model.IsAuthenticated, null, new { @class = "label label-danger" })
-            </div>
-        </div>*@
+                <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Is Authenticated</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.IsAuthenticated, new { @class = "form-control", @placeholder = "Is Authenticated", @autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.IsAuthenticated, null, new { @class = "label label-danger" })
+                </div>
+            </div>*@
         <div class="form-group">
             <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">SMS Balances</label>
             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -133,5 +143,5 @@
             placeholder: "Status",
             //allowClear: true
         });
-    });    
+    });
 </script>
