@@ -159,7 +159,7 @@ namespace CMS_Shared.CMSEmployees
                         PriceUSD =  usdRate != 0 ? (x.Discount != 0 ? ((x.PackageSMS * smsRate ) * (x.Discount / 100)) / usdRate : (x.PackageSMS * smsRate)/ usdRate) : 0,
                         //PriceDefault = pmRate == 0 ? 0 : usdRate/ pmRate,
                         PriceDefault = usdRate != 0 ? (x.Discount != 0 ? ((x.PackageSMS * smsRate) * (x.Discount / 100)) / usdRate : (x.PackageSMS * smsRate) / usdRate) : 0,
-                    }).ToList();
+                    }).OrderBy(o=>o.PackageSMS).ToList();
                     return data;
                 }
             }

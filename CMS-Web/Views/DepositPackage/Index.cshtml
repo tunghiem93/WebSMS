@@ -17,16 +17,16 @@
     <div class="container">
         <div class="panel panel-primary">
             <div class="panel-heading" style="background:#2B3441 !important">Packages Plan</div>
-            <div class="panel-body">
+            <div class="panel-body" style="padding-top: 0px !important;">
                 <div class="row">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>Package Name</th>
-                                <th>SMS Package (credits)</th>
-                                <th>Package price (VND)</th>
+                                <th>SMS Package</th>
+                                <th>Package price</th>
                                 <th>Discount</th>
-                                <th>USD</th>
+                                <th>Price</th>
                                 <th>VND/SMS</th>
                                 <th></th>
                             </tr>
@@ -43,13 +43,13 @@
                                 foreach (var item in Model)
                                 {
                                     <tr>
-                                        <th>@item.PackageName</th>
-                                        <th>@string.Format("{0}", item.PackageSMS.ToString("#,0"))</th>
-                                        <th>@string.Format("{0}", item.PackagePrice.ToString("#,0"))</th>
-                                        <th>@item.Discount @Html.Raw("%")</th>
-                                        <th>@item.PriceUSD</th>
-                                        <th>@string.Format("{0}", item.SMSPrice.ToString("#,0"))</th>
-                                        <th><a href="javascript:void(0)" class="btn-add-package add_@item.Id" onclick="AddDepositPackage(this,'@item.Id','@item.PackageName','@item.PriceDefault','@item.PackageSMS','@item.SMSPrice','@item.PackagePrice','@item.sPrice')">Add</a></th>
+                                        <td>@item.PackageName</td>
+                                        <td>@string.Format("{0} {1}", item.PackageSMS.ToString("#,0"), "credits")</td>
+                                        <td>@string.Format("{0} {1}", item.PackagePrice.ToString("#,0"), "VND")</td>
+                                        <td>@item.Discount @Html.Raw("%")</td>
+                                        <td>@item.PriceUSD @Html.Raw(" USD")</td>
+                                        <td>@string.Format("{0}", item.SMSPrice.ToString("#,0"))</td>
+                                        <td><a href="javascript:void(0)" class="btn-add-package add_@item.Id" onclick="AddDepositPackage(this,'@item.Id','@item.PackageName','@item.PriceDefault','@item.PackageSMS','@item.SMSPrice','@item.PackagePrice','@item.sPrice')">Add</a></td>
                                     </tr>
                                 }
                             }
@@ -62,7 +62,7 @@
 
         <div class="panel panel-primary">
             <div class="panel-heading" style="background:#2B3441 !important">Deposit Now</div>
-            <div class="panel-body">
+            <div class="panel-body" style="padding-top: 0px !important;">
                 <div class="row">
                     <table class="table table-bordered">
                         <thead>
@@ -72,7 +72,8 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody id="tbodydeposite"></tbody>
+                        <tbody id="tbodydeposite">
+                        </tbody>
                         <tfoot class="hidden tfoot">
                             <tr>
                                 <td colspan="2" style="text-align:right">Choose your payment</td>
@@ -156,7 +157,7 @@
             let _PayCoin = parseInt(x.PayCoin) > 0 ? numeral(x.PayCoin).format('0,00000000') : x.PayCoin
             html += "<tr class='tr_" + x.PackageId + "'>";
             html += "<td>" + x.PackageName + "</td>";
-            html += "<td>" + x.tempPrice + "</td>";
+            html += "<td>" + x.tempPrice + "USD" + "</td>";
             html += "<td> <a href='javascript:void(0)' class='remove_" + x.PackageId + "' onclick='removepackage(\"" + x.PackageId + "\")'> Remove </a> </td>";
             html += "</tr>";
         })
