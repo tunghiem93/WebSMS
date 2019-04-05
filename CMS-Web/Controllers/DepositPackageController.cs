@@ -133,6 +133,7 @@ namespace CMS_Web.Controllers
                     var ratePMUSD = lstDataSys.Where(o => o.ValueType.Equals((int)Commons.ConfigType.PMUSD)).Select(o => o.Value).FirstOrDefault();
                     Priceobj.lastPrice = rateUSD / ratePMUSD;
                     Priceobj.tempPrice = string.Format("{0:N0}", Priceobj.lastPrice);
+                    Priceobj.PaymentName = !string.IsNullOrEmpty(data.PaymentName) ? data.PaymentName : "PM";
                     return Json(Priceobj, JsonRequestBehavior.AllowGet);
                 }
             }            
@@ -142,7 +143,8 @@ namespace CMS_Web.Controllers
                 var Priceobj = new PriceObjects();
                 Priceobj = await GetLastPrice(URLApi.URLApi);
                 Priceobj.ScaleNumber = URLApi.ScaleNumber.HasValue ? URLApi.ScaleNumber.Value : 0;
-                if(Priceobj.ScaleNumber > 0)
+                Priceobj.PaymentName = !string.IsNullOrEmpty(data.PaymentName) ? data.PaymentName : "";
+                if (Priceobj.ScaleNumber > 0)
                 {
                     if(Priceobj.last.HasValue)
                     {
@@ -155,8 +157,7 @@ namespace CMS_Web.Controllers
                         var temp = priceUSD / Priceobj.lastPrice.Value;
                         Priceobj.lastPrice = temp;
                         Priceobj.tempPrice = string.Format("{0:N" + Priceobj.ScaleNumber + "}", Priceobj.lastPrice.Value);
-                    }
-                       
+                    }                       
                 }
                 return Json(Priceobj, JsonRequestBehavior.AllowGet);
             } else

@@ -105,8 +105,12 @@
 </div>
 <div class="detail-view"></div>
 <script type="text/javascript">
+    var priceDefault = 0;
     var Deposits = []
+    var DepositsPay = []
     function AddDepositPackage(that, PackageId, PackageName, PriceDefault, PackageSMS, SMSPrice, PackagePrice, sPrice) {
+        debugger;
+        priceDefault = PriceDefault;
         //$(that).addClass("hidden")
         $('.btn-add-package').addClass("hidden")
         $('.tfoot').removeClass('hidden')
@@ -122,18 +126,33 @@
                 SMSPrice: SMSPrice,
                 PackagePrice: PackagePrice,
                 PaymentMethodId: null,
+                PaymentName: "USD",
+                PaymentNameDefault: "USD",
                 sPrice: sPrice,
                 sTempPrice: sPrice,
                 tempPrice: sPrice
             });
         }
-        GetPriceFromApi(PaymentId)
+        //GetPriceFromApi(PaymentId)
+        var html = "";
+        Deposits.forEach((x) => {
+            let _PayCoin = parseInt(x.PayCoin) > 0 ? numeral(x.PayCoin).format('0,00000000') : x.PayCoin
+            html += "<tr class='tr_price_default" + x.PackageId + "'>";
+            html += "<td>" + x.PackageName + "</td>";
+            html += "<td>" + x.Price + " " + x.PaymentName + "</td>";
+            html += "<td> <a href='javascript:void(0)' class='remove_" + x.PackageId + "' onclick='removepackage(\"" + x.PackageId + "\")'> Remove </a> </td>";
+            html += "</tr>";
+        })
+        debugger;
+        DepositsPay = Deposits;
+        $('[id=tbodydeposite]').html(html)
     }
 
     function removepackage(PackageId) {
         //$('.add_' + PackageId).removeClass('hidden')
         $('.btn-add-package').removeClass("hidden")
-        $('.tr_' + PackageId).remove()
+        $('.tr_price_default' + PackageId).remove()
+        $('.tr_price_payment' + PackageId).remove()
         var item = Deposits.find((x) => x.PackageId == PackageId);
         Deposits.splice($.inArray(item, Deposits), 1);
         if (Deposits.length === 0) {
@@ -155,10 +174,18 @@
         var html = "";
         Deposits.forEach((x) => {
             let _PayCoin = parseInt(x.PayCoin) > 0 ? numeral(x.PayCoin).format('0,00000000') : x.PayCoin
-            html += "<tr class='tr_" + x.PackageId + "'>";
+            html += "<tr class='tr_price_default" + x.PackageId + "'>";
             html += "<td>" + x.PackageName + "</td>";
-            html += "<td>" + x.tempPrice + "USD" + "</td>";
+            html += "<td>" + x.Price + " " + x.PaymentNameDefault + "</td>";
             html += "<td> <a href='javascript:void(0)' class='remove_" + x.PackageId + "' onclick='removepackage(\"" + x.PackageId + "\")'> Remove </a> </td>";
+            html += "</tr>";
+        })
+        DepositsPay.forEach((x) => {
+            let _PayCoin = parseInt(x.PayCoin) > 0 ? numeral(x.PayCoin).format('0,00000000') : x.PayCoin
+            html += "<tr class='tr_price_payment" + x.PackageId + "'>";
+            html += "<td colspan=" + "2" + ">" + "You have to pay: " + x.tempPrice + " " + x.PaymentName + "</td>";
+            //html += "<td>" + x.tempPrice + " " + x.type + "</td>";
+            //html += "<td> <a href='javascript:void(0)' class='remove_" + x.PackageId + "' onclick='removepackage(\"" + x.PackageId + "\")'> Remove </a> </td>";
             html += "</tr>";
         })
         $('[id=tbodydeposite]').html(html)
@@ -168,7 +195,7 @@
         debugger;
         var paymentIdObj = '@Payments.Find((x) => x.ReferenceExchange == (int)Commons.ExchangeType.None).Id';
         var payCoin = 0;
-        Deposits.forEach(x => {
+        DepositsPay.forEach(x => {
             payCoin += x.PayCoin;
         });
         if (paymentIdObj == $('#txtPayment').val()) {
@@ -181,7 +208,7 @@
                 },
                 url: '@Url.Action("PayNow", "DepositPackage")',
                 type: "post",
-                data: { model: Deposits },
+                data: { model: DepositsPay },
                 success: function (data) {
                     if (data.status) {
                         location.href = "@Url.Action("Index","DepositOrder")";
@@ -197,28 +224,34 @@
     }
 
     function GetPriceFromApi(paymentId) {
+        debugger;
         $.ajax({
             beforeSend: function () {
                 $('#site-loader').show()
             },
             url: '@Url.Action("GetPrice", "DepositPackage")',
             type: "post",
-            data: { paymentId: paymentId, priceUSD: Deposits[0].PayCoin },
+            data: { paymentId: paymentId, priceUSD: priceDefault },
             dataType: "json",
             success: function (data) {
                 if (data !== undefined || data !== null) {
                     if (data.Status !== 0) {
-                        Deposits.forEach((x) => {
+                        debugger;
+                        DepositsPay.forEach((x) => {
+                            debugger;
                             x.PayCoin = data.lastPrice || data.last || 0;
-                            x.PaymentMethodId = paymentId
+                            x.PaymentMethodId = paymentId;
+                            x.PaymentName = data.PaymentName;
                             x.sPrice = data.lastPrice || data.last || 0;
                             x.ScaleNumber = data.ScaleNumber;
                             x.tempPrice = data.tempPrice;
                         });
                     } else {
-                        Deposits.forEach((x) => {
+                        DepositsPay.forEach((x) => {
+                            debugger;
                             x.PayCoin = x.Price;
                             x.PaymentMethodId = paymentId;
+                            x.PaymentName = data.PaymentName;
                             x.sPrice = x.sTempPrice;
                             x.ScaleNumber = 0;
                             x.tempPrice = x.sTempPrice
