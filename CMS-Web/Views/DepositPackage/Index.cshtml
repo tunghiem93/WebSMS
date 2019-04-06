@@ -109,7 +109,6 @@
     var Deposits = []
     var DepositsPay = []
     function AddDepositPackage(that, PackageId, PackageName, PriceDefault, PackageSMS, SMSPrice, PackagePrice, sPrice) {
-        debugger;
         priceDefault = PriceDefault;
         //$(that).addClass("hidden")
         $('.btn-add-package').addClass("hidden")
@@ -143,7 +142,6 @@
             html += "<td> <a href='javascript:void(0)' class='remove_" + x.PackageId + "' onclick='removepackage(\"" + x.PackageId + "\")'> Remove </a> </td>";
             html += "</tr>";
         })
-        debugger;
         DepositsPay = Deposits;
         $('[id=tbodydeposite]').html(html)
     }
@@ -192,7 +190,6 @@
     }
 
     function PayNow() {
-        debugger;
         var paymentIdObj = '@Payments.Find((x) => x.ReferenceExchange == (int)Commons.ExchangeType.None).Id';
         var payCoin = 0;
         DepositsPay.forEach(x => {
@@ -224,7 +221,6 @@
     }
 
     function GetPriceFromApi(paymentId) {
-        debugger;
         $.ajax({
             beforeSend: function () {
                 $('#site-loader').show()
@@ -236,9 +232,7 @@
             success: function (data) {
                 if (data !== undefined || data !== null) {
                     if (data.Status !== 0) {
-                        debugger;
                         DepositsPay.forEach((x) => {
-                            debugger;
                             x.PayCoin = data.lastPrice || data.last || 0;
                             x.PaymentMethodId = paymentId;
                             x.PaymentName = data.PaymentName;
@@ -248,7 +242,6 @@
                         });
                     } else {
                         DepositsPay.forEach((x) => {
-                            debugger;
                             x.PayCoin = x.Price;
                             x.PaymentMethodId = paymentId;
                             x.PaymentName = data.PaymentName;

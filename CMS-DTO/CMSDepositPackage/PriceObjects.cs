@@ -18,6 +18,7 @@ namespace CMS_DTO.CMSDepositPackage
         public Bittrex result { get; set; }
         public int ScaleNumber { get; set; }
         public string tempPrice { get; set; }
+        public string PaymentName { get; set; }
     }
 
     public class Bittrex
