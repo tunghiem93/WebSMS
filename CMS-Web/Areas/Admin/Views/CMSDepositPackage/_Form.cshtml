@@ -18,10 +18,18 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Package SMS</label>
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Package Credits</label>
             <div class="col-md-6 col-sm-6 col-xs-12">
                 @Html.TextBoxFor(model => model.PackageSMS, new { @class = "form-control", @placeholder = "Package SMS", @autocomplete = "off" })
                 @Html.ValidationMessageFor(model => model.PackageSMS, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Rate SMS (vnd)</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.RateSMS, new { @class = "form-control", @disabled = "disabled", @placeholder = "Package SMS", @autocomplete = "off", })
+                @Html.ValidationMessageFor(model => model.RateSMS, null, new { @class = "label label-danger" })
             </div>
         </div>
 
@@ -43,7 +51,7 @@
         <div class="form-group">
             <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Package Price For Discount </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-                @Html.TextBox("PackagePriceDiscount","", new { @class = "form-control", @placeholder = "Package Price For Discount", @autocomplete = "off", @disabled = "disabled" })
+                @Html.TextBox("PackagePriceDiscount", "", new { @class = "form-control", @placeholder = "Package Price For Discount", @autocomplete = "off", @disabled = "disabled" })
             </div>
         </div>
         <div class="form-group">
