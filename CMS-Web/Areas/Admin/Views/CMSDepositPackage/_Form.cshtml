@@ -5,7 +5,8 @@
     Html.EnableUnobtrusiveJavaScript(true);
     var _ID = Model.Id;
 }
-@Html.HiddenFor(model =>model.Id)
+@Html.HiddenFor(model => model.Id)
+@Html.HiddenFor(model => model.RateUSD)
 <div class="row form-horizontal form-label-left" style="margin-bottom:15px;">
     @*Image*@
     <fieldset>
@@ -49,9 +50,15 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Package Price For Discount </label>
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Package Price affter Discount(vnd) </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
                 @Html.TextBox("PackagePriceDiscount", "", new { @class = "form-control", @placeholder = "Package Price For Discount", @autocomplete = "off", @disabled = "disabled" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Package Price affter Discount(usd) </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBox("PackagePriceDiscountUsd", "", new { @class = "form-control", @placeholder = "Package Price For Discount", @autocomplete = "off", @disabled = "disabled" })
             </div>
         </div>
         <div class="form-group">
@@ -90,6 +97,7 @@
         var packageSMS = parseFloat($(this).val());
         if ($.isNumeric(packageSMS)) {
             $("#PackagePriceDiscount").val(calPackagePriceDiscount());
+            $("#PackagePriceDiscountUsd").val(calPackagePriceDiscount());
         }
     })
     function calPackagePrice() {
@@ -98,9 +106,10 @@
         return smsRate * packageSMS;
     }
     function calPackagePriceDiscount() {
+        var PackagePrice = parseFloat($("#PackagePrice").val());
         var smsRate = parseFloat($("#RateSMS").val());
         var packageSMS = parseFloat($("#PackageSMS").val());
         var discount = parseFloat($("#Discount").val());
-        return (smsRate * packageSMS) - (smsRate * packageSMS * discount);
+        return Math.round((smsRate * packageSMS) - (smsRate * packageSMS * discount / 100), 2);
     }
 </script>

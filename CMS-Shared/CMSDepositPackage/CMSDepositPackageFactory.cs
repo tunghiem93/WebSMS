@@ -110,6 +110,7 @@ namespace CMS_Shared.CMSEmployees
                 using (var cxt = new CMS_Context())
                 {
                     decimal smsRate = GetSMSRate(cxt);
+                    decimal usdRate = GetUSDRate(cxt);
                     var data = cxt.CMS_DepositPackage.Where(x => x.Id.Equals(Id))
                                                 .Select(x => new CMS_DepositPackageModel
                                                 {
@@ -118,6 +119,7 @@ namespace CMS_Shared.CMSEmployees
                                                     PackageSMS = x.PackageSMS,
                                                     PackagePrice = x.PackageSMS * smsRate,
                                                     RateSMS = smsRate,
+                                                    RateUSD = usdRate,
                                                     Discount = x.Discount,
                                                     SMSPrice = x.SMSPrice,
                                                     IsActive = x.IsActive,
