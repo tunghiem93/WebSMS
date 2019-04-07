@@ -52,13 +52,13 @@
         <div class="form-group">
             <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Package Price affter Discount(vnd) </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-                @Html.TextBox("PackagePriceDiscount", "", new { @class = "form-control", @placeholder = "Package Price For Discount", @autocomplete = "off", @disabled = "disabled" })
+                @Html.TextBox("PackagePriceDiscountVnd", "", new { @class = "form-control", @placeholder = "Package Price Affter Discount(vnd)", @autocomplete = "off", @disabled = "disabled" })
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">Package Price affter Discount(usd) </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-                @Html.TextBox("PackagePriceDiscountUsd", "", new { @class = "form-control", @placeholder = "Package Price For Discount", @autocomplete = "off", @disabled = "disabled" })
+                @Html.TextBox("PackagePriceDiscountUsd", "", new { @class = "form-control", @placeholder = "Package Price Affter Discount(usd)", @autocomplete = "off", @disabled = "disabled" })
             </div>
         </div>
         <div class="form-group">
@@ -84,20 +84,24 @@
     var id = $("#Id").val();
     if (id != "") {
         $("#PackagePrice").val(calPackagePrice());
-        $("#PackagePriceDiscount").val(calPackagePriceDiscount());
+        $("#PackagePriceDiscountVnd").val(calPackagePriceDiscountVnd());
+        $("#PackagePriceDiscountUsd").val(calPackagePriceDiscountUsd());
+        $("#SMSPrice").val(calSMSPrice());
     }
     $("#PackageSMS").on("change", function () {
         var packageSMS = parseFloat($(this).val());
         if ($.isNumeric(packageSMS)) {
             $("#PackagePrice").val(calPackagePrice());
-            $("#PackagePriceDiscount").val(calPackagePriceDiscount());
+            $("#PackagePriceDiscountVnd").val(calPackagePriceDiscountVnd());
+            $("#PackagePriceDiscountUsd").val(calPackagePriceDiscountUsd());
         }
     })
     $("#Discount").on("change", function () {
         var packageSMS = parseFloat($(this).val());
         if ($.isNumeric(packageSMS)) {
-            $("#PackagePriceDiscount").val(calPackagePriceDiscount());
-            $("#PackagePriceDiscountUsd").val(calPackagePriceDiscount());
+            $("#PackagePriceDiscountVnd").val(calPackagePriceDiscountVnd());
+            $("#PackagePriceDiscountUsd").val(calPackagePriceDiscountUsd());
+            $("#SMSPrice").val(calSMSPrice());
         }
     })
     function calPackagePrice() {
@@ -105,11 +109,25 @@
         var packageSMS = parseFloat($("#PackageSMS").val());
         return smsRate * packageSMS;
     }
-    function calPackagePriceDiscount() {
+    function calPackagePriceDiscountVnd() {
         var PackagePrice = parseFloat($("#PackagePrice").val());
         var smsRate = parseFloat($("#RateSMS").val());
         var packageSMS = parseFloat($("#PackageSMS").val());
         var discount = parseFloat($("#Discount").val());
-        return Math.round((smsRate * packageSMS) - (smsRate * packageSMS * discount / 100), 2);
+        var rateUsd = parseFloat($("#RateUSD").val());
+        return (((smsRate * packageSMS) - (smsRate * packageSMS * discount / 100))*1000).toFixed(2);
+    }
+    function calPackagePriceDiscountUsd() {
+        var PackagePrice = parseFloat($("#PackagePrice").val());
+        var smsRate = parseFloat($("#RateSMS").val());
+        var packageSMS = parseFloat($("#PackageSMS").val());
+        var discount = parseFloat($("#Discount").val());
+        var rateUsd = parseFloat($("#RateUSD").val());
+        return ((((smsRate * packageSMS) - (smsRate * packageSMS * discount / 100)) / rateUsd)*1000).toFixed(2);
+    }
+    function calSMSPrice() {
+        var smsRate = parseFloat($("#RateSMS").val());
+        var discount = parseFloat($("#Discount").val());
+        return (smsRate - (discount * discount / 100)).toFixed(2);
     }
 </script>

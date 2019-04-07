@@ -46,8 +46,8 @@
                                         <td>@item.PackageName</td>
                                         <td>@string.Format("{0} {1}", item.PackageSMS.ToString("#,0"), "credits")</td>
                                         <td>@string.Format("{0} {1}", item.PackagePrice.ToString("#,0"), "VND")</td>
-                                        <td>@item.Discount @Html.Raw("%")</td>
-                                        <td>@item.PriceUSD @Html.Raw(" USD")</td>
+                                        <td>@string.Format("{0}", Math.Round(item.Discount, 2)) @Html.Raw("%")</td>
+                                        <td>@string.Format("{0}", Math.Round(item.PriceUSD, 2)) @Html.Raw(" USD")</td>
                                         <td>@string.Format("{0}", item.SMSPrice.ToString("#,0"))</td>
                                         <td><a href="javascript:void(0)" class="btn-add-package add_@item.Id" onclick="AddDepositPackage(this,'@item.Id','@item.PackageName','@item.PriceDefault','@item.PackageSMS','@item.SMSPrice','@item.PackagePrice','@item.sPrice')">Add</a></td>
                                     </tr>
@@ -138,7 +138,7 @@
             let _PayCoin = parseInt(x.PayCoin) > 0 ? numeral(x.PayCoin).format('0,00000000') : x.PayCoin
             html += "<tr class='tr_price_default" + x.PackageId + "'>";
             html += "<td>" + x.PackageName + "</td>";
-            html += "<td>" + x.Price + " " + x.PaymentName + "</td>";
+            html += "<td>" + parseFloat(x.Price).toFixed(2) + " " + x.PaymentName + "</td>";
             html += "<td> <a href='javascript:void(0)' class='remove_" + x.PackageId + "' onclick='removepackage(\"" + x.PackageId + "\")'> Remove </a> </td>";
             html += "</tr>";
         })
@@ -174,14 +174,14 @@
             let _PayCoin = parseInt(x.PayCoin) > 0 ? numeral(x.PayCoin).format('0,00000000') : x.PayCoin
             html += "<tr class='tr_price_default" + x.PackageId + "'>";
             html += "<td>" + x.PackageName + "</td>";
-            html += "<td>" + x.Price + " " + x.PaymentNameDefault + "</td>";
+            html += "<td>" + parseFloat(x.Price).toFixed(2) + " " + x.PaymentNameDefault + "</td>";
             html += "<td> <a href='javascript:void(0)' class='remove_" + x.PackageId + "' onclick='removepackage(\"" + x.PackageId + "\")'> Remove </a> </td>";
             html += "</tr>";
         })
         DepositsPay.forEach((x) => {
             let _PayCoin = parseInt(x.PayCoin) > 0 ? numeral(x.PayCoin).format('0,00000000') : x.PayCoin
             html += "<tr class='tr_price_payment" + x.PackageId + "'>";
-            html += "<td colspan=" + "2" + ">" + "You have to pay: " + x.tempPrice + " " + x.PaymentName + "</td>";
+            html += "<td colspan=" + "2" + ">" + "You have to pay: " + parseFloat(x.tempPrice).toFixed(2) + " " + x.PaymentName + "</td>";
             //html += "<td>" + x.tempPrice + " " + x.type + "</td>";
             //html += "<td> <a href='javascript:void(0)' class='remove_" + x.PackageId + "' onclick='removepackage(\"" + x.PackageId + "\")'> Remove </a> </td>";
             html += "</tr>";
@@ -227,7 +227,7 @@
             },
             url: '@Url.Action("GetPrice", "DepositPackage")',
             type: "post",
-            data: { paymentId: paymentId, priceUSD: priceDefault },
+            data: { paymentId: paymentId, priceUSD: priceDefault.toFixed(2) },
             dataType: "json",
             success: function (data) {
                 if (data !== undefined || data !== null) {

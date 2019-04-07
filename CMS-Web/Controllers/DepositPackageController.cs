@@ -129,10 +129,9 @@ namespace CMS_Web.Controllers
                 {
                     var lstDataSys = facS.GetList();
                     var Priceobj = new PriceObjects();
-                    var rateUSD = lstDataSys.Where(o => o.ValueType.Equals((int)Commons.ConfigType.USD)).Select(o => o.Value).FirstOrDefault();
                     var ratePMUSD = lstDataSys.Where(o => o.ValueType.Equals((int)Commons.ConfigType.PMUSD)).Select(o => o.Value).FirstOrDefault();
-                    Priceobj.lastPrice = rateUSD / ratePMUSD;
-                    Priceobj.tempPrice = string.Format("{0:N0}", Priceobj.lastPrice);
+                    Priceobj.lastPrice = priceUSD / ratePMUSD;
+                    Priceobj.tempPrice = Math.Round(Priceobj.lastPrice.Value, 2).ToString();
                     Priceobj.PaymentName = !string.IsNullOrEmpty(data.PaymentName) ? data.PaymentName : "PM";
                     return Json(Priceobj, JsonRequestBehavior.AllowGet);
                 }
