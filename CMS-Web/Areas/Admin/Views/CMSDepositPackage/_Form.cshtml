@@ -64,7 +64,7 @@
         <div class="form-group">
             <label class="control-label col-md-2 col-sm-2 col-xs-12 lineHeight fontLighter">SMS Price</label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-                @Html.TextBoxFor(model => model.SMSPrice, new { @class = "form-control", @placeholder = "SMSPrice", @autocomplete = "off" })
+                @Html.TextBoxFor(model => model.SMSPrice, new { @class = "form-control", @placeholder = "SMSPrice", @autocomplete = "off", @disabled = "disabled" })
                 @Html.ValidationMessageFor(model => model.SMSPrice, null, new { @class = "label label-danger" })
             </div>
         </div>
@@ -115,19 +115,21 @@
         var packageSMS = parseFloat($("#PackageSMS").val());
         var discount = parseFloat($("#Discount").val());
         var rateUsd = parseFloat($("#RateUSD").val());
-        return (((smsRate * packageSMS) - (smsRate * packageSMS * discount / 100))*1000).toFixed(2);
+        return (((smsRate * packageSMS) - (smsRate * packageSMS * discount / 100))).toFixed(2);
     }
     function calPackagePriceDiscountUsd() {
+        debugger;
         var PackagePrice = parseFloat($("#PackagePrice").val());
         var smsRate = parseFloat($("#RateSMS").val());
         var packageSMS = parseFloat($("#PackageSMS").val());
         var discount = parseFloat($("#Discount").val());
         var rateUsd = parseFloat($("#RateUSD").val());
-        return ((((smsRate * packageSMS) - (smsRate * packageSMS * discount / 100)) / rateUsd)*1000).toFixed(2);
+        var abd = (((smsRate * packageSMS) - (smsRate * packageSMS * discount / 100)) / rateUsd).toFixed(2);
+        return (((smsRate * packageSMS) - (smsRate * packageSMS * discount / 100)) / rateUsd).toFixed(2);
     }
     function calSMSPrice() {
         var smsRate = parseFloat($("#RateSMS").val());
         var discount = parseFloat($("#Discount").val());
-        return (smsRate - (discount * discount / 100)).toFixed(2);
+        return (smsRate - (smsRate * discount / 100)).toFixed(2);
     }
 </script>

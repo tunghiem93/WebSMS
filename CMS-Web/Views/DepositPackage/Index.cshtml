@@ -15,7 +15,7 @@
 </div><!-- container /- -->
 <div class="contact-form-details">
     <div class="container">
-        <div class="panel panel-primary">
+        <div class="">
             <div class="panel-heading" style="background:#2B3441 !important">Packages Plan</div>
             <div class="panel-body" style="padding-top: 0px !important;">
                 <div class="row">
@@ -48,7 +48,7 @@
                                         <td>@string.Format("{0} {1}", item.PackagePrice.ToString("#,0"), "VND")</td>
                                         <td>@string.Format("{0}", Math.Round(item.Discount, 2)) @Html.Raw("%")</td>
                                         <td>@string.Format("{0}", Math.Round(item.PriceUSD, 2)) @Html.Raw(" USD")</td>
-                                        <td>@string.Format("{0}", item.SMSPrice.ToString("#,0"))</td>
+                                        <td>@string.Format("{0}", (item.RateSMS - (item.RateSMS * item.Discount/100)).ToString("#,0"))</td>
                                         <td><a href="javascript:void(0)" class="btn-add-package add_@item.Id" onclick="AddDepositPackage(this,'@item.Id','@item.PackageName','@item.PriceDefault','@item.PackageSMS','@item.SMSPrice','@item.PackagePrice','@item.sPrice')">Add</a></td>
                                     </tr>
                                 }
@@ -60,16 +60,16 @@
             </div>
         </div>
 
-        <div class="panel panel-primary">
+        <div class="" style="display: block; margin: auto; width: 50%; text-align: center;">
             <div class="panel-heading" style="background:#2B3441 !important">Deposit Now</div>
             <div class="panel-body" style="padding-top: 0px !important;">
                 <div class="row">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Choose your package</th>
-                                <th>Price</th>
-                                <th></th>
+                                <th class="text-right" width="40%">Choose your package</th>
+                                <th class="text-left" width="20%">Price</th>
+                                <th width="40%"></th>
                             </tr>
                         </thead>
                         <tbody id="tbodydeposite">
@@ -78,7 +78,7 @@
                             <tr>
                                 <td colspan="2" style="text-align:right">Choose your payment</td>
                                 <td>
-                                    <select class="form-control" style="width:50%" id="txtPayment" onchange="ChangePayment(this)">
+                                    <select class="form-control" style="width:100%" id="txtPayment" onchange="ChangePayment(this)">
                                         <option value="-1">Choose payment</option>
                                         @if (Payments != null && Payments.Count > 0)
                                         {
@@ -93,7 +93,7 @@
                             <tr>
                                 <td colspan="2"></td>
                                 <td>
-                                    <button class="btn btn-success" disabled id="paynow" onclick="PayNow();" style="margin-right:27%">Pay now</button>
+                                    <button class="btn btn-success" disabled id="paynow" onclick="PayNow();" style="text-align: center;">Next</button>
                                 </td>
                             </tr>
                         </tfoot>
@@ -109,6 +109,7 @@
     var Deposits = []
     var DepositsPay = []
     function AddDepositPackage(that, PackageId, PackageName, PriceDefault, PackageSMS, SMSPrice, PackagePrice, sPrice) {
+        debugger;
         priceDefault = PriceDefault;
         //$(that).addClass("hidden")
         $('.btn-add-package').addClass("hidden")
@@ -137,8 +138,8 @@
         Deposits.forEach((x) => {
             let _PayCoin = parseInt(x.PayCoin) > 0 ? numeral(x.PayCoin).format('0,00000000') : x.PayCoin
             html += "<tr class='tr_price_default" + x.PackageId + "'>";
-            html += "<td>" + x.PackageName + "</td>";
-            html += "<td>" + parseFloat(x.Price).toFixed(2) + " " + x.PaymentName + "</td>";
+            html += "<td class=" + 'text-right' +">" + x.PackageName + "</td>";
+            html += "<td class=" + 'text-left' +">" + parseFloat(x.Price).toFixed(2) + " " + x.PaymentName + "</td>";
             html += "<td> <a href='javascript:void(0)' class='remove_" + x.PackageId + "' onclick='removepackage(\"" + x.PackageId + "\")'> Remove </a> </td>";
             html += "</tr>";
         })
@@ -173,15 +174,17 @@
         Deposits.forEach((x) => {
             let _PayCoin = parseInt(x.PayCoin) > 0 ? numeral(x.PayCoin).format('0,00000000') : x.PayCoin
             html += "<tr class='tr_price_default" + x.PackageId + "'>";
-            html += "<td>" + x.PackageName + "</td>";
-            html += "<td>" + parseFloat(x.Price).toFixed(2) + " " + x.PaymentNameDefault + "</td>";
+            html += "<td class=" + 'text-right' +">" + x.PackageName + "</td>";
+            html += "<td class=" + 'text-left' +">" + parseFloat(x.Price).toFixed(2) + " " + x.PaymentNameDefault + "</td>";
             html += "<td> <a href='javascript:void(0)' class='remove_" + x.PackageId + "' onclick='removepackage(\"" + x.PackageId + "\")'> Remove </a> </td>";
             html += "</tr>";
         })
         DepositsPay.forEach((x) => {
             let _PayCoin = parseInt(x.PayCoin) > 0 ? numeral(x.PayCoin).format('0,00000000') : x.PayCoin
             html += "<tr class='tr_price_payment" + x.PackageId + "'>";
-            html += "<td colspan=" + "2" + ">" + "You have to pay: " + parseFloat(x.tempPrice).toFixed(2) + " " + x.PaymentName + "</td>";
+            html += "<td class=" + 'text-right' +">" + "You have to pay" + "</td>";
+            html += "<td class=" + 'text-left' + ">" + parseFloat(x.tempPrice).toFixed(2) + " " + x.PaymentName + "</td>";
+            html += "<td></td>"
             //html += "<td>" + x.tempPrice + " " + x.type + "</td>";
             //html += "<td> <a href='javascript:void(0)' class='remove_" + x.PackageId + "' onclick='removepackage(\"" + x.PackageId + "\")'> Remove </a> </td>";
             html += "</tr>";
@@ -227,7 +230,7 @@
             },
             url: '@Url.Action("GetPrice", "DepositPackage")',
             type: "post",
-            data: { paymentId: paymentId, priceUSD: priceDefault.toFixed(2) },
+            data: { paymentId: paymentId, priceUSD: priceDefault },
             dataType: "json",
             success: function (data) {
                 if (data !== undefined || data !== null) {

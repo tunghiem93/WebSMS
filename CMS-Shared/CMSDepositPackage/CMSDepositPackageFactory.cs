@@ -18,6 +18,7 @@ namespace CMS_Shared.CMSEmployees
             {
                 CMS_DepositPackageModel model = new CMS_DepositPackageModel();
                 model.RateSMS = GetSMSRate(cxt);
+                model.RateUSD = GetUSDRate(cxt);
                 return model;
             }
         }
@@ -158,9 +159,9 @@ namespace CMS_Shared.CMSEmployees
                         UpdatedDate = x.UpdatedDate,
                         CreatedBy = x.CreatedBy,
                         CreatedDate = x.CreatedDate,
-                        PriceUSD =  usdRate != 0 ? (x.Discount != 0 ? ((x.PackageSMS * smsRate ) * (x.Discount / 100)) / usdRate : (x.PackageSMS * smsRate)/ usdRate) : 0,
+                        PriceUSD =  usdRate != 0 ? (x.Discount != 0 ? ((x.PackageSMS * smsRate ) - (x.PackageSMS * smsRate * x.Discount / 100)) / usdRate : (x.PackageSMS * smsRate) / usdRate) : 0,
                         //PriceDefault = pmRate == 0 ? 0 : usdRate/ pmRate,
-                        PriceDefault = usdRate != 0 ? (x.Discount != 0 ? ((x.PackageSMS * smsRate) * (x.Discount / 100)) / usdRate : (x.PackageSMS * smsRate) / usdRate) : 0,
+                        PriceDefault = usdRate != 0 ? (x.Discount != 0 ? ((x.PackageSMS * smsRate) - (x.PackageSMS * smsRate * x.Discount / 100)) / usdRate : (x.PackageSMS * smsRate) / usdRate) : 0,
                     }).OrderBy(o=>o.PackageSMS).ToList();
                     return data;
                 }

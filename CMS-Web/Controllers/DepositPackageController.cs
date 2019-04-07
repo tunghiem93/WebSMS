@@ -132,7 +132,7 @@ namespace CMS_Web.Controllers
                     var ratePMUSD = lstDataSys.Where(o => o.ValueType.Equals((int)Commons.ConfigType.PMUSD)).Select(o => o.Value).FirstOrDefault();
                     Priceobj.lastPrice = priceUSD / ratePMUSD;
                     Priceobj.tempPrice = Math.Round(Priceobj.lastPrice.Value, 2).ToString();
-                    Priceobj.PaymentName = !string.IsNullOrEmpty(data.PaymentName) ? data.PaymentName : "PM";
+                    Priceobj.PaymentName = !string.IsNullOrEmpty(data.PaymentName) ? "PMUSD" : "PMUSD";
                     return Json(Priceobj, JsonRequestBehavior.AllowGet);
                 }
             }            
