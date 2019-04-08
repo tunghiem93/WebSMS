@@ -193,6 +193,7 @@
     }
 
     function PayNow() {
+        $("#PayNow").attr('disabled', true);
         var paymentIdObj = '@Payments.Find((x) => x.ReferenceExchange == (int)Commons.ExchangeType.None).Id';
         var payCoin = 0;
         DepositsPay.forEach(x => {
@@ -215,7 +216,7 @@
                     }
                 },
                 complete: function () {
-                    $('#site-loader').hide()
+                    $('#site-loader').hide();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                 }

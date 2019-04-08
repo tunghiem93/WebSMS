@@ -1,6 +1,6 @@
 ﻿@{
     Layout = null;
-    var user = Session["UserC"] as CMS_DTO.CMSCustomer.CustomerModels;
+    var user = Session["UserC"] as CMS_DTO.CMSSession.UserSession;
 }
 
 <header id="header" class="header">
@@ -21,17 +21,17 @@
                         <li>
                             <a title="Total Credist">
                                 @{
-                                    var temp = user.TotalCredit.ToString();
+                                    var temp = user.TotalCredits.ToString();
                                 }
-                                @if (user.TotalCredit > 1)
+                                @if (user.TotalCredits > 1)
                                 {
-                                    temp = string.Format("{0:0,0}", user.TotalCredit);
+                                    temp = string.Format("{0:0,0}", user.TotalCredits);
                                 }
 
                                 @temp Credits
                             </a>
                         </li>
-                        <li><a title="info" href="@Url.Action("Index","Profile")">@user.LastName</a></li>
+                        <li><a title="info" href="@Url.Action("Index","Profile")">@user.UserName</a></li>
                         <li><a title="Login" href="@Url.Action("Logout","Login")">Logout</a></li>
                     }
                     else

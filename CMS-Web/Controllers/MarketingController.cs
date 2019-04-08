@@ -1,7 +1,5 @@
 ﻿using ClosedXML.Excel;
-using CMS_DTO.CMSBase;
 using CMS_DTO.CMSCentrifugo;
-using CMS_DTO.CMSGSM;
 using CMS_DTO.CMSMarketing;
 using CMS_DTO.CMSSimOperator;
 using CMS_Shared;
@@ -15,7 +13,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
 
 namespace CMS_Web.Controllers
@@ -75,7 +72,7 @@ namespace CMS_Web.Controllers
 
                 model.ExcelUpload.SaveAs(filePath);
                 //Import data
-                var result = _fac.Import(filePath, CurrentUser.ID, CurrentUser.Name, CurrentUser.Phone, ref msg);
+                var result = _fac.Import(filePath, CurrentUser.UserId, CurrentUser.UserName, CurrentUser.Phone, ref msg);
                 model.ListSMS = result;
                 if (System.IO.File.Exists(filePath))
                     System.IO.File.Delete(filePath);
@@ -107,7 +104,7 @@ namespace CMS_Web.Controllers
             ok 3. Insert to DB tru credit
              ok 4. send sms to Centri server
              */
-            if(CurrentUser == null || string.IsNullOrEmpty(CurrentUser.ID))
+            if(CurrentUser == null || string.IsNullOrEmpty(CurrentUser.UserId))
             {
                 return RedirectToAction("Index","Login");
             }
@@ -117,7 +114,7 @@ namespace CMS_Web.Controllers
                
                 decimal totalPrice = 0;
                 totalPrice = model.Sum(x => x.SMSPrice);
-                if(!_fac.CheckTotalCredit(CurrentUser.ID, totalPrice))
+                if(!_fac.CheckTotalCredit(CurrentUser.UserId, totalPrice))
                 {
                     TempData["ErrorMessage"] = "Your credit is not enough to run this service!";
                     TempData["DataReturnError"] = model;
@@ -139,8 +136,8 @@ namespace CMS_Web.Controllers
                         item.RunTime = RunTime;
                         item.SendFrom = GSMName;
                         item.TimeInput = DateTime.Now;
-                        item.UpdatedBy = CurrentUser.ID;
-                        item.CreatedBy = CurrentUser.ID;
+                        item.UpdatedBy = CurrentUser.UserId;
+                        item.CreatedBy = CurrentUser.UserId;
                         _fac.InsertFromExcel(item, ref msg);
                         MessageSMSModels modelCentri = new MessageSMSModels()
                         {

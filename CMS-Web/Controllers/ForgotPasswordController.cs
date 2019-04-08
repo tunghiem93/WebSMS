@@ -8,7 +8,7 @@ using CMS_Shared.CMSCustomers;
 using CMS_Shared.Utilities;
 namespace CMS_Web.Controllers
 {
-    public class ForgotPasswordController : Controller
+    public class ForgotPasswordController : BasesController
     {
         private CMSCustomersFactory fac;
         public ForgotPasswordController()

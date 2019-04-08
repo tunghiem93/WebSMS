@@ -55,16 +55,16 @@ namespace CMS_Web.Controllers
                 CMS_MarketingModels importModel = new CMS_MarketingModels() {
                     OperatorName = operatorName,
                     SendFrom = GSMName,
-                    CreatedBy = CurrentUser.ID,
-                    CustomerId = CurrentUser.ID,
-                    CustomerName = string.Format("{0} ({1})", CurrentUser.Name, CurrentUser.Phone),
+                    CreatedBy = CurrentUser.UserId,
+                    CustomerId = CurrentUser.UserId,
+                    CustomerName = string.Format("{0} ({1})", CurrentUser.UserName, CurrentUser.Phone),
                     RunTime = 60,
                     SendTo = model.Phone,
                     SMSContent = model.Content,
                     SMSType = (int)Commons.SMSType.OTP,
                     Status = (int)Commons.SMSStatus.Sent,
                     TimeInput = DateTime.Now,
-                    UpdatedBy = CurrentUser.ID,
+                    UpdatedBy = CurrentUser.UserId,
                     SMSRate = rate,
                     SMSPrice = (smsFee + 1) * rate
                 };

@@ -11,7 +11,7 @@ using CMS_Shared.Utilities;
 
 namespace CMS_Web.Controllers
 {
-    public class VerifyCodeController : Controller
+    public class VerifyCodeController : BasesController
     {
         private CMSCustomersFactory fac;
         public VerifyCodeController()

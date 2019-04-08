@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 namespace CMS_Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BasesController
     {
         // GET: Home
         public ActionResult Index()

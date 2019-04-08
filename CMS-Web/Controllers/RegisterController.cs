@@ -10,7 +10,7 @@ using CMS_Shared.CMSCustomers;
 using CMS_Shared.Utilities;
 namespace CMS_Web.Controllers
 {
-    public class RegisterController : Controller
+    public class RegisterController : BasesController
     {
         private readonly CMSCustomersFactory fac;
         public RegisterController()

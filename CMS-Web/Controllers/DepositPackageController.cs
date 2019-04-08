@@ -2,6 +2,7 @@
 using CMS_DTO.CMSCustomer;
 using CMS_DTO.CMSDepositPackage;
 using CMS_DTO.CMSPaymentMethod;
+using CMS_DTO.CMSSession;
 using CMS_Shared;
 using CMS_Shared.CMSDepositTransaction;
 using CMS_Shared.CMSEmployees;
@@ -21,7 +22,7 @@ using System.Web.Mvc;
 namespace CMS_Web.Controllers
 {
     [NuWebAuth]
-    public class DepositPackageController : Controller
+    public class DepositPackageController : BasesController
     {
         private readonly CMSDepositPackageFactory fac;
         private readonly CMSPaymentMethodFactory facP;
@@ -51,7 +52,7 @@ namespace CMS_Web.Controllers
         [HttpPost]
         public async Task<ActionResult> PayNow(List<CMS_DepositTransactionsModel> model)
         {
-            var Customer = Session["UserC"] as CustomerModels;
+            var Customer = Session["UserC"] as UserSession;
             var Payment = facP.GetDetail(model.FirstOrDefault().PaymentMethodId);            
             var Config = facC.GetList().Where(x => x.ValueType == (int)Commons.ConfigType.USD).FirstOrDefault();
             decimal? Coin = 0;
@@ -75,8 +76,8 @@ namespace CMS_Web.Controllers
                 x.WalletMoney = Payment.WalletMoney;
                 x.ExchangeRate = Config != null ? Config.Value : 0;
                 x.PayCoin = Coin == 0 ? x.PayCoin : Coin.Value;
-                x.CustomerId = Customer.ID;
-                x.CustomerName = Customer.Name;
+                x.CustomerId = Customer.UserId;
+                x.CustomerName = Customer.UserName;
                 x.DepositNo = CommonHelper.RandomDepositNo();
             });
             var msg = "";

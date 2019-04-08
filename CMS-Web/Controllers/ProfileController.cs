@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace CMS_Web.Controllers
 {
-    public class ProfileController : Controller
+    public class ProfileController : BasesController
     {
         private CMSMarketingFactory _factory;
         private CMSDepositTransactionFactory _fac;

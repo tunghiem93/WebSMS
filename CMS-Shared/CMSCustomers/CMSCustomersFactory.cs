@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CMS_Shared.Utilities;
+using CMS_DTO.CMSSession;
+
 namespace CMS_Shared.CMSCustomers
 {
     public class CMSCustomersFactory
@@ -376,21 +378,21 @@ namespace CMS_Shared.CMSCustomers
             return false;
         }
 
-        public CustomerModels CustomerLogin(CustomerLoginModels model)
+        public UserSession CustomerLogin(CustomerLoginModels model)
         {
             try
             {
                 using(var cxt = new CMS_Context())
                 {
                     var data = cxt.CMS_Customers.Where(x => (x.Email == model.UserName || x.Phone == model.UserName) && (x.Password == model.Password || x.Password2 == model.Password) && x.IsActive && x.Status != (int)Commons.CustomerStatus.Watting)
-                                                .Select(x => new CustomerModels
+                                                .Select(x => new UserSession
                                                 {
                                                     Email = x.Email,
-                                                    FirstName = x.FirstName,
-                                                    LastName = x.LastName,
+                                                    UserName = x.LastName,
+                                                    UserFullName = x.FirstName + " " + x.LastName,
                                                     Phone = x.Phone,
-                                                    TotalCredit = x.TotalCredit,
-                                                    ID = x.Id,
+                                                    TotalCredits = x.TotalCredit,
+                                                    UserId = x.Id,
                                                     IsAuthenticated = true
                                                 }).FirstOrDefault();
                     return data;

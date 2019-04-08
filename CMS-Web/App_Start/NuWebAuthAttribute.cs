@@ -11,7 +11,7 @@ namespace CMS_Web.Web.App_Start
 {
     public class NuWebAuthAttribute : AuthorizeAttribute
     {
-        private CustomerModels _CurrentUser;
+        private UserSession _CurrentUser;
 
         private string Controller;
         private string Action;
@@ -25,9 +25,9 @@ namespace CMS_Web.Web.App_Start
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             if (HttpContext.Current.Session["UserC"] == null)
-                _CurrentUser = new CustomerModels();
+                _CurrentUser = new UserSession();
             else
-                _CurrentUser = (CustomerModels)HttpContext.Current.Session["UserC"];
+                _CurrentUser = (UserSession)HttpContext.Current.Session["UserC"];
                         
             //Alias Controller //Action
             Controller = httpContext.Request.RequestContext.RouteData.Values["controller"].ToString();

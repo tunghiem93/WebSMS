@@ -1,5 +1,6 @@
 ﻿using CMS_DTO;
 using CMS_DTO.CMSCustomer;
+using CMS_DTO.CMSSession;
 using CMS_Shared;
 using CMS_Shared.CMSDepositTransaction;
 using CMS_Shared.CMSSystemConfig;
@@ -13,7 +14,7 @@ using System.Web.Mvc;
 namespace CMS_Web.Controllers
 {
     [NuWebAuth]
-    public class DepositOrderController : Controller
+    public class DepositOrderController : BasesController
     {
         private readonly CMSDepositTransactionFactory fac;
         private readonly CMSSysConfigFactory facS;
@@ -25,11 +26,11 @@ namespace CMS_Web.Controllers
         // GET: DepositOrder
         public ActionResult Index()
         {
-            var Customer = Session["UserC"] as CustomerModels;
+            var Customer = Session["UserC"] as UserSession;
             var Status = new List<int>();
             Status.Add((int)Commons.DepositStatus.WaitingPay);
             //Status.Add((int)Commons.DepositStatus.Cancel);
-            var model = fac.GetListDepositTransaction(Customer.ID, Status);
+            var model = fac.GetListDepositTransaction(Customer.UserId, Status);
             ViewBag.disabled = model != null && model.Count > 0;
             var config = facS.GetList().Where(x => x.ValueType == (int)Commons.ConfigType.WaitingTime).FirstOrDefault();
             var IsCancel = model.Any(x => x.Status == (int)Commons.DepositStatus.Cancel);
@@ -41,7 +42,7 @@ namespace CMS_Web.Controllers
         [HttpPost]
         public ActionResult Index(List<CMS_DepositTransactionsModel> model)
         {
-            var Customer = Session["UserC"] as CustomerModels;
+            var Customer = Session["UserC"] as UserSession;
             if(model != null)
             {
                 int StatusOrder = (int)Commons.DepositStatus.ConfirmedPay;
@@ -57,7 +58,7 @@ namespace CMS_Web.Controllers
             Status.Add((int)Commons.DepositStatus.ConfirmedPay);
             //Status.Add((int)Commons.DepositStatus.Cancel);
             var Ids = model.Select(x => x.Id).ToList();
-            model = fac.GetListDepositTransaction(Customer.ID, Status).Where(x => Ids.Contains(x.Id)).ToList();
+            model = fac.GetListDepositTransaction(Customer.UserId, Status).Where(x => Ids.Contains(x.Id)).ToList();
             ViewBag.disabled = model != null && model.Any(x => x.Status == (int)Commons.DepositStatus.Cancel);
             return View(model);
         }

@@ -1,6 +1,7 @@
 ﻿using CMS_DTO;
 using CMS_DTO.CMSCustomer;
 using CMS_DTO.CMSDepositPackage;
+using CMS_DTO.CMSSession;
 using CMS_Shared;
 using CMS_Shared.CMSCompanies;
 using CMS_Shared.CMSDepositTransaction;
@@ -15,7 +16,7 @@ using System.Web.Mvc;
 
 namespace CMS_Web.Controllers
 {
-    public class PerfectMoneyController : Controller
+    public class PerfectMoneyController : BasesController
     {
         private readonly CMSDepositTransactionFactory facT;
         private readonly CMSSysConfigFactory facC;
@@ -51,14 +52,14 @@ namespace CMS_Web.Controllers
             {
                 List<CMS_DepositTransactionsModel> models = new List<CMS_DepositTransactionsModel>();
                 var Config = facC.GetList().Where(x => x.ValueType == (int)Commons.ConfigType.USD).FirstOrDefault();
-                var customer = Session["UserC"] as CustomerModels;
+                var customer = Session["UserC"] as UserSession;
                 CMS_DepositTransactionsModel _data = new CMS_DepositTransactionsModel();
                 _data.PaymentMethodName = "Perfect money";
                 _data.WalletMoney = Commons.APIType.APIPerfectMonney.ToString();
                 _data.ExchangeRate = Config != null ? Config.Value : 0;
                 _data.PayCoin = price == 0 ? price.Value : price.Value;
-                _data.CustomerId = customer.ID;
-                _data.CustomerName = customer.Name;
+                _data.CustomerId = customer.UserId;
+                _data.CustomerName = customer.UserName;
                 _data.DepositNo = CommonHelper.RandomDepositNo();
                 models.Add(_data);
                 //Set account information of admin to perfect payment
@@ -84,10 +85,10 @@ namespace CMS_Web.Controllers
                     else if(Paymnet_Batch_Num != "0" && Paymnet_Batch_Num != null)
                     {
                         models[0].Status = (int)Commons.DepositStatus.Completed;
-                        models[0].CustomerId = customer.ID;
+                        models[0].CustomerId = customer.UserId;
                         models[0].CreatedDate = DateTime.Now;
                         models[0].UpdatedDate = DateTime.Now; ;
-                        models[0].CreatedBy = customer.Name;
+                        models[0].CreatedBy = customer.UserName;
                         models[0].PackageSMS = price.Value;
                         var result = facT.CreateDepositTransaction(models, ref msg);
                         //Success

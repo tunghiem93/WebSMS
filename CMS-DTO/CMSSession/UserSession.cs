@@ -10,14 +10,17 @@ namespace CMS_DTO.CMSSession
     {
         public bool IsAuthenticated { get; set; }
         public string UserId { get; set; }
+        public string Phone { get; set; }
         public string Email { get; set; }
         public string UserName { get; set; }
+        public string UserFullName { get; set; }
         public int UserType { get; set; }
         public string ImageUrl { get; set; }
         public bool IsSuperAdmin { get; set; }
         public bool IsAdminClient { get; set; }
         public string CurrencySymbol { get; set; }
         public bool RememberMe { get; set; }
+        public decimal TotalCredits { get; set; }
 
         public UserSession()
         {

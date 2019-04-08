@@ -11,7 +11,7 @@ using CMS_Web.Web.App_Start;
 namespace CMS_Web.Controllers
 {
     [NuWebAuth]
-    public class ChangePasswordController : Controller
+    public class ChangePasswordController : BasesController
     {
         private readonly CMSCustomersFactory fac;
         public ChangePasswordController()
