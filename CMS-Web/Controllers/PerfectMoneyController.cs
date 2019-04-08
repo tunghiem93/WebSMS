@@ -19,14 +19,14 @@ namespace CMS_Web.Controllers
     public class PerfectMoneyController : BasesController
     {
         private readonly CMSDepositTransactionFactory facT;
-        private readonly CMSSysConfigFactory facC;
+        private readonly CMSSysConfigFactory fac_C;
         private readonly CMSPaymentMethodFactory facP;
         private readonly CMSCompaniesFactory fac_Co;
 
         public PerfectMoneyController()
         {
             facT = new CMSDepositTransactionFactory();
-            facC = new CMSSysConfigFactory();
+            fac_C = new CMSSysConfigFactory();
             facP = new CMSPaymentMethodFactory();
             fac_Co = new CMSCompaniesFactory();
         }
@@ -51,7 +51,7 @@ namespace CMS_Web.Controllers
             try
             {
                 List<CMS_DepositTransactionsModel> models = new List<CMS_DepositTransactionsModel>();
-                var Config = facC.GetList().Where(x => x.ValueType == (int)Commons.ConfigType.USD).FirstOrDefault();
+                var Config = fac_C.GetList().Where(x => x.ValueType == (int)Commons.ConfigType.USD).FirstOrDefault();
                 var customer = Session["UserC"] as UserSession;
                 CMS_DepositTransactionsModel _data = new CMS_DepositTransactionsModel();
                 _data.PaymentMethodName = "Perfect money";
@@ -78,7 +78,7 @@ namespace CMS_Web.Controllers
                     if (Paymnet_Batch_Num == "0" && Paymnet_Batch_Num != null)
                     {
                         models[0].Status = (int)Commons.DepositStatus.Cancel;
-                        var result = facT.CreateDepositTransaction(models, ref msg);
+                        var result = facT.CreateDepositTransaction(models, ref msg, null);
                         NSLog.Logger.Info("Perface_Payment", "Perfect payment Cancel");
                         // cancel
                     }
@@ -90,8 +90,16 @@ namespace CMS_Web.Controllers
                         models[0].UpdatedDate = DateTime.Now; ;
                         models[0].CreatedBy = customer.UserName;
                         models[0].PackageSMS = price.Value;
-                        var result = facT.CreateDepositTransaction(models, ref msg);
-                        //Success
+                        List<string> lstID = new List<string>();
+                        lstID.Add(models[0].CustomerId);
+                        var result = facT.CreateDepositTransaction(models, ref msg, lstID);
+                        //Success change status
+                        CMS_DepositTransactionsModel inputModel = new CMS_DepositTransactionsModel();
+                        inputModel.UpdatedBy = CurrentUser.UserId;
+                        inputModel.Status = (int)Commons.DepositStatus.Completed;
+                        inputModel.Id = lstID[0];
+                        inputModel.CustomerId = customer.UserId;
+                        var outPut = facT.ChangeStatus(inputModel, CurrentUser.UserId);
                     }
                 }
                 

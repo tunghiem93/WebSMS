@@ -81,7 +81,7 @@ namespace CMS_Web.Controllers
                 x.DepositNo = CommonHelper.RandomDepositNo();
             });
             var msg = "";
-            var result = facT.CreateDepositTransaction(model, ref msg);
+            var result = facT.CreateDepositTransaction(model, ref msg, null);
             var obj = new
             {
                 msg = msg,

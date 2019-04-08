@@ -11,7 +11,7 @@ namespace CMS_Shared.CMSDepositTransaction
 {
     public class CMSDepositTransactionFactory
     {
-        public bool CreateDepositTransaction(List<CMS_DepositTransactionsModel> model, ref string msg)
+        public bool CreateDepositTransaction(List<CMS_DepositTransactionsModel> model, ref string msg, List<string> lstID = null)
         {
             var result = true;
             try
