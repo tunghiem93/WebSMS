@@ -3,6 +3,7 @@
 }
 
 @model CMS_DTO.CMSDepositPackage.PerfectMoneyModel
+
 <!-- container -->
 <div class="container">
     @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home" }, { "B", "Perfect money payment" } })
@@ -10,63 +11,30 @@
         <h3>Perfect money</h3>
     </div><!-- Section Header /- -->
 </div><!-- container /- -->
-<div class="contact-form-details">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="section-header">
-                    <h3>Perfect money</h3>
-                </div>
-                <div class="contact-form">
-                    @*@using (@Html.BeginForm("PerfectMoney", "PerfectMoney", FormMethod.Post, new { @id = "form-create", @class = "form-horizontal login-page", @enctype = "multipart/form-data" }))
-                    {*@
-                    <form action="https://perfectmoney.is/api/step1.asp" method="post" class="form-horizontal" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <div class="col-md-6">
-                                <label for="phone" class="col-md-4">PM wallet</label>
-                                <div class="col-md-8">
-                                    <input type="hidden" value="http://localhost:54321/PerfectMoney" name="PAYMENT_URL" />
-                                    <input type="hidden" value="http://localhost:54321/PerfectMoney" name="NOPAYMENT_URL" />
-                                    @Html.TextBoxFor(model => model.PAYEE_ACCOUNT, new { @class = "form-control", @placeholder = "Payee account", @autocomplete = "off", @readonly = true })
-                                    @Html.ValidationMessageFor(model => model.PAYEE_ACCOUNT, null, new { @class = "label label-danger" })
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="phone" class="col-md-4">PM name</label>
-                                <div class="col-md-8">
-                                    @Html.TextBoxFor(model => model.PAYEE_NAME, new { @class = "form-control", @placeholder = "Payee name", @autocomplete = "off", @readonly = true })
-                                    @Html.ValidationMessageFor(model => model.PAYEE_NAME, null, new { @class = "label label-danger" })
-                                </div>
-                            </div>
-                        </div>
+<div class="container" style="display: block; margin: auto; text-align: center; width: 40%">
+    <form action="https://perfectmoney.is/api/step1.asp" method="post" class="form-horizontal" enctype="multipart/form-data">
+        <table class="table table-bordered">                           
+            <tbody id="tbodydeposite"></tbody>
+                <tr>
+                    <td style="text-align:right">PM wallet</td>
+                    <td>
+                        @Html.Raw(Model.PAYEE_ACCOUNT) @string.Format("{0}", !string.IsNullOrEmpty(Model.PAYEE_NAME) ? "(" + Model.PAYEE_NAME + ")" : "")
+                        <input type="hidden" value="http://sms4api.com/PerfectMoney" name="PAYMENT_URL" />
+                        <input type="hidden" value="http://sms4api.com/DepositPackage" name="NOPAYMENT_URL" />
+                        <input type="hidden" value="@Model.PAYEE_ACCOUNT" name="PAYEE_ACCOUNT" />
+                        <input type="hidden" value="@Model.PAYEE_NAME" name="PAYEE_NAME" />
+                        <input type="hidden" value="@Model.PAYMENT_AMOUNT" name="PAYMENT_AMOUNT" />
+                        <input type="hidden" value="@Model.PAYMENT_UNITS" name="PAYMENT_UNITS" />
 
-                        <div class="form-group">
-                            <div class="col-md-6">
-                                <label for="phone" class="col-md-4">PM amount</label>
-                                <div class="col-md-8">
-                                    @Html.TextBoxFor(model => model.PAYMENT_AMOUNT, new { @class = "form-control", @placeholder = "Payment amount", @autocomplete = "off", @readonly = true })
-                                    @Html.ValidationMessageFor(model => model.PAYMENT_AMOUNT, null, new { @class = "label label-danger" })
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="phone" class="col-md-4">PM units</label>
-                                <div class="col-md-8">
-                                    @Html.TextBoxFor(model => model.PAYMENT_UNITS, new { @class = "form-control", @value = "USD", @placeholder = "USD", @autocomplete = "off", @readonly = true })
-                                    @Html.ValidationMessageFor(model => model.PAYMENT_UNITS, null, new { @class = "label label-danger" })
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="drop-line bottom-shadow"></div>
-                        <div class="form-group">
-                            <a title="Or Return to Shop" href="#">Or Return to home</a>
-                            <input type="submit" value="Pay now" class="btn btn-default  pull-right">
-                        </div>
-                    </form>
-
-                        @*}*@
-                </div>
-            </div>
-        </div>
-    </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">You have to pay</td>
+                    <td>@Html.Raw(Model.PAYMENT_AMOUNT) @Html.Raw("PMUSD")</td>
+                </tr>
+                <tr style="text-align: center;">
+                    <td colspan="2" class="text-center"><input type="submit" value="Pay now" class="btn btn-success"></td>
+                </tr>
+        </table>
+    </form>
 </div>

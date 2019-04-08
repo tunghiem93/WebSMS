@@ -199,7 +199,7 @@
             payCoin += x.PayCoin;
         });
         if (paymentIdObj == $('#txtPayment').val()) {
-            location.href = "@Url.Action("Index", "PerfectMoney")?price=" + payCoin;
+            location.href = "@Url.Action("Index", "PerfectMoney")?price=" + payCoin.toFixed(2);
         }
         else {
             $.ajax({

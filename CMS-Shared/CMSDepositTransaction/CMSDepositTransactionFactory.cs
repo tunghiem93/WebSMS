@@ -44,6 +44,13 @@ namespace CMS_Shared.CMSDepositTransaction
                             DepositNo = item.DepositNo
                         };
                         es.Add(e);
+                        var c = cxt.CMS_Customers.Where(x => x.Id.Equals(item.CustomerId)).FirstOrDefault();
+                        if (c != null)
+                        {
+                            c.TotalCredit += item.PackageSMS;// change after confirm
+                            c.UpdatedBy = item.CreatedBy;
+                            c.UpdatedDate = DateTime.Now;
+                        }
                     }
                     cxt.CMS_DepositTransactions.AddRange(es);
                     cxt.SaveChanges();

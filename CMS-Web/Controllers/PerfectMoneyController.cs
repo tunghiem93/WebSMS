@@ -84,6 +84,11 @@ namespace CMS_Web.Controllers
                     else if(Paymnet_Batch_Num != "0" && Paymnet_Batch_Num != null)
                     {
                         models[0].Status = (int)Commons.DepositStatus.Completed;
+                        models[0].CustomerId = customer.ID;
+                        models[0].CreatedDate = DateTime.Now;
+                        models[0].UpdatedDate = DateTime.Now; ;
+                        models[0].CreatedBy = customer.Name;
+                        models[0].PackageSMS = price.Value;
                         var result = facT.CreateDepositTransaction(models, ref msg);
                         //Success
                     }

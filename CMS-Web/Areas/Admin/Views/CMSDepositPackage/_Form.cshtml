@@ -118,7 +118,6 @@
         return (((smsRate * packageSMS) - (smsRate * packageSMS * discount / 100))).toFixed(2);
     }
     function calPackagePriceDiscountUsd() {
-        debugger;
         var PackagePrice = parseFloat($("#PackagePrice").val());
         var smsRate = parseFloat($("#RateSMS").val());
         var packageSMS = parseFloat($("#PackageSMS").val());
