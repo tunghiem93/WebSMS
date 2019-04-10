@@ -9,7 +9,7 @@ namespace CMS_Entity.Mapping
         {
             this.HasKey(x => x.Id);
             this.Property(x => x.Id).HasMaxLength(60).HasColumnType("varchar").IsRequired();
-            this.Property(x => x.HeaderPhone).HasMaxLength(4).HasColumnType("varchar").IsRequired();
+            this.Property(x => x.HeaderPhone).HasMaxLength(5).HasColumnType("varchar").IsRequired();
             this.Property(x => x.OperaterName).HasMaxLength(100).HasColumnType("varchar").IsRequired();
             this.Property(x => x.UpdatedBy).HasColumnType("varchar").HasMaxLength(60).IsOptional();
             this.Property(x => x.CreatedBy).HasColumnType("varchar").HasMaxLength(60).IsOptional();
