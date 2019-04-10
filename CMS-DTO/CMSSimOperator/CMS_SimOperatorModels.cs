@@ -7,7 +7,7 @@ namespace CMS_DTO.CMSSimOperator
     {
         public string Id { get; set; }
         [Required]
-        [MaxLength(4)]
+        [MaxLength(5)]
         public string HeaderPhone { get; set; }
         [Required]
         [MaxLength(50)]
