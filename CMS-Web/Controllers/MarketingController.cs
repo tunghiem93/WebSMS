@@ -131,13 +131,15 @@ namespace CMS_Web.Controllers
                     string channelName = Commons.centriSMSChannel + (GSMName == null? "" : "#"+GSMName);
                     foreach (CMS_MarketingModels item in model)
                     {
-                        string operatorName = _fac.GetOperatorName(item.SendTo, listOp);
+                        string newPhone = "";
+                        string operatorName = _fac.GetOperatorName(item.SendTo, listOp, ref newPhone);
                         item.OperatorName = operatorName;
                         item.RunTime = RunTime;
                         item.SendFrom = GSMName;
                         item.TimeInput = DateTime.Now;
                         item.UpdatedBy = CurrentUser.UserId;
                         item.CreatedBy = CurrentUser.UserId;
+                        item.SendTo = newPhone;
                         _fac.InsertFromExcel(item, ref msg);
                         MessageSMSModels modelCentri = new MessageSMSModels()
                         {
@@ -153,6 +155,7 @@ namespace CMS_Web.Controllers
                     {
                         MainSMSModels mod = new MainSMSModels()
                         {
+                            type = "SEND_SMS",
                             messages = listData,
                             callbackURL = Url.Action("UpdateSMSStatus", "Centrifuge",null, HttpContext.Request.Url.Scheme),
                             delay = RunTime

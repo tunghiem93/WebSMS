@@ -384,35 +384,49 @@ namespace CMS_Shared.CMSMarketing
                 return GetSMSRate(cxt, smsType);
             }
         }
-        public string GetOperatorName(string phone, List<CMS_SimOperatorModels> listOp)
+        public string GetOperatorName(string phone, List<CMS_SimOperatorModels> listOp, ref string newPhone)
         {
             //097, 8497, +8497
-            string name = "";
-            string headerPhone1 = phone;
-            if (phone.Contains("+"))
+            try
             {
-                headerPhone1 = phone.Trim().Substring(0, 5);
-            }
-            else
-            {
-                string headerPhone = phone.Trim().Substring(0, 1);
-                if (headerPhone.Equals("0"))
+                string name = "";
+                string headerPhone1 = phone;
+                if (phone.Contains("+"))
                 {
-                    headerPhone1 = "+84" + phone.Trim().Substring(1, 2);
-                }else
+                    headerPhone1 = phone.Trim().Substring(0, 5);
+                    newPhone = headerPhone1;
+                }
+                else
                 {
-                    if(phone.Trim().Substring(0, 2).Equals("84"))
+                    string headerPhone = phone.Trim().Substring(0, 1);
+                    if (headerPhone.Equals("0"))
                     {
-                        headerPhone1 = "+" + phone.Trim().Substring(0, 4);
+                        headerPhone1 = "+84" + phone.Trim().Substring(1, 2);
+                        newPhone = headerPhone1 + phone.Trim().Substring(3, 7);
                     }
                     else
                     {
-                        headerPhone1 = "+84" + phone.Trim().Substring(0, 2);
+                        if (phone.Trim().Substring(0, 2).Equals("84"))
+                        {
+                            headerPhone1 = "+" + phone.Trim().Substring(0, 4);
+                            newPhone = headerPhone1 + phone.Trim().Substring(4, 7);
+                        }
+                        else
+                        {
+                            headerPhone1 = "+84" + phone.Trim().Substring(0, 2);
+                            newPhone = headerPhone1 + phone.Trim().Substring(2, 7);
+                        }
                     }
                 }
-            }          
-            name = listOp.Where(x => x.IsActive && x.HeaderPhone.Equals(headerPhone1)).Select(x => x.OperaterName).FirstOrDefault();
-            return name;
+                name = listOp.Where(x => x.IsActive && x.HeaderPhone.Equals(headerPhone1)).Select(x => x.OperaterName).FirstOrDefault();
+                return name;
+            }
+            catch
+            {
+                newPhone = phone;
+                return "";
+            }
+            
         }
     }
 }

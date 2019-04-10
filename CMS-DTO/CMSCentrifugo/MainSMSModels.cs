@@ -11,5 +11,6 @@ namespace CMS_DTO.CMSCentrifugo
         public object messages { get; set; }
         public string callbackURL { get; set; }
         public int delay { get; set; }
+        public string type { get; set; }
     }
 }

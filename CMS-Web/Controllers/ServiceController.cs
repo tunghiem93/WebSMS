@@ -51,7 +51,8 @@ namespace CMS_Web.Controllers
                 decimal rate = _fac.GetSMSRate((int)Commons.ConfigType.SMSOTP);
                 string strSMSConvert = Commons.ConvertUnicodeToWithoutAccent(model.Content);
                 int smsFee = strSMSConvert.Length / 80;
-                string operatorName = _fac.GetOperatorName(model.Phone, listOp);
+                string newPhone = "";
+                string operatorName = _fac.GetOperatorName(model.Phone, listOp, ref newPhone);
                 CMS_MarketingModels importModel = new CMS_MarketingModels() {
                     OperatorName = operatorName,
                     SendFrom = GSMName,
@@ -59,7 +60,7 @@ namespace CMS_Web.Controllers
                     CustomerId = CurrentUser.UserId,
                     CustomerName = string.Format("{0} ({1})", CurrentUser.UserName, CurrentUser.Phone),
                     RunTime = 60,
-                    SendTo = model.Phone,
+                    SendTo = newPhone,
                     SMSContent = model.Content,
                     SMSType = (int)Commons.SMSType.OTP,
                     Status = (int)Commons.SMSStatus.Sent,
@@ -89,6 +90,7 @@ namespace CMS_Web.Controllers
                     {
                         MainSMSModels mod = new MainSMSModels()
                         {
+                            type = "SEND_SMS",
                             messages = listData,
                             callbackURL = Url.Action("UpdateSMSStatus", "Centrifuge", null, HttpContext.Request.Url.Scheme),
                             delay = 10
