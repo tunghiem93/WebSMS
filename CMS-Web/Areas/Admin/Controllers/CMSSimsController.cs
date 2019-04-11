@@ -1,5 +1,8 @@
 ﻿using CMS_DTO;
+using CMS_DTO.CMSCentrifugo;
 using CMS_DTO.CMSSims;
+using CMS_Shared;
+using CMS_Shared.CMSCategories;
 using CMS_Shared.CMSSims;
 using CMS_Web.Web.App_Start;
 using System;
@@ -19,6 +22,11 @@ namespace CMS_Web.Areas.Admin.Controllers
         // GET: Admin/CMSCategories
         public ActionResult Index()
         {
+            MainSMSModels mod = new MainSMSModels()
+            {
+                type = "GET_PORTS",
+            };
+            CMSCentrifugoFactory.PublishApiToCentri("publish", Commons.centriURL, Commons.centriApiKey, "$gsmclient:task", mod);
             return View();
         }
 

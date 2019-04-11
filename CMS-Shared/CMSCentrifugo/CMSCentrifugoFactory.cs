@@ -14,7 +14,7 @@ namespace CMS_Shared.CMSCategories
 {
     public static class CMSCentrifugoFactory
     {
-        public static bool SendSMSToCentri(string method, string url, string apiKey, string channel, object data)
+        public static bool PublishApiToCentri(string method, string url, string apiKey, string channel, object data)
         {
             try
             {
@@ -25,8 +25,8 @@ namespace CMS_Shared.CMSCategories
                 client.DefaultRequestHeaders.TryAddWithoutValidation("Content-type", "application/json");
                 var response = client.PostAsJsonAsync(url, cenMod).Result;
                 var result = response.Content.ReadAsStringAsync();
-                NSLog.Logger.Info("SendSMSToCentri: " + response.StatusCode + "-" + result.Result);
-                NSLog.Logger.Info("DataSendSMSToCentri: " + JsonConvert.SerializeObject(cenMod));
+                NSLog.Logger.Info("PublishApiToCentri: " + response.StatusCode + "-" + result.Result);
+                NSLog.Logger.Info("PublishApiToCentri: " + JsonConvert.SerializeObject(cenMod));
                 if (result.Result.Contains("error"))
                 {
                     return false;
@@ -43,11 +43,12 @@ namespace CMS_Shared.CMSCategories
             }
             catch (Exception ex)
             {
-                NSLog.Logger.Error("SendSMSToCentri: ", ex);
+                NSLog.Logger.Error("PublishApiToCentri: ", ex);
                 return false;
             }
 
 
         }
+       
     }
 }

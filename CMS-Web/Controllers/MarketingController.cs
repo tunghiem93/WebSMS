@@ -160,7 +160,7 @@ namespace CMS_Web.Controllers
                             callbackURL = Url.Action("UpdateSMSStatus", "Centrifuge",null, HttpContext.Request.Url.Scheme),
                             delay = RunTime
                         };
-                        isRunSuccess = CMSCentrifugoFactory.SendSMSToCentri("publish", Commons.centriURL, Commons.centriApiKey, channelName, mod);
+                        isRunSuccess = CMSCentrifugoFactory.PublishApiToCentri("publish", Commons.centriURL, Commons.centriApiKey, channelName, mod);
                     }
                     if (!isRunSuccess)
                     {

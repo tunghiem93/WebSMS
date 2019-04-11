@@ -8,8 +8,30 @@
 }
 <script src="~/Scripts/jquery.signalR-2.4.1.js"></script>
 <script src="~/SignalR/hubs"></script>
+
+<div role="main">
+    <div class="se-pre-con" style="display: none;"></div>
+    <div class="_gridview">
+        <div class="page-title">
+            <!-- BEGIN PAGE BAR -->
+            @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home Page" }, { "B", "Sim - List" } })
+            <!-- END PAGE BAR -->
+        </div>
+        <div class="page-main">
+            @using (Html.BeginForm("LoadGrid", "CMSSims", FormMethod.Post, new { @class = "form-horizontal search-form" }))
+            {
+            }
+        </div>
+    </div>
+    <div class="detail-view" style="height:100%;">
+        <!-- detail partial view -->
+    </div>
+</div>
 <script type="text/javascript">
-    (function () {
+    $(document).ready(function () {
+        LoadGrid();
+    });
+    $(function () {
         // Defining a connection to the server hub.
         var myHub = $.connection.synDataHub;
         // Setting logging to true so that we can see whats happening in the browser console log. [OPTIONAL]
@@ -48,28 +70,4 @@
         };
 
     }());
-</script>
-<div role="main">
-    <div class="se-pre-con" style="display: none;"></div>
-    <div class="_gridview">
-        <div class="page-title">
-            <!-- BEGIN PAGE BAR -->
-            @Html.Partial("_breadcrumb", new Dictionary<string, string> { { "A", "Home Page" }, { "B", "Sim - List" } })
-            <!-- END PAGE BAR -->
-        </div>
-        <div class="page-main">
-            @using (Html.BeginForm("LoadGrid", "CMSSims", FormMethod.Post, new { @class = "form-horizontal search-form" }))
-            {
-            }
-        </div>
-    </div>
-    <div class="detail-view" style="height:100%;">
-        <!-- detail partial view -->
-    </div>
-</div>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        LoadGrid();
-    })
 </script>
