@@ -7,6 +7,7 @@ using CMS_Shared.CMSCustomers;
 using CMS_DTO.CMSCustomer;
 using CMS_Shared.Utilities;
 using CMS_Web.Web.App_Start;
+using CMS_DTO.CMSSession;
 
 namespace CMS_Web.Controllers
 {
@@ -29,7 +30,7 @@ namespace CMS_Web.Controllers
         {
             try
             {
-                var User = Session["UserC"] as CustomerModels;
+                var User = Session["UserC"] as UserSession;
                 if (User == null)
                     return RedirectToAction("Index", "Home");
                 if (!ModelState.IsValid)

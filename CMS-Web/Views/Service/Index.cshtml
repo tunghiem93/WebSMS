@@ -22,7 +22,7 @@
                         <div class="form-group">
                             <label for="phone" class="col-md-4">Phone</label>
                             <div class="col-md-8">
-                                @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", @placeholder = "Phone Number", @autocomplete = "off" })
+                                @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", @placeholder = "Phone Number", @autocomplete = "off", @type="number" })
                                 @Html.ValidationMessageFor(model => model.Phone, null, new { @class = "label label-danger" })
                             </div>
                         </div>

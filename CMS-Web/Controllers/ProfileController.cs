@@ -1,5 +1,6 @@
 ﻿using CMS_DTO.CMSCustomer;
 using CMS_DTO.CMSProfile;
+using CMS_DTO.CMSSession;
 using CMS_Shared;
 using CMS_Shared.CMSDepositTransaction;
 using CMS_Shared.CMSMarketing;
@@ -26,8 +27,8 @@ namespace CMS_Web.Controllers
             var model = new CMS_ProfileModels();
             model.OTPs = _factory.GetList((int)Commons.SMSType.OTP);
             model.Marketings = _factory.GetList((int)Commons.SMSType.Marketing);
-            var Customer = Session["UserC"] as CustomerModels;
-            model.Transactions = _fac.GetListDepositTransaction(Customer.ID);
+            var Customer = Session["UserC"] as UserSession;
+            model.Transactions = _fac.GetListDepositTransaction(Customer.UserId);
             return View(model);
         }
     }
