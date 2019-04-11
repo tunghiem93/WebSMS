@@ -134,6 +134,10 @@ namespace CMS_Shared.CMSSims
                         CreatedBy = x.CreatedBy,
                         CreatedDate = x.CreatedDate
                     }).ToList();
+                    foreach(var item in data)
+                    {
+                        item.StatusName = Enum.GetName(typeof(Commons.SimStatus), item.Status);
+                    }
                     return data;
                 }
             }

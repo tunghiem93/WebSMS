@@ -5,6 +5,7 @@ using CMS_Shared;
 using CMS_Shared.CMSCategories;
 using CMS_Shared.CMSMarketing;
 using CMS_Shared.CMSSims;
+using CMS_Web.signalr;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -109,6 +110,8 @@ namespace CMS_Web.Controllers
                 {
                     result.Add("StatusCode", "200");
                     result.Add("Message", "Success");
+                    var listSim = _CMSSimsFactory.GetList();
+                    SynDataHub.SycnDataSim(listSim);
                 }
                 else
                 {

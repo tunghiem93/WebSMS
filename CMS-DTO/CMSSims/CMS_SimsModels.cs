@@ -16,6 +16,7 @@ namespace CMS_DTO.CMSSims
         public string OperatorName { get; set; }
         [Required]
         public int Status { get; set; }
+        public string StatusName { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }

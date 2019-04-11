@@ -63,6 +63,9 @@ namespace CMS_Web
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+
+            //Enables SignalR
+            app.MapSignalR();
         }
     }
 }

@@ -1,9 +1,54 @@
 ﻿@{
+    /**/
+
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 @{
     ViewBag.Title = "Sim - List";
 }
+<script src="~/Scripts/jquery.signalR-2.4.1.js"></script>
+<script src="~/SignalR/hubs"></script>
+<script type="text/javascript">
+    (function () {
+        // Defining a connection to the server hub.
+        var myHub = $.connection.synDataHub;
+        // Setting logging to true so that we can see whats happening in the browser console log. [OPTIONAL]
+        $.connection.hub.logging = true;
+        // Start the hub
+        $.connection.hub.start(function () {
+            //calling ....
+        });
+        myHub.client.sycnDataSim = function (listSim) {
+            console.log(listSim);
+            console.log("test");
+            if (listSim != null) {
+                var temp = "";
+                for (var i = 0; i < listSim.length; i++) {
+                    var SimNumber = listSim[i].SimNumber == null ? "" : listSim[i].SimNumber;
+                    var OperatorName = listSim[i].OperatorName == null ? "" : listSim[i].OperatorName;
+                    temp += '<tr class="odd gradeX">' +
+                        '<td class="text-center" > ' + listSim[i].SimName + '</td>' +
+                        '<td class="text-center">' + SimNumber + '</td>' +
+                        '<td class="text-center">' + OperatorName + '</td>' +
+                        '<td class="text-center">';
+                    if (listSim[i].Status != 1) {
+                        temp += '<span class="label label-sm label-warning"> ' + listSim[i].StatusName + ' </span>';
+                    } else {
+                        temp += '<span class="label label-sm label-success"> ' + listSim[i].StatusName + ' </span>';
+                    }
+                    temp += '</td>' +
+                        '<td class="text-center">' +
+                        '<a href="javascript:void(0)" onclick="ShowView(&quot;/Admin/CMSSims/Edit/' + listSim[i].Id + '&quot;)" class="btn btn-info btn-xs edit details"><i class="fa fa-edit"></i>&nbsp;Edit</a>&nbsp;&nbsp;' +
+                        '</td>' +
+                        '</tr >';
+                }
+                $("#sample_3 tbody").html("");
+                $("#sample_3 tbody").append(temp);
+            }
+        };
+
+    }());
+</script>
 <div role="main">
     <div class="se-pre-con" style="display: none;"></div>
     <div class="_gridview">
@@ -16,7 +61,7 @@
             @using (Html.BeginForm("LoadGrid", "CMSSims", FormMethod.Post, new { @class = "form-horizontal search-form" }))
             {
             }
-        </div>      
+        </div>
     </div>
     <div class="detail-view" style="height:100%;">
         <!-- detail partial view -->
